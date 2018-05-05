@@ -5,7 +5,7 @@ const chaiHttp = require('chai-http');
 //const {DATABASE_URL, TEST_DATABASE_URL} = //require('../config');
 //const {Raid} = require('../models/raid-model');
 //const {User} = require('../models/user-model');
-//const {closeServer, runServer, app} = require('../server');
+const {closeServer, runServer, app} = require('../server');
 
 chai.should();
 chai.use(chaiHttp);
