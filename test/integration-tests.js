@@ -9,13 +9,13 @@ chai.use(chaiHttp);
 
 describe('Root URL', function() {
 
-  before(function() {
-    return runServer();
-  });
+ // before(function() {
+ //   return runServer();
+ // });
 
-  after(function() {
-    return closeServer();
-  });
+ // after(function() {
+//    return closeServer();
+//  });
 
   it('should respond with a status of 200 and HTML', function() {
     return chai.request(app)
