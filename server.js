@@ -1,8 +1,14 @@
 const express = require('express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
-//const {PORT, DATABASE_URL} = require('./config');
+const {PORT, DATABASE_URL} = require('./config');
+
+mongoose.Promise = global.Promise;
+
 const app = express();
+
+app.use(morgan('common'));
+
 app.use(express.static('public'));
 app.listen(process.env.PORT || 8080);
 
