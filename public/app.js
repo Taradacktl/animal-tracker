@@ -4,30 +4,38 @@ var MOCK_STATUS_UPDATES = {
 	"statusUpdates": [
         {
             "id": "1111111",
-            "species": "Deer",
-            "location": "Canyon",
             "Date": "3/10/18",
+            "TimeOfDay": "Midday",
+            "species": "Deer",
+            "activity": "Napping",
+            "location": "Canyon",
             "publishedAt": 1470016976609
         },
         {
             "id": "2222222",
+            "Date": "4/5/18",
+            "TimeOfDay": "Late afternoon",
             "species": "Coyote",
+            "activity": "Hunting",
             "location": "Mountains",
-            "Date": "5/1/18",
             "publishedAt": 1470012976609
         },
         {
             "id": "333333",
-            "species": "Rattlesnake",
-            "location": "Creek",
             "Date": "4/15/18",
+            "TimeOfDay": "Noon",
+            "species": "Rattlesnake",
+            "activity": "Sunning",
+            "location": "Creek",
             "publishedAt": 1470011976609
         },
         {
             "id": "4444444",
+            "Date": "5/2/18",
+            "TimeOfDay": "Late afternoon",
             "species": "Bobcat",
+            "activity": "Hunting",
             "location": "Hills",
-            "Date": "4/5/18",
             "publishedAt": 1470009976609
         }
     ]
@@ -50,8 +58,11 @@ function getRecentStatusUpdates(callbackFn) {
 function displayStatusUpdates(data) {
     for (index in data.statusUpdates) {
 	   $('body').append(
-        '<p>' + "species:" + data.statusUpdates[index].species + '</p>' +
-        '<p>' + data.statusUpdates[index].location + '</p>');
+        '<p>' + "Date:" + " " + data.statusUpdates[index].date + '</p>' +
+        '<p>' + "Time of Day:" + " " + data.statusUpdates[index].timeOfDay + '</p>' +
+        '<p>' + "Species:" + " " + data.statusUpdates[index].species + '</p>' +
+        '<p>' + "Activity:" + " " + data.statusUpdates[index].activity + '</p>' +
+        '<p>' + "Location:" + " " + data.statusUpdates[index].location + '</p>');
     }
 }
 
