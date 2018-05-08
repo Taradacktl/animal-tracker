@@ -7,15 +7,18 @@ const expect = chai.expect;
 chai.should();
 chai.use(chaiHttp);
 
- before(function() {
-   return runServer();
- });
+describe('animal tracker API resource', function () {
 
- after(function() {
-    return closeServer();
- });
+  before(function() {
+    return runServer(TEST_DATABASE_URL);
+  });
+ 
+  after(function() {
+     return closeServer();
+  });
 
- describe('Root URL', function() {
+  describe('Root URL', function() {
+ 
   it('should respond with a status of 200 and HTML', function() {
     return chai.request(app)
         .get('/')
@@ -25,3 +28,4 @@ chai.use(chaiHttp);
         });
     });
   });
+});
