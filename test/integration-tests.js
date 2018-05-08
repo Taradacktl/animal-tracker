@@ -7,7 +7,7 @@ const expect = chai.expect;
 chai.should();
 chai.use(chaiHttp);
 
-describe('animal tracker API resource', function () {
+/* describe('animal tracker API resource', function () {
 
   before(function() {
     return runServer(TEST_DATABASE_URL);
@@ -16,7 +16,7 @@ describe('animal tracker API resource', function () {
   after(function() {
      return closeServer();
   });
-
+*/
   describe('Root URL', function() {
  
   it('should respond with a status of 200 and HTML', function() {
@@ -28,4 +28,4 @@ describe('animal tracker API resource', function () {
         });
     });
   });
-});
+//});
