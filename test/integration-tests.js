@@ -23,9 +23,9 @@ chai.use(chaiHttp);
   it('should respond with a status of 200 and HTML', function() {
     return chai.request(app)
         .get('/')
-        .then(function(result) {
-          result.should.have.status(200);
-          result.should.be.html;
+        .then(function(res) {
+          expect(res).to.have.status(200);
+          expect(res).to.be.html;
         });
     });
   });
