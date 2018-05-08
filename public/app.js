@@ -5,28 +5,28 @@ var MOCK_STATUS_UPDATES = {
         {
             "id": "1111111",
             "species": "Can't believe how much fun I'm having.",
-            "friendId": "aaaaaa",
+            "location": "aaaaaa",
             "friendName": "John Doe",
             "publishedAt": 1470016976609
         },
         {
             "id": "2222222",
             "species": "Have FOMO? Well you SHOULD!",
-            "friendId": "bbbbbbb",
+            "location": "bbbbbbb",
             "friendName": "Jane Doe",
             "publishedAt": 1470012976609
         },
         {
             "id": "333333",
             "species": "They're giving out immortality and free $$$ where I am.",
-            "friendId": "cccc",
+            "location": "cccc",
             "friendName": "Jim Doe",
             "publishedAt": 1470011976609
         },
         {
             "id": "4444444",
             "species": "humble brag humble brag humble brag",
-            "friendId": "ddddd",
+            "location": "ddddd",
             "friendName": "Jackie Doe",
             "publishedAt": 1470009976609
         }
@@ -50,7 +50,8 @@ function getRecentStatusUpdates(callbackFn) {
 function displayStatusUpdates(data) {
     for (index in data.statusUpdates) {
 	   $('body').append(
-        '<p>' + data.statusUpdates[index].species + '</p>');
+        '<p>' + data.statusUpdates[index].species + '</p>' +
+        '<p>' + data.statusUpdates[index].location + '</p>');
     }
 }
 
