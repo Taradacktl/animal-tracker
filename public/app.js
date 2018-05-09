@@ -4,7 +4,7 @@ var MOCK_STATUS_UPDATES = {
 	"statusUpdates": [
         {
             "id": "1111111",
-            "Date": "3/10/18",
+            "Date": "3'/'10'/'18",
             "TimeOfDay": "Midday",
             "species": "Deer",
             "activity": "Napping",
@@ -13,7 +13,7 @@ var MOCK_STATUS_UPDATES = {
         },
         {
             "id": "2222222",
-            "Date": "4/5/18",
+            "Date": "4-5-18",
             "TimeOfDay": "Late afternoon",
             "species": "Coyote",
             "activity": "Hunting",
