@@ -4,7 +4,7 @@ var MOCK_STATUS_UPDATES = {
 	"statusUpdates": [
         {
             "id": "1111111",
-            "Date": "3'/'10'/'18",
+            "Date": "3/10/18",
             "TimeOfDay": "Midday",
             "species": "Deer",
             "activity": "Napping",
@@ -13,7 +13,7 @@ var MOCK_STATUS_UPDATES = {
         },
         {
             "id": "2222222",
-            "Date": "4-5-18",
+            "Date": "4/5/18",
             "TimeOfDay": "Late afternoon",
             "species": "Coyote",
             "activity": "Hunting",
@@ -59,7 +59,7 @@ function displayStatusUpdates(data) {
     for (index in data.statusUpdates) {
 	   $('body').append(
         '<p>' + "Date:" + " " + data.statusUpdates[index].date + '</p>' +
-        '<p>' + "Time of Day:" + " " + data.statusUpdates[index].timeOfDay + '</p>' +
+        '<p>' + "Time of  Day:" + " " + data.statusUpdates[index].timeOfDay + '</p>' +
         '<p>' + "Species:" + " " + data.statusUpdates[index].species + '</p>' +
         '<p>' + "Activity:" + " " + data.statusUpdates[index].activity + '</p>' +
         '<p>' + "Location:" + " " + data.statusUpdates[index].location + '</p>');
