@@ -146,7 +146,7 @@ chai.use(chaiHttp);
         activity: 'hunting',
         location: 'canyon'
         }
-      };
+      ;
 
       return AnimalTracker
         .findOne()
@@ -200,6 +200,5 @@ chai.use(chaiHttp);
         });
     });
   });
-});
 
 //});
