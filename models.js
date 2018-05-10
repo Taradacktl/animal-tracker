@@ -1,4 +1,4 @@
-const uuid = require('uuid');
+/*const uuid = require('uuid');
 
 
 function StorageException(message) {
@@ -48,4 +48,5 @@ function createShoppingList() {
 }
 module.exports = {
     ShoppingList: createShoppingList(),
-  }
+  } 
+  */
