@@ -1,5 +1,4 @@
-/*const express = require('express');
-const morgan = require('morgan');
+/*
 const mongoose = require('mongoose');
 const {PORT, DATABASE_URL} = require('./config');
 
@@ -62,10 +61,18 @@ module.exports = {app};
 'use strict';
 
 const express = require('express');
-
+const router = express.Router();
+const morgan = require('morgan');
+const bodyParser = require('body-parser');
+const {AnimalTracker} = require('./models');
+const jsonParser = bodyParser.json();
 const app = express();
 
 app.use(express.static('public'));
+
+app.get('/animal-tracker', (req, res) => {
+  res.json(AnimalTracker.get());
+});
 
 if (require.main === module) {
   app.listen(process.env.PORT || 8080, function () {

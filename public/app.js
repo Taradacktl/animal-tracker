@@ -4,8 +4,8 @@ var MOCK_STATUS_UPDATES = {
 	"statusUpdates": [
         {
             "id": "1111111",
-            "Date": "3/10/18",
-            "TimeOfDay": "Midday",
+            "date": "3/10/18",
+            "timeOfDay": "Midday",
             "species": "Deer",
             "activity": "Napping",
             "location": "Canyon",
@@ -13,8 +13,8 @@ var MOCK_STATUS_UPDATES = {
         },
         {
             "id": "2222222",
-            "Date": "4/5/18",
-            "TimeOfDay": "Late afternoon",
+            "date": "4/5/18",
+            "timeOfDay": "Late afternoon",
             "species": "Coyote",
             "activity": "Hunting",
             "location": "Mountains",
@@ -22,8 +22,8 @@ var MOCK_STATUS_UPDATES = {
         },
         {
             "id": "333333",
-            "Date": "4/15/18",
-            "TimeOfDay": "Noon",
+            "date": "4/15/18",
+            "timeOfDay": "Noon",
             "species": "Rattlesnake",
             "activity": "Sunning",
             "location": "Creek",
@@ -31,8 +31,8 @@ var MOCK_STATUS_UPDATES = {
         },
         {
             "id": "4444444",
-            "Date": "5/2/18",
-            "TimeOfDay": "Late afternoon",
+            "date": "5/2/18",
+            "timeOfDay": "Late afternoon",
             "species": "Bobcat",
             "activity": "Hunting",
             "location": "Hills",
