@@ -4,15 +4,15 @@ const app = require('../server.js');
 const mongoose = require('mongoose');
 //const faker = require('faker');
 //const {closeServer, runServer, app} = require('../server');
-//const { TEST_DATABASE_URL } = require('../config');
+const { TEST_DATABASE_URL } = require('../config');
 const { AnimalTracker } = require('../models');
 const expect = chai.expect;
 const should = chai.should();
 chai.use(chaiHttp);
 
-/* describe('animal tracker API resource', function () {
+ describe('animal tracker API resource', function () {
 
-  before(function() {
+ /* before(function() {
     return runServer(TEST_DATABASE_URL);
   });
  
@@ -109,7 +109,7 @@ chai.use(chaiHttp);
         .post('/posts')
         .send(newPost)
         .then(function (res) {
-          res.should.have.status(201);
+          res.should.have.status(200);
           res.should.be.json;
           res.body.should.be.a('object');
           res.body.should.include.keys(
@@ -202,4 +202,4 @@ chai.use(chaiHttp);
     });
   });
 
-//});
+});
