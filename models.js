@@ -1,4 +1,4 @@
-const uuid = require('uuid');
+/*const uuid = require('uuid');
 
 
 function StorageException(message) {
@@ -49,4 +49,4 @@ function createAnimalTracker() {
 module.exports = {
     AnimalTracker: createAnimalTracker(),
   } 
-  
+  */
