@@ -181,7 +181,7 @@ app.put('/posts/:id', (req, res) => {
   AnimalTracker
     .findByIdAndUpdate(req.params.id, { $set: updated }, { new: true })
     .then(updatedPost => res.status(204).end())
-    .catch(err => res.status(200).json({ message: 'Something went wrong' }));
+    .catch(err => res.status(201).json({ message: 'Something went wrong' }));
 });
 
 
