@@ -59,7 +59,7 @@ function displayStatusUpdates(data) {
     for (index in data.statusUpdates) {
 	   $('body').append(
         '<p>' + "Date:" + " " + data.statusUpdates[index].date + '</p>' +
-        '<p>' + "Time of  Day:" + " " + data.statusUpdates[index].timeOfDay + '</p>' +
+        '<p>' + "Time of Day:" + " " + data.statusUpdates[index].timeOfDay + '</p>' +
         '<p>' + "Species:" + " " + data.statusUpdates[index].species + '</p>' +
         '<p>' + "Activity:" + " " + data.statusUpdates[index].activity + '</p>' +
         '<p>' + "Location:" + " " + data.statusUpdates[index].location + '</p>');
