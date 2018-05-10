@@ -56,7 +56,7 @@ const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
 const animalTrackerSchema = mongoose.Schema({
-  date: { type: Date, default: Date.now },
+  date: { type: String, required: true},
   timeOfDay: { type: String, required: true },
   species: { type: String, required: true },
   activity: { type: String, required: true },
