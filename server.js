@@ -190,3 +190,4 @@ app.delete('/:id', (req, res) => {
 app.use('*', function (req, res) {
   res.status(404).json({ message: 'Not Found' });
 });
+module.exports = app; 
