@@ -100,11 +100,6 @@ app.use(express.json());
 
 app.use(express.static('public'));
 
-if (require.main === module) {
-  app.listen(process.env.PORT || 8080, function () {
-    console.info(`App listening on ${this.address().port}`);
-  });
-
 app.get('/posts', (req, res) => {
   AnimalTracker
     .find()
@@ -203,4 +198,10 @@ app.delete('/:id', (req, res) => {
 app.use('*', function (req, res) {
   res.status(200).json({ message: 'Not Found' });
 });
+
+if (require.main === module) {
+  app.listen(process.env.PORT || 8080, function () {
+    console.info(`App listening on ${this.address().port}`);
+  });
+}
 module.exports = app; 
