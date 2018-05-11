@@ -1,5 +1,6 @@
-/*const uuid = require('uuid');
-
+/* const uuid = require('uuid');
+const mongoose = require('mongoose');
+mongoose.Promise = global.Promise;
 
 function StorageException(message) {
    this.message = message;
@@ -41,14 +42,15 @@ const AnimalTracker = {
   }
 };
 
-function createShoppingList() {
-  const storage = Object.create(ShoppingList);
+function createAnimalTracker() {
+  const storage = Object.create(AnimalTracker);
   storage.items = {};
   return storage;
 }
 module.exports = {
-    ShoppingList: createShoppingList(),
-  }*/
+    AnimalTracker: createAnimalTracker(),
+  }
+*/
 
   'use strict';
 
@@ -77,4 +79,4 @@ animalTrackerSchema.methods.serialize = function() {
 
 const AnimalTracker = mongoose.model('AnimalTracker', animalTrackerSchema);
 
-module.exports = { AnimalTracker };
+module.exports = { AnimalTracker }; 
