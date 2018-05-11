@@ -1,9 +1,9 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
-const app = require('../server.js');
+
 const mongoose = require('mongoose');
 //const faker = require('faker');
-//const {closeServer, runServer, app} = require('../server');
+const {closeServer, runServer, app, runExpress} = require('../server');
 const { TEST_DATABASE_URL } = require('../config');
 const { AnimalTracker } = require('../models');
 const expect = chai.expect;
@@ -12,14 +12,14 @@ chai.use(chaiHttp);
 
  describe('animal tracker API resource', function () {
 
- /* before(function() {
+  before(function() {
     return runServer(TEST_DATABASE_URL);
   });
  
   after(function() {
      return closeServer();
   });
-*/
+
   describe('Root URL', function() {
  
   it('should respond with a status of 200 and HTML', function() {
