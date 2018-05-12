@@ -114,29 +114,24 @@ app.use('*', function (req, res) {
   res.status(200).json({ message: 'Not Found' });
 });
 
-if (require.main === module) {
-  app.listen(process.env.PORT || 8080, function () {
-    console.info(`App listening on ${this.address().port}`);
-  });
-}
-module.exports = app; 
-
-
-/*
-const mongoose = require('mongoose');
-const {PORT, DATABASE_URL} = require('./config');
-
-mongoose.Promise = global.Promise;
-
-const app = express();
-
-app.use(morgan('common'));
-
-app.use(express.static('public'));
-app.listen(process.env.PORT || 8080);
 
 // Server stuff
 let server;
+
+function runExpress(port){
+  return new Promise((resolve, reject) => {
+    server = app.listen(port, () => {
+     
+      console.log(`Your app is listening on port ${port}`);
+      resolve(true);
+    }).on('error', err => {
+      // TODO remove comment below
+      mongoose.disconnect();
+      reject(err);
+    });
+})
+}
+
 
 // this function connects to our database, then starts the server
 function runServer(databaseUrl=DATABASE_URL, port = PORT) {
@@ -146,14 +141,7 @@ function runServer(databaseUrl=DATABASE_URL, port = PORT) {
       if (err) {
         return reject(err);
       }
-      server = app.listen(port, () => {
-        console.log(`Your app is listening on port ${port}`);
-        resolve();
-      })
-      .on('error', err => {
-        mongoose.disconnect();
-        reject(err);
-      });
+      return resolve(runExpress(port))
     });
   });
 }
@@ -164,7 +152,7 @@ function closeServer() {
   return mongoose.disconnect().then(() => {
     return new Promise((resolve, reject) => {
       console.log('Closing server');
-      server.close(err => {
+      server && server.close(err => {
         if (err) {
           return reject(err);
         }
@@ -177,31 +165,8 @@ function closeServer() {
 // if server.js is called directly (aka, with `node server.js`), this block
 // runs. but we also export the runServer command so other code (for instance, test code) can start the server as needed.
 if (require.main === module) {
-  runServer().catch(err => console.error(err));
+  runServer().catch(err => console.error('CANNOT START SERVER',err));
 }
 
-module.exports = {app};
+module.exports = {app, runServer, closeServer }; 
 
-'use strict';
-
-const express = require('express');
-const router = express.Router();
-const morgan = require('morgan');
-const bodyParser = require('body-parser');
-const {AnimalTracker} = require('./models');
-const jsonParser = bodyParser.json();
-const app = express();
-
-app.use(express.static('public'));
-
-app.get('/animal-tracker', (req, res) => {
-  res.json(AnimalTracker.get());
-});
-
-if (require.main === module) {
-  app.listen(process.env.PORT || 8080, function () {
-    console.info(`App listening on ${this.address().port}`);
-  });
-}
-
-module.exports = app; */
