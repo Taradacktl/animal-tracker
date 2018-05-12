@@ -1,12 +1,14 @@
 'use strict';
 
-const express = require('express');
-const morgan = require('morgan');
+
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
 const { DATABASE_URL, PORT } = require('./config');
 const { AnimalTracker } = require('./models');
+
+const express = require('express');
+const morgan = require('morgan');
 
 const app = express();
 
@@ -56,10 +58,10 @@ app.post('/posts', (req, res) => {
       activity: req.body.activity,
       location: req.body.location,
     })
-    .then(animalTracker => res.status(201).json(animalTracker.serialize()))
+    .then(animalTracker => res.status(200).json(animalTracker.serialize()))
     .catch(err => {
       console.error(err);
-      res.status(200).json({ error: 'Something went wrong' });
+      res.status(500).json({ error: 'Something went wrong' });
     });
 
 });
@@ -115,13 +117,55 @@ app.use('*', function (req, res) {
 });
 
 
+function seedData(databaseUrl) {
+
+  console.log('seeding db test data...');
+  if (true || (process.env.NODE_ENV != 'production')) {
+
+    const seeder = require('mongoose-seed');
+    const data = require('./seed_data/AnimalTracker');
+
+    let resolved
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (!resolved) {
+          reject(new Error('SEED_ERROR_OR_TIMEOUT'))
+        }
+      }, 6000)
+
+      // Connect to MongoDB via Mongoose
+      seeder.connect(databaseUrl, function () {
+
+        // Load Mongoose models
+        seeder.loadModels([
+          './models.js',
+        ]);
+
+        const data = require('./seed_data/AnimalTracker')
+
+        // Clear specified collections
+        seeder.clearModels(['AnimalTracker'], function () {
+
+          // Callback to populate DB once collections have been cleared
+          seeder.populateModels(data, function () {
+            //seeder.disconnect();
+            resolved = true
+            resolve(true)
+          });
+
+        });
+      });
+    })
+  }
+}
+
+
 // Server stuff
 let server;
 
-function runExpress(port){
+function runExpress(port) {
   return new Promise((resolve, reject) => {
     server = app.listen(port, () => {
-     
       console.log(`Your app is listening on port ${port}`);
       resolve(true);
     }).on('error', err => {
@@ -129,21 +173,25 @@ function runExpress(port){
       mongoose.disconnect();
       reject(err);
     });
-})
+  })
 }
 
 
 // this function connects to our database, then starts the server
-function runServer(databaseUrl=DATABASE_URL, port = PORT) {
+function runServer(databaseUrl = DATABASE_URL, port = PORT) {
 
   return new Promise((resolve, reject) => {
     mongoose.connect(databaseUrl, err => {
       if (err) {
         return reject(err);
       }
-      return resolve(runExpress(port))
+      console.log('MONGOOSE CONNECTED', databaseUrl)
+      return seedData(databaseUrl).then(() => {
+        return resolve(runExpress(port))
+      })
+
     });
-  });
+  })
 }
 
 // this function closes the server, and returns a promise. we'll
@@ -165,8 +213,8 @@ function closeServer() {
 // if server.js is called directly (aka, with `node server.js`), this block
 // runs. but we also export the runServer command so other code (for instance, test code) can start the server as needed.
 if (require.main === module) {
-  runServer().catch(err => console.error('CANNOT START SERVER',err));
+  runServer().catch(err => console.error('CANNOT START SERVER', err));
 }
 
-module.exports = {app, runServer, closeServer }; 
+module.exports = { app, runServer, closeServer };
 
