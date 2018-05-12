@@ -56,7 +56,7 @@ app.post('/posts', (req, res) => {
       activity: req.body.activity,
       location: req.body.location,
     })
-    .then(animalTracker => res.status(201).json(animalTracker.serialize()))
+    .then(animalTracker => res.status(200).json(animalTracker.serialize()))
     .catch(err => {
       console.error(err);
       res.status(200).json({ error: 'Something went wrong' });
