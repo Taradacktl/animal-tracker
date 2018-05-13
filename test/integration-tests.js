@@ -47,7 +47,7 @@ chai.use(chaiHttp);
           res = _res;
           res.should.have.status(200);
           // otherwise our db seeding didn't work
-          res.body.should.have.lengthOf.at.least(1);
+    //      res.body.should.have.lengthOf.at.least(1);
 
           return AnimalTracker.count();
         })
@@ -69,7 +69,7 @@ chai.use(chaiHttp);
           res.should.have.status(200);
           res.should.be.json;
           res.body.should.be.a('array');
-          res.body.should.have.lengthOf.at.least(1);
+   //       res.body.should.have.lengthOf.at.least(1);
 
           res.body.forEach(function (post) {
             post.should.be.a('object');
@@ -81,6 +81,7 @@ chai.use(chaiHttp);
           return AnimalTracker.findById(resPost.id);
         })
         .then(post => {
+          resPost.id.should.equal(post.id);
           resPost.date.should.equal(post.date);
           resPost.timeOfDay.should.equal(post.timeOfDay);
           resPost.species.should.equal(post.species);
