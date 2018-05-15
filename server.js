@@ -131,7 +131,7 @@ function seedData(databaseUrl) {
         if (!resolved) {
           reject(new Error('SEED_ERROR_OR_TIMEOUT'))
         }
-      }, 6000)
+      }, 10000)
 
       // Connect to MongoDB via Mongoose
       seeder.connect(databaseUrl, function () {
