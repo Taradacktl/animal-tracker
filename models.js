@@ -55,9 +55,9 @@ module.exports = {
   'use strict';
 
 const mongoose = require('mongoose');
-mongoose.Promise = global.Promise;
+// mongoose.Promise = global.Promise;
 
-const animalTrackerSchema = mongoose.Schema({
+const animalTrackerSchema = new mongoose.Schema({
   date: { type: String, required: true},
   timeOfDay: { type: String, required: true },
   species: { type: String, required: true },
