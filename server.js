@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
 const { DATABASE_URL, PORT } = require('./config');
-const { AnimalTracker } = require('./models');
+const { AnimalTracker } = require('./trackers/model');
 
 const express = require('express');
 const morgan = require('morgan');
@@ -123,7 +123,7 @@ function seedData(databaseUrl) {
   if (true || (process.env.NODE_ENV != 'production')) {
 
     const seeder = require('mongoose-seed');
-    const data = require('./seed_data/AnimalTracker');
+    const data = require('./trackers/seed-data');
 
     let resolved
     return new Promise((resolve, reject) => {
@@ -138,10 +138,10 @@ function seedData(databaseUrl) {
 
         // Load Mongoose models
         seeder.loadModels([
-          './models.js',
+          './trackers/model.js',
         ]);
 
-        const data = require('./seed_data/AnimalTracker')
+        const data = require('./trackers/seed-data')
 
         // Clear specified collections
         seeder.clearModels(['AnimalTracker'], function () {

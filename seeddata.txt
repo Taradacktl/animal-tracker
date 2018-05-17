@@ -1,1 +1,0 @@
-{"date": "December", "timeOfDay":"Morning", "species":"Goat","activity": "Eating","location": "Mountainside"}
