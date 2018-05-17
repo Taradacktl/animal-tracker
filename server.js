@@ -7,6 +7,8 @@ mongoose.Promise = global.Promise;
 const { DATABASE_URL, PORT } = require('./config');
 const { AnimalTracker } = require('./trackers/model');
 
+const seedData = require('./helpers/seed-data')
+
 const express = require('express');
 const morgan = require('morgan');
 
@@ -17,7 +19,7 @@ app.use(express.json());
 
 app.use(express.static('public'));
 
-const { router: usersRouter } = require('./users/routes'); 
+const { router: usersRouter } = require('./users/routes');
 app.use('/users', usersRouter);
 
 app.get('/posts', (req, res) => {
@@ -120,49 +122,17 @@ app.use('*', function (req, res) {
 });
 
 
-function seedData(databaseUrl) {
-
-  console.log('seeding db test data...');
-  if (true || (process.env.NODE_ENV != 'production')) {
-
-    const seeder = require('mongoose-seed');
-    const data = require('./trackers/seed-data');
-
-    let resolved
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (!resolved) {
-          reject(new Error('SEED_ERROR_OR_TIMEOUT'))
-        }
-      }, 10000)
-
-      // Connect to MongoDB via Mongoose
-      seeder.connect(databaseUrl, function () {
-
-        // Load Mongoose models
-        seeder.loadModels([
-          './trackers/model.js',
-          './users/model.js'
-        ]);
-
-        const data = require('./trackers/seed-data')
-
-        // Clear specified collections
-        seeder.clearModels(['AnimalTracker'], function () {
-
-          // Callback to populate DB once collections have been cleared
-          seeder.populateModels(data, function () {
-            //seeder.disconnect();
-            resolved = true
-            resolve(true)
-          });
-
-        });
-      });
-    })
-  }
+function seedTrackersP(databaseUrl) {
+  const data = require( __dirname + '/trackers/seed-data')
+  const modelPath = __dirname + '/trackers/model'
+  return seedData(databaseUrl, modelPath, data, 'AnimalTracker')
 }
 
+function seedUsersP(databaseUrl) {
+  const data = require( __dirname + '/users/seed-data')
+  const modelPath = __dirname + '/users/model'
+  return seedData(databaseUrl, modelPath, data, 'User')
+}
 
 // Server stuff
 let server;
@@ -190,7 +160,11 @@ function runServer(databaseUrl = DATABASE_URL, port = PORT) {
         return reject(err);
       }
       console.log('MONGOOSE CONNECTED', databaseUrl)
-      return seedData(databaseUrl).then(() => {
+      const promises = [
+        seedTrackersP(databaseUrl),
+        seedUsersP(databaseUrl),
+      ]
+      return Promise.all(promises).then(() => {
         return resolve(runExpress(port))
       })
 
