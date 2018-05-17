@@ -10,7 +10,7 @@ const expect = chai.expect;
 const should = chai.should();
 chai.use(chaiHttp);
 
- describe('animal tracker API resource', function () {
+ describe('user tracker API resource', function () {
 
   before(function() {
     return runServer(TEST_DATABASE_URL);
@@ -24,10 +24,10 @@ chai.use(chaiHttp);
  
   it('should respond with a status of 200 and HTML', function() {
     return chai.request(app)
-        .get('/')
+        .get('/users/login')
         .then(function(res) {
           expect(res).to.have.status(200);
-          expect(res).to.be.html;
+          expect(res).to.be.json;
         });
     });
   });
