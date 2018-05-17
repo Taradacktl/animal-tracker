@@ -20,7 +20,7 @@ chai.use(chaiHttp);
      return closeServer();
   });
 
-  describe('Root URL', function() {
+  describe('Login URL', function() {
  
   it('should respond with a status of 200 and HTML', function() {
     return chai.request(app)
