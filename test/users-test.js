@@ -22,7 +22,7 @@ chai.use(chaiHttp);
 
   describe('Login URL', function() {
  
-  it('should respond with a status of 200 and HTML', function() {
+  it('should respond with a status of 200 and JSON', function() {
     return chai.request(app)
         .get('/users/login')
         .then(function(res) {
