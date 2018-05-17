@@ -17,6 +17,9 @@ app.use(express.json());
 
 app.use(express.static('public'));
 
+const { router: usersRouter } = require('./users/routes'); 
+app.use('/users', usersRouter);
+
 app.get('/posts', (req, res) => {
   AnimalTracker
     .find()
@@ -139,6 +142,7 @@ function seedData(databaseUrl) {
         // Load Mongoose models
         seeder.loadModels([
           './trackers/model.js',
+          './users/model.js'
         ]);
 
         const data = require('./trackers/seed-data')
