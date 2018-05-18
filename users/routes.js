@@ -4,7 +4,7 @@ const router = express.Router(); const jsonParser = bodyParser.json();
 
 router.post('/login', (req, res) => { res.status(200).json({message:'OK'}) });
 
-router.post('/users/create', (req, res) => {
+router.post('/create', (req, res) => {
     let username = req.body.username;
     username = username.trim();
     let password = req.body.password;
