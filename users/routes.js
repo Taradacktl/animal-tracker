@@ -1,6 +1,7 @@
 const express = require('express'); const bodyParser = require('body-parser');
 
 const router = express.Router(); const jsonParser = bodyParser.json();
+const {User} = require('./model');
 
 //user login
 router.post('/login', jsonParser, (req, res) => { 
@@ -14,7 +15,7 @@ router.post('/login', jsonParser, (req, res) => {
      // res.status(200).json({message:'OK'})
      }
  }
-    const user = AnimalTracker.create(req.body.name, req.body.emailAddress);
+    const user = User.create(req.body.name, req.body.emailAddress);
     res.status(200).json(user)
  });
 

@@ -42,21 +42,21 @@ function generateUserData() {
         });
     });
 	  
-   describe('AnimalTracker', function() {	  
+   describe('User', function() {	  
 	
-   it('should login on POST', function() {
-    const userName = {
+   it('should get login info', function() {
+    const userInfo = {
         name: 'Julio', emailAddress: 'email@address'};
     return chai.request(app)
       .post('/login')
-      .send(userName)
+      .send(userInfo)
       .then(function(res) {
         res.should.have.status(200);
         res.should.be.json;
         res.body.should.be.a('object');
         res.body.should.include.keys('id', 'name', 'emailAddress');
-        res.body.name.should.equal(userName.name);
-        res.body.emailAddress.should.equal(userName.emailAddress);
+        res.body.name.should.equal(userInfo.name);
+        res.body.emailAddress.should.equal(userInfo.emailAddress);
       });
   });	  
 	  
