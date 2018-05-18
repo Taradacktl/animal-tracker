@@ -3,7 +3,7 @@ const express = require('express'); const bodyParser = require('body-parser');
 const router = express.Router(); const jsonParser = bodyParser.json();
 
 //user login
-router.post('/login', (req, res) => { 
+router.post('/login', jsonParser, (req, res) => { 
     const requiredFields = ['name', 'emailAddress'];
     for (let i=0; i<requiredFields.length; i++) {
     const field = requiredFields[i];
@@ -11,7 +11,7 @@ router.post('/login', (req, res) => {
       const message = `Missing \`${field}\` in request body`
       console.error(message);
       return res.status(400).send(message);
-    res.status(200).json({message:'OK'})
+     // res.status(200).json({message:'OK'})
      }
  }
     const user = AnimalTracker.create(req.body.name, req.body.emailAddress);
