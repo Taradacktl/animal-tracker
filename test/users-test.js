@@ -10,14 +10,17 @@ const expect = chai.expect;
 const should = chai.should();
 chai.use(chaiHttp);
 
-const testUsername = faker.random.word() + faker.random.number();
+const testname = faker.random.word();
+const testemailAddress = faker.random.word();
 
 function generateUserData() {
 	return {
-		username: testUsername,
+    name: testname,
+    emailAddress: testemailAddress,
 		password: faker.random.word()
 	}
 }
+
  describe('animal tracker API resource', function () {
 
   before(function() {

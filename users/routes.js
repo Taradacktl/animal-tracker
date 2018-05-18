@@ -5,8 +5,10 @@ const router = express.Router(); const jsonParser = bodyParser.json();
 router.post('/login', (req, res) => { res.status(200).json({message:'OK'}) });
 
 router.post('/create', (req, res) => {
-    let username = req.body.username;
-    username = username.trim();
+    let name = req.body.name;
+    name = name.trim();
+    let emailAddress = req.body.emailAddress;
+    emailAddress = emailAddress.trim();
     let password = req.body.password;
     password = password.trim();
     bcrypt.genSalt(10, (err, salt) => {
@@ -24,7 +26,8 @@ router.post('/create', (req, res) => {
             }
         
         User.create({
-            username,
+            name,
+            emailAddress,
             password: hash,
         }, (err, item) => {
             if (err) {
@@ -33,7 +36,7 @@ router.post('/create', (req, res) => {
                 });
             }
             if(item) {
-                console.log(`User \`${username}\` created.`);
+                console.log(`User \`${name}\` created.`);
                 return res.json(item);
             }
         });
