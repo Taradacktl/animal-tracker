@@ -1,7 +1,13 @@
-const express = require('express'); const bodyParser = require('body-parser');
+const express = require('express'); 
+const bodyParser = require('body-parser');
 
-const router = express.Router(); const jsonParser = bodyParser.json();
+const router = express.Router(); 
+const jsonParser = bodyParser.json();
 const {User} = require('./model');
+
+User.create(
+    'John', 'helloEmail'
+);
 
 //user login
 router.post('/login', jsonParser, (req, res) => { 
