@@ -41,5 +41,24 @@ function generateUserData() {
           expect(res).to.be.html;
         });
     });
+	  
+   describe('AnimalTracker', function() {	  
+	
+   it('should login on POST', function() {
+    const userName = {
+        name: 'Julio', emailAddress: 'email@address'};
+    return chai.request(app)
+      .post('/login')
+      .send(userName)
+      .then(function(res) {
+        res.should.have.status(200);
+        res.should.be.json;
+        res.body.should.be.a('object');
+        res.body.should.include.keys('id', 'name', 'emailAddress');
+        res.body.name.should.equal(userName.name);
+        res.body.emailAddress.should.equal(userName.emailAddress);
+      });
+  });	  
+	  
   });
 });
