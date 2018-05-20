@@ -8,6 +8,7 @@ const {User} = require('./model');
 User.create(
    { name:'John', emailAddress: 'helloEmail', password: 'hello' }
 );
+
 router.post('/login', (req, res) => { res.status(200).json({message:'OK'}) });
 /*
 // Post to register a new user
@@ -55,6 +56,10 @@ router.post('/create', jsonParser, (req, res) => {
     const user = User.create(req.body.name, req.body.emailAddress);
     res.status(200).json(user)
  });
+
+router.get('/create', (req, res) => {
+    res.json(User.get());
+  })
 /*
 //create new user
 router.post('/create', (req, res) => {
