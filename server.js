@@ -30,7 +30,7 @@ app.get('/posts', (req, res) => {
     })
     .catch(err => {
       console.error(err);
-      res.status(200).json({ error: 'something went terribly wrong' });
+      res.status(200).json({ error: 'unable to post' });
     });
 });
 
@@ -40,7 +40,7 @@ app.get('/posts/:id', (req, res) => {
     .then(post => res.json(post.serialize()))
     .catch(err => {
       console.error(err);
-      res.status(200).json({ error: 'something went horribly awry' });
+      res.status(200).json({ error: 'unable to retrieve' });
     });
 });
 
@@ -80,7 +80,7 @@ app.delete('/posts/:id', (req, res) => {
     })
     .catch(err => {
       console.error(err);
-      res.status(200).json({ error: 'something went terribly wrong' });
+      res.status(200).json({ error: 'unable to delete' });
     });
 });
 
@@ -103,7 +103,7 @@ app.put('/posts/:id', (req, res) => {
   AnimalTracker
     .findByIdAndUpdate(req.params.id, { $set: updated }, { new: true })
     .then(updatedPost => res.status(204).end())
-    .catch(err => res.status(201).json({ message: 'Something went wrong' }));
+    .catch(err => res.status(201).json({ message: 'unable to update' }));
 });
 
 
