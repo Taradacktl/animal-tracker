@@ -5,13 +5,13 @@ const bcrypt = require('bcryptjs');
 // mongoose.Promise = global.Promise;
 
 const userSchema = new mongoose.Schema({
-  name: { type: String, required: true},
-  emailAddress: { type: String, required: true },
+  name: { type: String, required: true },
+  emailAddress: { type: String, required: true, unique: true },
   password: { type: String, required: true },
 });
 
 
-userSchema.methods.serialize = function() {
+userSchema.methods.serialize = function () {
   return {
     id: this._id,
     name: this.name,
@@ -19,14 +19,14 @@ userSchema.methods.serialize = function() {
   };
 };
 
-userSchema.methods.validatePassword = function(password, callback) {
-    bcrypt.compare(password, this.password, (err, isValid) => {
-        if (err) {
-            callback(err);
-            return;
-        }
-        callback(null, isValid);
-    });
+userSchema.methods.validatePassword = function (password, callback) {
+  bcrypt.compare(password, this.password, (err, isValid) => {
+    if (err) {
+      callback(err);
+      return;
+    }
+    callback(null, isValid);
+  });
 };
 
 
