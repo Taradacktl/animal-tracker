@@ -3,25 +3,15 @@ module.exports = [{
     documents:[
 
     {
-        "name": "3/10/18",
-        "emailAddress": "Midday",
+        "name": "John O'Malley",
+        "emailAddress": "john@eample.com",
         "password": "Deer",
     },
     {
-        "name": "3/10/18",
-        "emailAddress": "Midday",
+        "name": "Tudor von Ilisoi",
+        "emailAddress": "doe@example.com",
         "password": "Deer",
     },
-    {
-        "name": "3/10/18",
-        "emailAddress": "Midday",
-        "password": "Deer",     
-    },
-    {
-        "name": "3/10/18",
-        "emailAddress": "Midday",
-        "password": "Deer",
-    }
 ]
 
 }]
