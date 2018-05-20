@@ -49,7 +49,7 @@ router.post('/create', jsonParser, (req, res) => {
             const message = `Missing \`${field}\` in request body`
             console.error(message);
             return res.status(400).send(message);
-            res.json(item.serialize());
+            // res.json(item.serialize()); //NOTE: this NEVER happens becuase you're returning on the previous line
             // res.status(200).json({message:'OK'})
         }
     }
