@@ -12,19 +12,8 @@ User.create(
 //router.post('/login', (req, res) => { res.status(200).json({ message: 'OK' }) });
 
 //login user
-router.post('/login', jsonParser, (req, res) => {
-    const loginInfo = ['name', 'password'];
-    for (let i = 0; i < requiredFields.length; i++) {
-        const field = requiredFields[i];
-        if (!(field in req.body)) {
-            const message = `Missing \`${field}\` in request body`
-            console.error(message);
-            return res.status(400).send(message);
-        }
-    }
-  
 
-});
+  
 
 //create new user
 router.post('/create', jsonParser, (req, res) => {
