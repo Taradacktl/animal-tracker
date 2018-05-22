@@ -9,38 +9,24 @@ User.create(
     { name: 'John', emailAddress: 'helloEmail', password: 'hello' }
 );
 
-router.post('/login', (req, res) => { res.status(200).json({ message: 'OK' }) });
-/*
-// Post to register a new user
-router.post('/create', jsonParser, (req, res) => {
-    const requiredFields = ['name', 'emailAddress', 'password'];
-    const missingField = requiredFields.find(field => !(field in req.body));
-  
-    if (missingField) {
-      return res.status(422).json({
-        code: 422,
-        reason: 'ValidationError',
-        message: 'Missing field',
-        location: missingField
-      });
+//router.post('/login', (req, res) => { res.status(200).json({ message: 'OK' }) });
+
+//login user
+router.post('/login', jsonParser, (req, res) => {
+    const loginInfo = ['name', 'password'];
+    for (let i = 0; i < requiredFields.length; i++) {
+        const field = requiredFields[i];
+        if (!(field in req.body)) {
+            const message = `Missing \`${field}\` in request body`
+            console.error(message);
+            return res.status(400).send(message);
+        }
     }
   
-    const stringFields = ['name', 'password', 'emailAddress'];
-    const nonStringField = stringFields.find(
-      field => field in req.body && typeof req.body[field] !== 'string'
-    );
-  
-    if (nonStringField) {
-      return res.status(422).json({
-        code: 422,
-        reason: 'ValidationError',
-        message: 'Incorrect field type: expected string',
-        location: nonStringField
-      });
-    }
+
 });
-*/
-//user login
+
+//create new user
 router.post('/create', jsonParser, (req, res) => {
     const requiredFields = ['name', 'emailAddress', 'password'];
     for (let i = 0; i < requiredFields.length; i++) {
@@ -49,8 +35,6 @@ router.post('/create', jsonParser, (req, res) => {
             const message = `Missing \`${field}\` in request body`
             console.error(message);
             return res.status(400).send(message);
-            // res.json(item.serialize()); //NOTE: this NEVER happens becuase you're returning on the previous line
-            // res.status(200).json({message:'OK'})
         }
     }
     //validation went well, now create the Mongo record
