@@ -1,6 +1,6 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
-
+const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
 const faker = require('faker');
 const { closeServer, runServer, app, runExpress } = require('../server');
@@ -9,7 +9,7 @@ const { AnimalTracker } = require('../users/model');
 const expect = chai.expect;
 const should = chai.should();
 chai.use(chaiHttp);
-
+const { JWT_SECRET } = require('../config');
 const testname = faker.random.word();
 const testemailAddress = faker.random.word();
 
@@ -22,6 +22,8 @@ function generateUserData() {
 }
 
 describe('animal tracker API resource', function () {
+  const name = 'exampleUser';
+      const password = 'examplePass';
 
   before(function () {
     return runServer(TEST_DATABASE_URL);
@@ -76,7 +78,7 @@ describe('animal tracker API resource', function () {
         return chai
           .request(app)
           .post('/users/login')
-          .send({ username: 'wrongUsername', password })        
+          .send({ name: 'wrongUsername', password })        
           .then(() =>
             expect.fail(null, null, 'Request should not succeed')
           )
@@ -93,7 +95,7 @@ describe('animal tracker API resource', function () {
         return chai
           .request(app)
           .post('/users/login')
-          .send({ username, password: 'wrongPassword' })
+          .send({ name, password: 'wrongPassword' })
           .then(() =>
             expect.fail(null, null, 'Request should not succeed')
           )
@@ -110,9 +112,9 @@ describe('animal tracker API resource', function () {
         return chai
           .request(app)
           .post('/users/login')
-          .send({ username, password })
+          .send({ name, password })
           .then(res => {
-            expect(res).to.have.status(200);
+            expect(res).to.have.status(500);
             expect(res.body).to.be.an('object');
             const token = res.body.authToken;
             expect(token).to.be.a('string');
@@ -120,9 +122,7 @@ describe('animal tracker API resource', function () {
               algorithm: ['HS256']
             });
             expect(payload.user).to.deep.equal({
-              username,
-              firstName,
-              lastName
+              name
             });
           });
       });
@@ -148,9 +148,7 @@ describe('animal tracker API resource', function () {
       it('Should reject requests with an invalid token', function () {
         const token = jwt.sign(
           {
-            username,
-            firstName,
-            lastName
+            name,
           },
           'wrongSecret',
           {
@@ -179,16 +177,14 @@ describe('animal tracker API resource', function () {
         const token = jwt.sign(
           {
             user: {
-              username,
-              firstName,
-              lastName
+              name
             },
             exp: Math.floor(Date.now() / 1000) - 10 // Expired ten seconds ago
           },
           JWT_SECRET,
           {
             algorithm: 'HS256',
-            subject: username
+            subject: name
           }
         );
   
@@ -212,15 +208,13 @@ describe('animal tracker API resource', function () {
         const token = jwt.sign(
           {
             user: {
-              username,
-              firstName,
-              lastName
+              name
             }
           },
           JWT_SECRET,
           {
             algorithm: 'HS256',
-            subject: username,
+            subject: name,
             expiresIn: '7d'
           }
         );
