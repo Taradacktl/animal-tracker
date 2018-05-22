@@ -33,42 +33,6 @@ describe('animal tracker API resource', function () {
 
   describe('Root URL', function () {
 
-    /*
-   describe('/create', function () {
-    describe('POST', function () {
-     it('Should create a new user', function () {
-       return chai
-         .request(app)
-         .post('/create')
-         .send({
-           name,
-           password,
-           emailAddress
-         })
-         .then(res => {
-           expect(res).to.have.status(200);
-           expect(res.body).to.be.an('object');
-           expect(res.body).to.have.keys(
-             'name',
-           'emailAddress'
-            
-           );
-           expect(res.body.name).to.equal(name);
-           expect(res.body.emailAddress).to.equal(emailAddress);
-           return User.findOne({
-             name
-           });
-         })
-         .then(user => {
-           expect(user).to.not.be.null;
-           expect(user.name).to.equal(name);
-           expect(user.emailAddress).to.equal(emailAddress);
-           return user.validatePassword(password);
-         })
-         .then(passwordIsCorrect => {
-           expect(passwordIsCorrect).to.be.true;
-         });
-     }); */
     describe('User', function () {
 
       it('should /create user', function () {

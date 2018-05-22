@@ -72,47 +72,5 @@ router.post('/create', jsonParser, (req, res) => {
 router.get('/create', (req, res) => {
     res.json(User.get());
 })
-/*
-//create new user
-router.post('/create', (req, res) => {
-    let name = req.body.name;
-    name = name.trim();
-    let emailAddress = req.body.emailAddress;
-    emailAddress = emailAddress.trim();
-    let password = req.body.password;
-    password = password.trim();
-    bcrypt.genSalt(10, (err, salt) => {
-        if (err) {
-            return res.status(500).json({
-                message: 'Internal server error'
-            });
-        }
-
-        bcrypt.hash(password, salt, (err, hash) => {
-            if (err) {
-                return res.status(500).json({
-                    message: 'Internal server error'
-                });
-            }
-        
-        User.create({
-            name,
-            emailAddress,
-            password: hash,
-        }, (err, item) => {
-            if (err) {
-                return res.status(500).json({
-                    message: 'Internal Server Error'
-                });
-            }
-            if(item) {
-                console.log(`User \`${name}\` created.`);
-                return res.json(item);
-            }
-        });
-        });
-    });
-});
-*/
 
 module.exports = { router };
