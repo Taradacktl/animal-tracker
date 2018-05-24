@@ -74,11 +74,11 @@ describe('animal tracker API resource', function () {
             expect(res).to.have.status(400);
           });
       });
-      it('Should reject requests with incorrect usernames', function () {
+      it('Should reject requests with incorrect names', function () {
         return chai
           .request(app)
           .post('/users/login')
-          .send({ name: 'wrongUsername', password })        
+          .send({ name: 'wrongName', password })        
           .then(() =>
             expect.fail(null, null, 'Request should not succeed')
           )
