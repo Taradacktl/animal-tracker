@@ -57,6 +57,8 @@ describe('animal tracker API resource', function () {
       });
 
     });
+
+    /*
     describe('/login', function () {
       it('Should reject requests with no credentials', function () {
         return chai
@@ -241,6 +243,7 @@ describe('animal tracker API resource', function () {
           });
       });
     });
+    */
   });
 });
 

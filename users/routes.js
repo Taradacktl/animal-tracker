@@ -13,7 +13,7 @@ passport.use(jwtStrategy)
 User.create(
     { name: 'John', emailAddress: 'helloEmail', password: 'hello' }
 );
-
+/*
 //router.post('/login', (req, res) => { res.status(200).json({ message: 'OK' }) });
 
 //login user
@@ -41,6 +41,7 @@ const createAuthToken = function(user) {
     res.json({authToken});
   });
   
+*/
 
 //create new user
 router.post('/create', jsonParser, (req, res) => {
