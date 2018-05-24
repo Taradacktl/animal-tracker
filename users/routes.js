@@ -6,9 +6,9 @@ const config = require('../config');
 const router = express.Router();
 const jsonParser = bodyParser.json();
 const { User } = require('./model');
-const { router: authRouter, localStrategy, jwtStrategy } = require('./strategies');
-passport.use(localStrategy);
-passport.use(jwtStrategy)
+//const { router: authRouter, localStrategy, jwtStrategy } = require('./strategies');
+//passport.use(localStrategy);
+//passport.use(jwtStrategy)
 
 User.create(
     { name: 'John', emailAddress: 'helloEmail', password: 'hello' }
