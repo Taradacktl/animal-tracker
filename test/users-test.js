@@ -233,7 +233,7 @@ describe('animal tracker API resource', function () {
               algorithm: ['HS256']
             });
             expect(payload.user).to.deep.equal({
-              username,
+              emailAddress,
               firstName,
               lastName
             });
