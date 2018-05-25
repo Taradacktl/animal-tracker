@@ -18,7 +18,7 @@ userSchema.methods.serialize = function () {
     emailAddress: this.emailAddress,
   };
 };
-
+/*
 userSchema.methods.validatePassword = function (password, callback) {
   bcrypt.compare(password, this.password, (err, isValid) => {
     if (err) {
@@ -28,7 +28,14 @@ userSchema.methods.validatePassword = function (password, callback) {
     callback(null, isValid);
   });
 };
+*/
+userSchema.methods.validatePassword = function(password) {
+  return bcrypt.compare(password, this.password);
+};
 
+userSchema.statics.hashPassword = function(password) {
+  return bcrypt.hash(password, 10);
+};
 
 const User = mongoose.model('User', userSchema);
 
