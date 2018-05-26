@@ -18,17 +18,7 @@ userSchema.methods.serialize = function () {
     emailAddress: this.emailAddress,
   };
 };
-/*
-userSchema.methods.validatePassword = function (password, callback) {
-  bcrypt.compare(password, this.password, (err, isValid) => {
-    if (err) {
-      callback(err);
-      return;
-    }
-    callback(null, isValid);
-  });
-};
-*/
+
 userSchema.methods.validatePassword = function(password) {
   return bcrypt.compare(password, this.password);
 };
