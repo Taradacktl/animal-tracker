@@ -1,5 +1,6 @@
 'use strict';
-
+const passport = require('passport');
+const { router: authRouter, localStrategy, jwtStrategy } = require('./auth');
 
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
@@ -14,13 +15,23 @@ const morgan = require('morgan');
 
 const app = express();
 
+var bodyParser = require('body-parser');
+app.use(bodyParser.json()); // support json encoded bodies
+app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
+
 app.use(morgan('common'));
 app.use(express.json());
 
 app.use(express.static('public'));
 
+
+passport.use(localStrategy);
+passport.use(jwtStrategy);
+
 const { router: usersRouter } = require('./users/routes');
 app.use('/users', usersRouter);
+app.use('/auth', authRouter);
+
 
 app.get('/posts', (req, res) => {
   AnimalTracker
@@ -118,7 +129,7 @@ app.delete('/:id', (req, res) => {
 
 
 app.use('*', function (req, res) {
-  res.status(200).json({ message: 'Not Found' });
+  res.status(200).json({ message: 'Route not handled' });
 });
 
 

@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test:users": "mocha test/users-test.js --timeout 10000 --exit",
+    "test:auth": "mocha test/auth-test.js --timeout 10000 --exit",
     "test:trackers": "mocha test/trackers-test.js --timeout 10000 --exit",
     "test": "mocha --exit --timeout 10000"
   },

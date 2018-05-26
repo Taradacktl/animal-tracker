@@ -10,9 +10,9 @@ const { User } = require('./model');
 //passport.use(localStrategy);
 //passport.use(jwtStrategy)
 
-User.create(
-    { name: 'John', emailAddress: 'helloEmail', password: 'hello' }
-);
+// User.create(
+//     { name: 'John', emailAddress: 'helloEmail', password: 'hello' }
+// );
 /*
 //router.post('/login', (req, res) => { res.status(200).json({ message: 'OK' }) });
 
