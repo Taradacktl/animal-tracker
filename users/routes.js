@@ -55,19 +55,22 @@ router.post('/create', jsonParser, (req, res) => {
         }
     }
     //validation went well, now create the Mongo record
-    const userPromise = User.create({
-        password: req.body.password, 
-        name: req.body.name, 
-        emailAddress: req.body.emailAddress
-    });
+
+    const userPromise =
+        User.hashPassword(req.body.password).then(hashedPassword =>
+            User.create({
+                password: hashedPassword,
+                name: req.body.name,
+                emailAddress: req.body.emailAddress
+            }));
 
     userPromise
         .then(user => { res.status(200).json(user.serialize()) })
-        .catch(err => { 
+        .catch(err => {
             console.log('MONGO ERRORR', err.toString())
-            res.status(500).json({ message: 'CANNOT_CREATE_USER', reason:err.toString() }) 
+            res.status(500).json({ message: 'CANNOT_CREATE_USER', reason: err.toString() })
         })
-    
+
 });
 
 router.get('/create', (req, res) => {
