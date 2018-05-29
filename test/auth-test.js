@@ -18,7 +18,6 @@ const AUTH_REFRESH_ROUTE = '/auth/refresh-auth-token'
 chai.use(chaiHttp);
 
 describe('Auth endpoints', function () {
-  const name = 'Elena';
   const password = 'haxxor';
   const emailAddress = 'me@example.com';
 
@@ -35,7 +34,6 @@ describe('Auth endpoints', function () {
     return User.hashPassword(password).then(hashedPassword =>{    
       // console.log('password/password hash' ,password, hashedPassword)
       return User.create({
-        name,
         password:hashedPassword,
         emailAddress,
       }) }
@@ -61,11 +59,11 @@ describe('Auth endpoints', function () {
           expect(res).to.have.status(400);
         });
     });
-    it('Should reject requests with incorrect usernames', function () {
+    it('Should reject requests with incorrect emailAddress', function () {
       return chai
         .request(app)
         .post('/auth/login')
-        .send({ name: 'wrongUsername', password })
+        .send({ emailAddress: 'wrongemailAddress', password })
         .catch(err => {
           if (err instanceof chai.AssertionError) {
             throw err;
@@ -78,7 +76,7 @@ describe('Auth endpoints', function () {
       return chai
         .request(app)
         .post('/auth/login')
-        .send({ name, password: 'wrongPassword' })
+        .send({ emailAddress, password: 'wrongPassword' })
         .catch(err => {
           if (err instanceof chai.AssertionError) {
             throw err;
@@ -92,7 +90,7 @@ describe('Auth endpoints', function () {
       return chai
         .request(app)
         .post('/auth/login')
-        .send({ name, password })
+        .send({ emailAddress, password })
         .then(res => {
           expect(res).to.have.status(200);
           expect(res.body).to.be.an('object');
@@ -102,14 +100,8 @@ describe('Auth endpoints', function () {
             algorithm: ['HS256']
           });
 
-          expect(payload.user.name).to.equal(name)
           expect(payload.user.emailAddress).to.equal(emailAddress)
           
-
-          // expect(payload.user).to.deep.equal({
-          //   name,
-          //   emailAddress,
-          // });
         });
     });
   });
@@ -131,7 +123,7 @@ describe('Auth endpoints', function () {
     it('Should reject requests with an invalid token', function () {
       const token = jwt.sign(
         {
-          name,        
+          emailAddress,        
         },
         'wrongSecret',
         {
@@ -160,13 +152,13 @@ describe('Auth endpoints', function () {
       const token = jwt.sign(
         {
           user: {
-            name,
+            emailAddress,
           },
         },
         JWT_SECRET,
         {
           algorithm: 'HS256',
-          subject: name,
+          subject: emailAddress,
           expiresIn: Math.floor(Date.now() / 1000) - 10 // Expired ten seconds ago
         }
       );
@@ -187,13 +179,13 @@ describe('Auth endpoints', function () {
       const token = jwt.sign(
         {
           user: {
-            name,
+            emailAddress,
           }
         },
         JWT_SECRET,
         {
           algorithm: 'HS256',
-          subject: name,
+          subject: emailAddress,
           expiresIn: '7d'
         }
       );
@@ -213,7 +205,7 @@ describe('Auth endpoints', function () {
             algorithm: ['HS256']
           });
           // console.log('PAYLOAD for /auth/refresh', payload)
-          expect(payload.user.name).to.equal(name)
+          expect(payload.user.emailAddress).to.equal(emailAddress)
           // expect(payload.user.emailAddress).to.equal(emailAddress)
           expect(payload.exp).to.be.at.least(decoded.exp);
         });

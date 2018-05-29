@@ -15,14 +15,13 @@ const testemailAddress = faker.random.word();
 
 function generateUserData() {
   return {
-    name: testname,
     emailAddress: testemailAddress,
     password: faker.random.word()
   }
 }
 
 describe('animal tracker API resource', function () {
-  const name = 'exampleUser';
+  const emailAddress = 'exampleemailAddress';
       const password = 'examplePass';
 
   before(function () {
@@ -39,7 +38,6 @@ describe('animal tracker API resource', function () {
 
       it('should /create user', function () {
         const userInfo = {
-          name: 'Julio',
           emailAddress: 'email@address',
           password: '1234'
         };
@@ -50,8 +48,7 @@ describe('animal tracker API resource', function () {
             res.should.have.status(200);
             res.should.be.json;
             res.body.should.be.a('object');
-            res.body.should.include.keys('id', 'name', 'emailAddress');
-            res.body.name.should.equal(userInfo.name);
+            res.body.should.include.keys('id', 'emailAddress');
             res.body.emailAddress.should.equal(userInfo.emailAddress);
           });
       });

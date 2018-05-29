@@ -11,13 +11,13 @@ const { JWT_SECRET } = require('../config');
 const localStrategy = new LocalStrategy(
   //Gotcha! if you do not pass this config your auth will ALWAYS fail with 'Bad Request'
   {
-  usernameField: 'name',
+  usernameField: 'emailAddress',
   passwordField: 'password'
 },
-  (name, password, callback) => {
-    // console.log('LOCAL AUTH', name, password)
+  (emailAddress, password, callback) => {
+    // console.log('LOCAL AUTH', emailAddress, password)
     let user;
-    User.findOne({ name: name })
+    User.findOne({ emailAddress: emailAddress })
       .then(_user => {
         user = _user;
         if (!user) {
@@ -25,7 +25,7 @@ const localStrategy = new LocalStrategy(
           // Any errors like this will be handled in the catch block.
           return Promise.reject({
             reason: 'LoginError',
-            message: 'Incorrect username or password'
+            message: 'Incorrect emailAddress or password'
           });
         }
         return user.validatePassword(password);
@@ -34,7 +34,7 @@ const localStrategy = new LocalStrategy(
         if (!isValid) {
           return Promise.reject({
             reason: 'LoginError',
-            message: 'Incorrect username or password'
+            message: 'Incorrect emailAddress or password'
           });
         }
         return callback(null, user);

@@ -9,7 +9,7 @@ const router = express.Router();
 
 const createAuthToken = function(user) {
   return jwt.sign({user}, config.JWT_SECRET, {
-    subject: user.name,
+    subject: user.emailAddress,
     expiresIn: config.JWT_EXPIRY,
     algorithm: 'HS256'
   });
@@ -19,7 +19,7 @@ const localAuth = passport.authenticate('local', {session: false, failWithError:
 router.use(bodyParser.json());
 // The user provides a username and password to login
 router.post('/login', localAuth, (req, res) => {
-  console.log('LOGIN ATTEMPT SUCCESFUL', req.name, req.password, req.user )
+  console.log('LOGIN ATTEMPT SUCCESFUL', req.emailAddress, req.password, req.user )
   //on a succesful login  localAuth will do req.user = <the mongoose db record fo the user>
   const authToken = createAuthToken(req.user.serialize());
   res.json({authToken});
