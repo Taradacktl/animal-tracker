@@ -43,7 +43,14 @@ router.get('/create', (req, res) => {
 
 const localAuth = passport.authenticate('local', {session: false, failWithError: false});
 router.get('/profile', localAuth,  (req, res) => {
-    res.send('Foo')
+   const userPromise = User.findOne({name:'tudorvi'})
+   
+   userPromise.then(user=>{
+       res.json(user.serialize)
+   })
+   userPromise.catch(err=>{
+       res.status(404).json({message:'NOT_FOUND'})
+   })
 })
 
 
