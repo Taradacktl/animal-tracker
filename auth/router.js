@@ -19,7 +19,8 @@ const localAuth = passport.authenticate('local', {session: false, failWithError:
 router.use(bodyParser.json());
 // The user provides a username and password to login
 router.post('/login', localAuth, (req, res) => {
-  // console.log('LOGIN ATTEMPT', req.user)  
+  console.log('LOGIN ATTEMPT SUCCESFUL', req.name, req.password, req.user )
+  //on a succesful login  localAuth will do req.user = <the mongoose db record fo the user>
   const authToken = createAuthToken(req.user.serialize());
   res.json({authToken});
 });
@@ -27,9 +28,10 @@ router.post('/login', localAuth, (req, res) => {
 const jwtAuth = passport.authenticate('jwt', {session: false});
 
 // The user exchanges a valid JWT for a new one with a later expiration
-router.post('/refresh', jwtAuth, (req, res) => {
+router.post('/refresh-auth-token', jwtAuth, (req, res) => {
   const authToken = createAuthToken(req.user);
   res.json({authToken});
+ 
 });
 
 module.exports = {router};

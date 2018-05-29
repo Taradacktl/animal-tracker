@@ -10,6 +10,8 @@ const { JWT_SECRET, TEST_DATABASE_URL } = require('../config');
 
 const expect = chai.expect;
 
+const AUTH_REFRESH_ROUTE = '/auth/refresh-auth-token'
+
 // This let's us make HTTP requests
 // in our tests.
 // see: https://github.com/chaijs/chai-http
@@ -112,11 +114,11 @@ describe('Auth endpoints', function () {
     });
   });
 
-  describe('/auth/refresh', function () {
+  describe(AUTH_REFRESH_ROUTE, function () {
     it('Should reject requests with no JWT token', function () {
       return chai
         .request(app)
-        .post('/auth/refresh')        
+        .post('/auth/refresh-auth-token')        
         .catch(err => {
           if (err instanceof chai.AssertionError) {
             throw err;
@@ -140,7 +142,7 @@ describe('Auth endpoints', function () {
 
       return chai
         .request(app)
-        .post('/auth/refresh')
+        .post(AUTH_REFRESH_ROUTE)
         .set('Authorization', `Bearer ${token}`)
         // .then(() =>
         //   expect.fail(null, null, 'Request should not succeed')
@@ -199,11 +201,12 @@ describe('Auth endpoints', function () {
 
       return chai
         .request(app)
-        .post('/auth/refresh')
+        .post('/auth/refresh-auth-token')
         .set('authorization', `Bearer ${token}`)
         .then(res => {
           expect(res).to.have.status(200);
           expect(res.body).to.be.an('object');
+          console.log('AUTH TOKEN', res.body.authToken )
           const token = res.body.authToken;
           expect(token).to.be.a('string');
           const payload = jwt.verify(token, JWT_SECRET, {

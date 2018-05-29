@@ -41,4 +41,10 @@ router.get('/create', (req, res) => {
     res.json(User.get());
 })
 
+const localAuth = passport.authenticate('local', {session: false, failWithError: false});
+router.get('/profile:id',  (req, res) => {
+    res.json(User.get());
+})
+
+
 module.exports = { router };
