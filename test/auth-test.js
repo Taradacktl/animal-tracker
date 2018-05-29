@@ -18,9 +18,8 @@ const AUTH_REFRESH_ROUTE = '/auth/refresh-auth-token'
 chai.use(chaiHttp);
 
 describe('Auth endpoints', function () {
-  const password = 'haxxor';
   const emailAddress = 'me@example.com';
-
+  const password = 'haxxor';
 
   before(function () {
     return runServer(TEST_DATABASE_URL);
@@ -34,8 +33,8 @@ describe('Auth endpoints', function () {
     return User.hashPassword(password).then(hashedPassword =>{    
       // console.log('password/password hash' ,password, hashedPassword)
       return User.create({
-        password:hashedPassword,
         emailAddress,
+        password:hashedPassword
       }) }
     );
   });

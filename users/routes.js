@@ -23,8 +23,9 @@ router.post('/create', jsonParser, (req, res) => {
     const userPromise =
         User.hashPassword(req.body.password).then(hashedPassword =>
             User.create({
+                emailAddress: req.body.emailAddress,
                 password: hashedPassword,
-                emailAddress: req.body.emailAddress
+                
             }));
 
     userPromise

@@ -22,7 +22,8 @@ router.post('/login', localAuth, (req, res) => {
   console.log('LOGIN ATTEMPT SUCCESFUL', req.emailAddress, req.password, req.user )
   //on a succesful login  localAuth will do req.user = <the mongoose db record fo the user>
   const authToken = createAuthToken(req.user.serialize());
-  res.json({authToken});
+  const emailAddress = req.user.serialize().emailAddress;
+  res.json({authToken, emailAddress});
 });
 
 const jwtAuth = passport.authenticate('jwt', {session: false});
