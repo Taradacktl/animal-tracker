@@ -90,7 +90,7 @@ const setupLogin = () => {
     $(`#${LOGIN_FORM_ID}`).on('submit', ev => {
         ev.preventDefault()
         const requestData = {
-            name: $('input[name="name"]').val(),
+            emailAddress: $('input[name="emailAddress"]').val(),
             password: $('input[name="password"]').val(),
         }
 
