@@ -42,8 +42,8 @@ router.get('/create', (req, res) => {
 })
 
 const localAuth = passport.authenticate('local', {session: false, failWithError: false});
-router.get('/profile:id',  (req, res) => {
-    res.json(User.get());
+router.get('/profile', localAuth,  (req, res) => {
+    res.send('Foo')
 })
 
 

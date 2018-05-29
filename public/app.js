@@ -74,7 +74,17 @@ function getAndDisplayStatusUpdates() {
 
 const LOGIN_FORM_ID = 'login-form'
 const LOGIN_URL = '/auth/login'
+const PROFILE_URL = '/users/profile'
+// const PROFILE_URL = '/auth/refresh-auth-token'
 let JWT_TOKEN = null
+
+
+const authAjaxOptions = {
+    beforeSend: (request) => {
+       
+        request.setRequestHeader('Authorization', `Bearer: ${JWT_TOKEN}`)
+    }
+}
 
 const setupLogin = () => {
     $(`#${LOGIN_FORM_ID}`).on('submit', ev => {
@@ -92,12 +102,31 @@ const setupLogin = () => {
             dataType: 'json',
         });
         loginPromise.then(loginResponse => {
+            
             console.log(
                 'Yay, got a token:',
-                loginPromise.responseJSON.authToken                
+                loginPromise.responseJSON.authToken
             )
 
             JWT_TOKEN = loginPromise.responseJSON.authToken
+
+
+            $.ajax({
+                method:'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization':`Bearer ${JWT_TOKEN}`                  
+                },
+                dataType: "json",
+                url: PROFILE_URL,                
+                beforeSend:authAjaxOptions.setRequestHeader
+              })
+                .then(response => {
+                    console.log('GOT PROFILE')
+                })
+                .catch(err => {
+                    console.error('Bummer!')
+                })
 
         })
 
