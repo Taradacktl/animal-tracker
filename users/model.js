@@ -5,7 +5,6 @@ const bcrypt = require('bcryptjs');
 // mongoose.Promise = global.Promise;
 
 const userSchema = new mongoose.Schema({
-  name: { type: String, required: true },
   emailAddress: { type: String, required: true, unique: true },
   password: { type: String, required: true },
 });
@@ -14,7 +13,6 @@ const userSchema = new mongoose.Schema({
 userSchema.methods.serialize = function () {
   return {
     id: this._id,
-    name: this.name,
     emailAddress: this.emailAddress,
   };
 };

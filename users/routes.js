@@ -9,7 +9,7 @@ const { User } = require('./model');
 
 //create new user
 router.post('/create', jsonParser, (req, res) => {
-    const requiredFields = ['name', 'emailAddress', 'password'];
+    const requiredFields = ['emailAddress', 'password'];
     for (let i = 0; i < requiredFields.length; i++) {
         const field = requiredFields[i];
         if (!(field in req.body)) {
@@ -24,7 +24,6 @@ router.post('/create', jsonParser, (req, res) => {
         User.hashPassword(req.body.password).then(hashedPassword =>
             User.create({
                 password: hashedPassword,
-                name: req.body.name,
                 emailAddress: req.body.emailAddress
             }));
 
@@ -43,7 +42,7 @@ router.get('/create', (req, res) => {
 
 const localAuth = passport.authenticate('local', {session: false, failWithError: false});
 router.get('/profile', localAuth,  (req, res) => {
-   const userPromise = User.findOne({name:'tudorvi'})
+   const userPromise = User.findOne({emailAddress:'tudorvi'})
    
    userPromise.then(user=>{
        res.json(user.serialize)

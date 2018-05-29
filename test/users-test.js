@@ -10,7 +10,7 @@ const expect = chai.expect;
 const should = chai.should();
 chai.use(chaiHttp);
 const { JWT_SECRET } = require('../config');
-const testname = faker.random.word();
+//const testname = faker.random.word();
 const testemailAddress = faker.random.word();
 
 function generateUserData() {
