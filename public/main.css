@@ -5,3 +5,13 @@ body {
     background-attachment: fixed;
    
 }
+
+#nav-menu {
+    text-align: right;
+    list-style:none;
+}
+
+#Sign-up {
+    color: black; 
+    text-decoration: none;
+}
