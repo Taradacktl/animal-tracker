@@ -158,7 +158,7 @@ const setupLogin = () => {
 $(function () {
 
     setupLogin()
-    getAndDisplayStatusUpdates()
+ //   getAndDisplayStatusUpdates()
     routeTo('users-login', ()=>{})
 })
 
