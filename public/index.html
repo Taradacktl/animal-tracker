@@ -1,35 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="utf-8">
 	<title>Animal Tracker</title>
 	<link href="main.css" rel="stylesheet" type="text/css" />
 </head>
+
 <body>
 	<div class="nav-bar">
 		<ul id="nav-menu">
 			<a href="#" id="Sign-up">Sign Up</a>
-			
+
 		</ul>
 	</div>
 	<header role="banner">
-	<div class="title">
-	   <h1>Animal Tracker</h1>
-	   <h2>Record animal behaviors and locations</h2>
-	</div>
+		<div class="title">
+			<h1>Animal Tracker</h1>
+			<h2>Record animal behaviors and locations</h2>
+		</div>
 	</header>
-	<div class="main-login">
-		<form aria-label="login-username" id="login-form">
-		    <label for="login"></label>
-				<input type="text" name="emailAddress" placeholder="Email Address"/>
-				<input type="password" name="password" placeholder="Password"/>
-				  <button type="submit" id="login-button">Login</button>
+	<div class="app-page" id="users-profile">
+		<h1>Profile page</h1>
+		<div class="info">
+			Loading...
+		</div>
+	</div>
+	<div class="app-page" id="users-login">
+		<h1>Login page</h1>
+
+		<div class="main-login">
+			<form aria-label="login-username" id="login-form">
+				<label for="login"></label>
+				<input type="text" name="emailAddress" placeholder="Email Address" />
+				<input type="password" name="password" placeholder="Password" />
+				<button type="submit" id="login-button">Login</button>
 			</form>
+		</div>
+	
+
 	</div>
 
+	
 
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 	<script type="text/javascript" src="app.js"></script>
 </body>
+
 </html>

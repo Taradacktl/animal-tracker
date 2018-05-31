@@ -41,6 +41,13 @@ var MOCK_STATUS_UPDATES = {
     ]
 };
 
+function routeTo(pageID, callbackFn) {
+    debugger
+    $('.app-page').hide()
+    $(`#${pageID}`).show()
+    callbackFn()
+}
+
 // this function's name and argument can stay the
 // same after we have a live API, but its internal
 // implementation will change. Instead of using a
@@ -81,10 +88,16 @@ let JWT_TOKEN = null
 
 const authAjaxOptions = {
     beforeSend: (request) => {
-       
+
         request.setRequestHeader('Authorization', `Bearer: ${JWT_TOKEN}`)
     }
 }
+
+function displayProfile(user) {
+    // debugger
+    $('#users-profile .info').html('foobar')
+}
+
 
 const setupLogin = () => {
     $(`#${LOGIN_FORM_ID}`).on('submit', ev => {
@@ -102,7 +115,7 @@ const setupLogin = () => {
             dataType: 'json',
         });
         loginPromise.then(loginResponse => {
-            
+
             console.log(
                 'Yay, got a token:',
                 loginPromise.responseJSON.authToken
@@ -112,17 +125,17 @@ const setupLogin = () => {
 
 
             $.ajax({
-                method:'GET',
+                method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization':`Bearer ${JWT_TOKEN}`                  
+                    'Authorization': `Bearer ${JWT_TOKEN}`
                 },
                 dataType: "json",
-                url: PROFILE_URL,                
-                beforeSend:authAjaxOptions.setRequestHeader
-              })
-                .then(response => {
+                url: PROFILE_URL,
+                beforeSend: authAjaxOptions.setRequestHeader
+            }).then(response => {
                     console.log('GOT PROFILE')
+                    routeTo('users-profile', ()=>displayProfile(response))
                 })
                 .catch(err => {
                     console.error('Bummer!')
@@ -140,8 +153,10 @@ const setupLogin = () => {
 
 //  on page load do this
 $(function () {
+
     setupLogin()
     getAndDisplayStatusUpdates()
+    routeTo('users-login', ()=>{})
 })
 
 

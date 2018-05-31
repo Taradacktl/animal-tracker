@@ -42,11 +42,15 @@ router.get('/create', (req, res) => {
 })
 
 const localAuth = passport.authenticate('local', {session: false, failWithError: false});
-router.get('/profile', localAuth,  (req, res) => {
-   const userPromise = User.findOne({emailAddress:'tudorvi'})
+
+//remove <localAuth,> to test without the actual login 
+// router.get('/profile', localAuth,  (req, res) => {
+router.get('/profile',   (req, res) => {
+//    console.log('AUTH USER IS:', req.user) 
+   const userPromise = User.findOne({emailAddress:'doe@example.com'})
    
    userPromise.then(user=>{
-       res.json(user.serialize)
+       res.json(user.serialize())
    })
    userPromise.catch(err=>{
        res.status(404).json({message:'NOT_FOUND'})

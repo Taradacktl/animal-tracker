@@ -11,11 +11,11 @@ const { JWT_SECRET } = require('../config');
 const localStrategy = new LocalStrategy(
   //Gotcha! if you do not pass this config your auth will ALWAYS fail with 'Bad Request'
   {
-  emailAddressField: 'emailAddress',
+  usernameField: 'emailAddress',
   passwordField: 'password'
 },
   (emailAddress, password, callback) => {
-    // console.log('LOCAL AUTH', emailAddress, password)
+    console.log('LOCAL AUTH', emailAddress, password)
     let user;
     User.findOne({ emailAddress: emailAddress })
       .then(_user => {
