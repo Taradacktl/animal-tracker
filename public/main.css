@@ -19,10 +19,6 @@ input, button{
     max-width: 25%;
     margin: auto;
 }
-#nav-menu {
-    text-align: right;
-    list-style:none;
-}
 
 #Sign-up {
     color: black; 
@@ -30,7 +26,7 @@ input, button{
 }
 .top-bar{
     background-color: #D3D3D3;
-    height: 25%;
+    padding: 25px;
 }
 .app-page{
     /* this will be overridden by JS */
