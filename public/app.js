@@ -65,11 +65,13 @@ function getRecentStatusUpdates(callbackFn) {
 function displayStatusUpdates(data) {
     for (index in data.statusUpdates) {
         $('body').append(
+            '<div class="tracker-data">' +
             '<p>' + "Date:" + " " + data.statusUpdates[index].date + '</p>' +
             '<p>' + "Time of  Day:" + " " + data.statusUpdates[index].timeOfDay + '</p>' +
             '<p>' + "Species:" + " " + data.statusUpdates[index].species + '</p>' +
             '<p>' + "Activity:" + " " + data.statusUpdates[index].activity + '</p>' +
-            '<p>' + "Location:" + " " + data.statusUpdates[index].location + '</p>');
+            '<p>' + "Location:" + " " + data.statusUpdates[index].location + '</p>' +
+            '</div>');
     }
 }
 
@@ -95,7 +97,8 @@ const authAjaxOptions = {
 
 function displayProfile(user) {
     // debugger
-    $('#users-profile .info').html('foobar')
+    $('#users-profile .info').html('<h2>' + 'My tracks:' + '</h2>')
+    getAndDisplayStatusUpdates()
 }
 
 
