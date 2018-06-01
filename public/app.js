@@ -67,7 +67,7 @@ function displayStatusUpdates(data) {
         $('body').append(
             '<div class="tracker-data">' +
             '<p>' + "Date:" + " " + data.statusUpdates[index].date + '</p>' +
-            '<p>' + "Time of  Day:" + " " + data.statusUpdates[index].timeOfDay + '</p>' +
+            '<p>' + "Time of Day:" + " " + data.statusUpdates[index].timeOfDay + '</p>' +
             '<p>' + "Species:" + " " + data.statusUpdates[index].species + '</p>' +
             '<p>' + "Activity:" + " " + data.statusUpdates[index].activity + '</p>' +
             '<p>' + "Location:" + " " + data.statusUpdates[index].location + '</p>' +
@@ -94,10 +94,21 @@ const authAjaxOptions = {
         request.setRequestHeader('Authorization', `Bearer: ${JWT_TOKEN}`)
     }
 }
-
 function displayProfile(user) {
     // debugger
-    $('#users-profile .info').html('<h2>' + 'My tracks:' + '</h2>')
+    $('#users-profile .info').html('<h2>' + 'Post new:' + '</h2>' +
+    '<div class="new-track">' + 
+     '<form aria-label="track" id="track-form">' +
+       '<input type="text" name="date" placeholder="Date" /> <br>' +
+       '<input type="text" name="timeOfDay" placeholder="Time of Day" /> <br>' +
+       '<input type="text" name="species" placeholder="Species" /> <br>' +
+       '<input type="text" name="activity" placeholder="Activity" /> <br>' +
+       '<input type="text" name="location" placeholder="Location" /> <br>' +
+       '<button type="submit" id="log-track">Post</button>' +
+      '</form>' +
+    '</div>' +
+
+    '<h2>' + 'My tracks:' + '</h2>')
     getAndDisplayStatusUpdates()
 }
 
@@ -158,7 +169,7 @@ const setupLogin = () => {
 $(function () {
 
     setupLogin()
- //   getAndDisplayStatusUpdates()
+//   getAndDisplayStatusUpdates()
     routeTo('users-login', ()=>{})
 })
 
