@@ -42,11 +42,51 @@ var MOCK_STATUS_UPDATES = {
 };
 
 function routeTo(pageID, callbackFn) {
-    debugger
+//    debugger
     $('.app-page').hide()
     $(`#${pageID}`).show()
     callbackFn()
 }
+
+
+const LOGIN_FORM_ID = 'login-form'
+const LOGIN_URL = '/auth/login'
+const PROFILE_URL = '/users/profile'
+// const PROFILE_URL = '/auth/refresh-auth-token'
+let JWT_TOKEN = null
+
+
+const authAjaxOptions = {
+    beforeSend: (request) => {
+
+        request.setRequestHeader('Authorization', `Bearer: ${JWT_TOKEN}`)
+    }
+}
+function displayProfile(user) {
+    // debugger
+    $('#users-profile .info').html('<h2>' + 'Post new:' + '</h2>' +
+    '<div class="new-track">' + 
+     '<form aria-label="track" id="track-form">' +
+       '<input type="text" name="date" id="date" placeholder="Date" /> <br>' +
+       '<input type="text" name="timeOfDay" id="timeOfDay" placeholder="Time of Day" /> <br>' +
+       '<input type="text" name="species" id="species" placeholder="Species" /> <br>' +
+       '<input type="text" name="activity" id="activity" placeholder="Activity" /> <br>' +
+       '<input type="text" name="location" id="location" placeholder="Location" /> <br>' +
+       '<button type="submit" id="log-track">Post</button>' +
+      '</form>' +
+    '</div>' +
+
+    '<h2>' + 'My tracks:' + '</h2>')
+    
+    getAndDisplayStatusUpdates()
+    handleAddTrack()
+}
+
+// this function can stay the same even when we
+// are connecting to real API
+function getAndDisplayStatusUpdates() {
+    getRecentStatusUpdates(displayStatusUpdates);
+} 
 
 // this function's name and argument can stay the
 // same after we have a live API, but its internal
@@ -75,42 +115,33 @@ function displayStatusUpdates(data) {
     }
 }
 
-// this function can stay the same even when we
-// are connecting to real API
-function getAndDisplayStatusUpdates() {
-    getRecentStatusUpdates(displayStatusUpdates);
-}
+function handleAddTrack() {
 
-const LOGIN_FORM_ID = 'login-form'
-const LOGIN_URL = '/auth/login'
-const PROFILE_URL = '/users/profile'
-// const PROFILE_URL = '/auth/refresh-auth-token'
-let JWT_TOKEN = null
-
-
-const authAjaxOptions = {
-    beforeSend: (request) => {
-
-        request.setRequestHeader('Authorization', `Bearer: ${JWT_TOKEN}`)
-    }
-}
-function displayProfile(user) {
-    // debugger
-    $('#users-profile .info').html('<h2>' + 'Post new:' + '</h2>' +
-    '<div class="new-track">' + 
-     '<form aria-label="track" id="track-form">' +
-       '<input type="text" name="date" placeholder="Date" /> <br>' +
-       '<input type="text" name="timeOfDay" placeholder="Time of Day" /> <br>' +
-       '<input type="text" name="species" placeholder="Species" /> <br>' +
-       '<input type="text" name="activity" placeholder="Activity" /> <br>' +
-       '<input type="text" name="location" placeholder="Location" /> <br>' +
-       '<button type="submit" id="log-track">Post</button>' +
-      '</form>' +
-    '</div>' +
-
-    '<h2>' + 'My tracks:' + '</h2>')
-    getAndDisplayStatusUpdates()
-}
+    $('#track-form').submit(function(e) {
+      e.preventDefault();
+      addTrack({
+        date: $(e.currentTarget).find('#date').val(),
+        timeOfDay: $(e.currentTarget).find('#timeOfDay').val(),
+        species: $(e.currentTarget).find('#species').val(),
+        activity: $(e.currentTarget).find('#activity').val(),
+        location: $(e.currentTarget).find('#location').val(),
+      });
+    });
+  
+  }
+  function addTrack(data) {
+    console.log('Adding track post: ' + data);
+    $.ajax({
+      method: 'POST',
+      url: PROFILE_URL,
+      data: JSON.stringify(data),
+      success: function(data) {
+        displayStatusUpdates();
+      },
+      dataType: 'json',
+      contentType: 'application/json'
+    });
+  }
 
 
 const setupLogin = () => {
@@ -169,8 +200,9 @@ const setupLogin = () => {
 $(function () {
 
     setupLogin()
-//   getAndDisplayStatusUpdates()
+  // getAndDisplayStatusUpdates()
     routeTo('users-login', ()=>{})
+    
 })
 
 
