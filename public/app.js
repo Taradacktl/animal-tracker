@@ -64,7 +64,6 @@ const authAjaxOptions = {
     }
 }
 function displayProfile(user) {
-    // debugger
     $('#users-profile .info').html('<h2>' + 'Post new:' + '</h2>' +
     '<div class="new-track">' + 
      '<form aria-label="track" id="track-form">' +
@@ -76,7 +75,6 @@ function displayProfile(user) {
        '<button type="submit" id="log-track">Post</button>' +
       '</form>' +
     '</div>' +
-
     '<h2>' + 'My tracks:' + '</h2>')
     
     getAndDisplayStatusUpdates()
@@ -139,7 +137,7 @@ function handleAddTrack() {
       url: PROFILE_URL,
       data: JSON.stringify(data),
       success: function(data) {
-        displayStatusUpdates();
+        displayProfile();
       },
       dataType: 'json',
       contentType: 'application/json'
@@ -154,12 +152,12 @@ function handleAddTrack() {
     });
   }
 
-  function deleteRecipe(recipeId) {
-    console.log('Deleting track `' + postId + '`');
+  function deleteTrack(recipeId) {
+    console.log('Deleting track `' + id + '`');
     $.ajax({
-      url: POSTS_URL + '/' + postId,
+      url: POSTS_URL + '/' + id,
       method: 'DELETE',
-      success: displayStatusUpdates
+      success: displayProfile
     });
   }
   
@@ -219,10 +217,9 @@ const setupLogin = () => {
 $(function () {
 
     setupLogin()
-    handleTrackDelete()
+   handleTrackDelete()
   // getAndDisplayStatusUpdates()
     routeTo('users-login', ()=>{})
-    handleTrackDelete()
     
 })
 
