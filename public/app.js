@@ -52,6 +52,7 @@ function routeTo(pageID, callbackFn) {
 const LOGIN_FORM_ID = 'login-form'
 const LOGIN_URL = '/auth/login'
 const PROFILE_URL = '/users/profile'
+const POSTS_URL = '/posts/'
 // const PROFILE_URL = '/auth/refresh-auth-token'
 let JWT_TOKEN = null
 
@@ -111,6 +112,8 @@ function displayStatusUpdates(data) {
             '<p>' + "Species:" + " " + data.statusUpdates[index].species + '</p>' +
             '<p>' + "Activity:" + " " + data.statusUpdates[index].activity + '</p>' +
             '<p>' + "Location:" + " " + data.statusUpdates[index].location + '</p>' +
+            '<button type="submit" id="edit-track-post">Edit</button>' +
+            '<button type="submit" id="delete-track-post">Delete</button>' +
             '</div>');
     }
 }
@@ -143,7 +146,23 @@ function handleAddTrack() {
     });
   }
 
+  function handleTrackDelete() {
+    $('.tracker-data').on('click', '#delete-track-post', function(e) {
+      ev.preventDefault();
+      deleteTrack(
+        $(e.currentTarget).closest('.tracker-data').attr('id'));
+    });
+  }
 
+  function deleteRecipe(recipeId) {
+    console.log('Deleting track `' + postId + '`');
+    $.ajax({
+      url: POSTS_URL + '/' + postId,
+      method: 'DELETE',
+      success: displayStatusUpdates
+    });
+  }
+  
 const setupLogin = () => {
     $(`#${LOGIN_FORM_ID}`).on('submit', ev => {
         ev.preventDefault()
@@ -200,8 +219,10 @@ const setupLogin = () => {
 $(function () {
 
     setupLogin()
+    handleTrackDelete()
   // getAndDisplayStatusUpdates()
     routeTo('users-login', ()=>{})
+    handleTrackDelete()
     
 })
 
