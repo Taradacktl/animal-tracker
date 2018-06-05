@@ -41,13 +41,11 @@ router.get('/create', (req, res) => {
     res.json(User.get());
 })
 
-const localAuth = passport.authenticate('local', {session: false, failWithError: false});
+const jwtAuth = passport.authenticate('jwt', {session: false});
 
-//remove <localAuth,> to test without the actual login 
-// router.get('/profile', localAuth,  (req, res) => {
-router.get('/profile',   (req, res) => {
-//    console.log('AUTH USER IS:', req.user) 
-   const userPromise = User.findOne({emailAddress:'doe@example.com'})
+router.get('/profile',  jwtAuth, (req, res) => {
+console.log('AUTH USER IS:', req.user) 
+   const userPromise = User.findOne({emailAddress:req.user.emailAddress})
    
    userPromise.then(user=>{
        res.json(user.serialize())
