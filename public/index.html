@@ -9,24 +9,40 @@
 
 <body>
 	<div class="top-bar">
-	<header role="banner">
-		<div class="title">
-			<h1>Animal Tracker</h1>
-			<h2>Record animal behaviors and locations</h2>
-		</div>
-	</div>	
+		<header role="banner">
+			<div class="title">
+				<h1>Animal Tracker</h1>
+				<h2>Record animal behaviors and locations</h2>
+			</div>
+	</div>
 	</header>
-		<div class="image">
-			<img src="http://78.media.tumblr.com/tumblr_m6jkdhzmQ51rwcfrqo1_500.png" alt="Roaming wolf">
-			<img src="https://i.pinimg.com/736x/15/7d/81/157d8135be40bb60c3a698987fc5eb2c.jpg" alt="Hunting Caracal">
-			<img src="http://www.gameandfishmag.com/files/2017/11/mule-deer-Sinfelt.jpg" alt="Mule Deer eating">
-		</div>
+	<div class="image">
+		<img src="http://78.media.tumblr.com/tumblr_m6jkdhzmQ51rwcfrqo1_500.png" alt="Roaming wolf">
+		<img src="https://i.pinimg.com/736x/15/7d/81/157d8135be40bb60c3a698987fc5eb2c.jpg" alt="Hunting Caracal">
+		<img src="http://www.gameandfishmag.com/files/2017/11/mule-deer-Sinfelt.jpg" alt="Mule Deer eating">
+	</div>
 	<div class="app-page" id="users-profile">
 		<h1>Profile page</h1>
-		<div class="info">
+		<div class="js-container data-container profile-container">
 			Loading...
 		</div>
 	</div>
+
+	<div class="app-page" id="trackers-page">
+		<h1>Trackers page</h1>
+		<form id="tracker-add-form">
+			<input type="text" name="date" placeholder="Date" />
+			<input type="text" name="timeOfDay" placeholder="ToD" />
+			<input type="text" name="species" placeholder="species" />
+			<input type="text" name="location" placeholder="Location" />
+			<input type="text" name="activity" placeholder="activity" />
+			<button type="submit">Post</button>
+		</form>
+		<div class="js-container data-container tracker-container">
+			Loading...
+		</div>
+	</div>
+
 	<div class="app-page" id="users-login">
 		<h1>Login page</h1>
 
@@ -41,14 +57,17 @@
 				<button type="submit" id="sign-up-button">Sign Up</button>
 			</form>
 		</div>
-	
+
 
 	</div>
 
-	
+
 
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+	<script type="text/javascript" src="globals.js"></script>
+	<script type="text/javascript" src="user.js"></script>
+	<script type="text/javascript" src="trackers.js"></script>
 	<script type="text/javascript" src="app.js"></script>
 </body>
 

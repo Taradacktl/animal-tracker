@@ -47,3 +47,16 @@ input, button{
     background-color:  #dbc9b8;
     padding: 10px;
 }
+
+
+.data-container{
+  padding:10px;
+}
+
+.profile-container{
+background:pink;
+}
+
+.tracker-container{
+    background:lightgreen;
+}
