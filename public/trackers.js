@@ -27,7 +27,11 @@ function displayTracker(tracker) {
     return `
     <div>
 	    <p>${tracker.id}</p>
-	    <p>${tracker.species}</p>
+        <p>${tracker.date}</p>
+        <p>${tracker.timeOfDay}</p>
+        <p>${tracker.species}</p>
+        <p>${tracker.activity}</p>
+        <p>${tracker.location}</p>
     </div>    
     `
 }
@@ -50,7 +54,7 @@ function getTrackersPromise() {
 
     return new Promise((resolve, reject) => {
         const resolver = () => resolve(MOCK_STATUS_UPDATES.trackingRecords)
-        window.setTimeout(resolver, 5000)
+        window.setTimeout(resolver, 500)
     })
 }
 
