@@ -57,7 +57,7 @@ const setupSignUpButton = () => {
             emailAddress: $('input[name="emailAddress"]').val(),
             password: $('input[name="password"]').val(),
         }
-        apiLoginPromise(formData.emailAddress, formData.password)
+        apiSignupPromise(formData.emailAddress, formData.password)
             .then(
                 () => {
                     routeTo(TRACKERS_DIV_ID)
