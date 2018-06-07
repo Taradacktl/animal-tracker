@@ -6,7 +6,7 @@ const LOGIN_DIV_ID = 'users-login' //profile div id
 const PROFILE_URL = '/users/profile'
 const PROFILE_DIV_ID = 'users-profile' //profile div id
 
-
+const TRACKERS_URL = '/trackers'
 const TRACKERS_DIV_ID = 'trackers-page'
 
 const SIGNUP_DIV_ID = 'users-signup'

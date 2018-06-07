@@ -28,6 +28,12 @@ router.post('/login', localAuth, (req, res) => {
 
 const jwtAuth = passport.authenticate('jwt', {session: false});
 
+router.post('/changepassword', jwtAuth, (req, res) => {
+  //TODO implement this
+ 
+});
+
+
 // The user exchanges a valid JWT for a new one with a later expiration
 router.post('/refresh-auth-token', jwtAuth, (req, res) => {
   const authToken = createAuthToken(req.user);
