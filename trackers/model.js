@@ -9,6 +9,10 @@ const animalTrackerSchema = new mongoose.Schema({
   species: { type: String, required: true },
   activity: { type: String, required: true },
   location: { type: String, required: true },
+  user_id: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'User'
+	}
 });
 
 

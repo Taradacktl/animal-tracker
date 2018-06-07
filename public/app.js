@@ -5,7 +5,7 @@ $(() => {
 
     //user stuff
     setupLoginButton()
-    routeTo(SIGNUP_DIV_ID)
+    routeTo(LOGIN_DIV_ID)
 
     //tracker stuff
     setupAddTrackerForm()

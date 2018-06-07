@@ -49,21 +49,35 @@ function displayTrackerList() {
 
 function getTrackersPromise() {
 
-    //TODO replace this with an API call
-    // return Promise.resolve(MOCK_STATUS_UPDATES.trackingRecords)
-
-    return new Promise((resolve, reject) => {
-        const resolver = () => resolve(MOCK_STATUS_UPDATES.trackingRecords)
-        window.setTimeout(resolver, 500)
+    return $.ajax({
+        url: TRACKERS_URL,
+        type: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${JWT_TOKEN}`
+        },
+        dataType: 'json',
+    }).then(trackers => {
+        return trackers
     })
+
 }
 
 
 function addTrackerPromise(trackerRecord) {
 
-    //TODO replace this with an API call
-    MOCK_STATUS_UPDATES.trackingRecords.unshift(trackerRecord)
-    return Promise.resolve(true)
+    return $.ajax({
+        url: TRACKERS_URL,
+        type: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${JWT_TOKEN}`
+        },
+        data: JSON.stringify(trackerRecord),
+        dataType: 'json',
+    }).then(trackers => {
+        return true
+    })
 }
 
 function setupAddTrackerForm() {

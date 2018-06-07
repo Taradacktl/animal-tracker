@@ -25,7 +25,7 @@ router.post('/create', jsonParser, (req, res) => {
             User.create({
                 emailAddress: req.body.emailAddress,
                 password: hashedPassword,
-                
+
             }));
 
     userPromise
@@ -41,18 +41,36 @@ router.get('/create', (req, res) => {
     res.json(User.get());
 })
 
-const jwtAuth = passport.authenticate('jwt', {session: false});
+const jwtAuth = passport.authenticate('jwt', { session: false });
 
-router.get('/profile',  jwtAuth, (req, res) => {
-console.log('AUTH USER IS:', req.user) 
-   const userPromise = User.findOne({emailAddress:req.user.emailAddress})
-   
-   userPromise.then(user=>{
-       res.json(user.serialize())
-   })
-   userPromise.catch(err=>{
-       res.status(404).json({message:'NOT_FOUND'})
-   })
+// routes = API endpoints
+router.get('/trackers', jwtAuth, (req, res) => {
+    //TODO implement this
+
+});
+
+router.get('/tracker:id', jwtAuth, (req, res) => {
+    //TODO implement this
+
+});
+
+router.post('/tracker', jwtAuth, (req, res) => {
+    //TODO implement this
+
+});
+
+
+
+router.get('/profile', jwtAuth, (req, res) => {
+    console.log('AUTH USER IS:', req.user)
+    const userPromise = User.findOne({ emailAddress: req.user.emailAddress })
+
+    userPromise.then(user => {
+        res.json(user.serialize())
+    })
+    userPromise.catch(err => {
+        res.status(404).json({ message: 'NOT_FOUND' })
+    })
 })
 
 

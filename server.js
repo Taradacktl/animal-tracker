@@ -5,7 +5,7 @@ const { router: authRouter, localStrategy, jwtStrategy } = require('./auth');
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
-const { DATABASE_URL, PORT } = require('./config');
+const { DATABASE_URL, TEST_DATABASE_URL, PORT } = require('./config');
 const { AnimalTracker } = require('./trackers/model');
 
 const seedData = require('./helpers/seed-data')
@@ -29,8 +29,10 @@ passport.use(localStrategy);
 passport.use(jwtStrategy);
 
 const { router: usersRouter } = require('./users/routes');
+const { router: trackersRouter } = require('./trackers/routes');
 app.use('/users', usersRouter);
 app.use('/auth', authRouter);
+app.use('/trackers', trackersRouter);
 
 
 app.get('/posts', (req, res) => {
@@ -134,13 +136,13 @@ app.use('*', function (req, res) {
 
 
 function seedTrackersP(databaseUrl) {
-  const data = require( __dirname + '/trackers/seed-data')
+  const data = require(__dirname + '/trackers/seed-data')
   const modelPath = __dirname + '/trackers/model'
   return seedData(databaseUrl, modelPath, data, 'AnimalTracker')
 }
 
 function seedUsersP(databaseUrl) {
-  const data = require( __dirname + '/users/seed-data')
+  const data = require(__dirname + '/users/seed-data')
   const modelPath = __dirname + '/users/model'
   return seedData(databaseUrl, modelPath, data, 'User')
 }
@@ -170,7 +172,15 @@ function runServer(databaseUrl = DATABASE_URL, port = PORT) {
       if (err) {
         return reject(err);
       }
-      console.log('MONGOOSE CONNECTED', databaseUrl)
+
+      if (databaseUrl !== TEST_DATABASE_URL){
+        
+        //no seeding if not in test mode
+        console.log('SKIPPING DB SEEDING')
+        return resolve(runExpress(port))
+      }
+
+        console.log('MONGOOSE CONNECTED', databaseUrl)
       const promises = [
         seedTrackersP(databaseUrl),
         seedUsersP(databaseUrl),
