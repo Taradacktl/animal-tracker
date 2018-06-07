@@ -9,6 +9,7 @@ const PROFILE_DIV_ID = 'users-profile' //profile div id
 
 const TRACKERS_DIV_ID = 'trackers-page'
 
+const SIGNUP_DIV_ID = 'users-signup'
 
 // const PROFILE_URL = '/auth/refresh-auth-token'
 let JWT_TOKEN = null
