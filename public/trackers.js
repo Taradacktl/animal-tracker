@@ -1,5 +1,5 @@
 const TRACKER_FORM_ID = 'tracker-add-form'
-
+const TRACKS = 'tracks'
 var MOCK_STATUS_UPDATES = {
     "trackingRecords": [
         {
@@ -25,13 +25,15 @@ var MOCK_STATUS_UPDATES = {
 
 function displayTracker(tracker) {
     return `
-    <div>
+    <div id="tracks">
 	    <p>${tracker.id}</p>
         <p>${tracker.date}</p>
         <p>${tracker.timeOfDay}</p>
         <p>${tracker.species}</p>
         <p>${tracker.activity}</p>
         <p>${tracker.location}</p>
+        <button type="submit">Edit</button>
+        <button type="submit">Delete</button>
     </div>    
     `
 }
@@ -83,7 +85,7 @@ function addTrackerPromise(trackerRecord) {
 function setupAddTrackerForm() {
     $(`#${TRACKER_FORM_ID}`).on('submit', ev => {
         ev.preventDefault()
-        console.log('TRACKER ADD SUBMIT')
+        console.log('TRACK ADD SUBMIT')
 
         //split the string into an array, the boundary is a whitespace character
         const inputNames = 'date timeOfDay activity species location'.split(' ')
@@ -99,11 +101,48 @@ function setupAddTrackerForm() {
                 return displayTrackerList()
             }).catch(err => {
                 //TODO display a nice message div
-                console.error('ADD TRACKER FAILED')
+                console.error('ADD TRACK FAILED')
             })
-
-        // debugger
 
     })
 }
 
+function deleteTrackPromise(){
+    return $.ajax({
+        url: TRACKERS_URL,
+        type: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${JWT_TOKEN}`
+        },
+        data: JSON.stringify(trackerRecord),
+        dataType: 'json',
+    }).then(trackers => {
+        return true
+    })
+}
+
+function setupDeleteTrack() {
+    $(`#${TRACKS}`).on('submit', ev => {
+        ev.preventDefault()
+        console.log('TRACK DELETE SUBMIT')
+
+        //split the string into an array, the boundary is a whitespace character
+        const inputNames = 'date timeOfDay activity species location'.split(' ')
+
+        const trackerRecord = {}
+        inputNames.forEach(inputName => {
+            const inputSelector = `#${TRACKER_FORM_ID} input[name="${inputName}"]`
+            trackerRecord[inputName] = $(inputSelector).val()
+        })
+
+       deleteTrackPromise(trackerRecord)
+            .then(() => {
+                return displayTrackerList()
+            }).catch(err => {
+                //TODO display a nice message div
+                console.error('DELETE TRACK FAILED')
+            })
+
+    })
+}

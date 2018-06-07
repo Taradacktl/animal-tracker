@@ -41,6 +41,7 @@ router.get('/create', (req, res) => {
     res.json(User.get());
 })
 
+/*
 const jwtAuth = passport.authenticate('jwt', { session: false });
 
 // routes = API endpoints
@@ -59,7 +60,7 @@ router.post('/tracker', jwtAuth, (req, res) => {
 
 });
 
-
+*/
 
 router.get('/profile', jwtAuth, (req, res) => {
     console.log('AUTH USER IS:', req.user)
