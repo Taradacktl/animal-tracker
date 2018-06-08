@@ -15,6 +15,7 @@ function apiLoginPromise(emailAddress, password) {
 
 const setupLoginButton = () => {
     $(`#${LOGIN_FORM_ID}`).on('submit', ev => {
+        // debugger
         ev.preventDefault()
         const formData = {
             emailAddress: $('input[name="emailAddress"]').val(),
@@ -47,6 +48,17 @@ function apiSignupPromise(emailAddress, password) {
         // debugger
         JWT_TOKEN = signupResponse.authToken
         return JWT_TOKEN
+    })
+}
+
+const setupRouteHandlers = ()=>{
+    $('.js-route-signup').on('click', ev=>{
+        ev.preventDefault()
+        routeTo(SIGNUP_DIV_ID)
+    })
+    $('.js-route-login').on('click', ev=>{
+        ev.preventDefault()
+        routeTo(LOGIN_DIV_ID)
     })
 }
 
