@@ -15,7 +15,7 @@ function apiLoginPromise(emailAddress, password) {
 
 const setupLoginButton = () => {
     $(`#${LOGIN_FORM_ID}`).on('submit', ev => {
-        debugger
+        // debugger
         ev.preventDefault()
         const formData = {
             emailAddress: $('input[name="emailAddress"]').val(),
