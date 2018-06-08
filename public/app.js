@@ -8,6 +8,7 @@ $(() => {
    routeTo(LOGIN_DIV_ID)
 
  setupSignUpButton()
+ setupRouteHandlers()
  // routeTo(SIGNUP_DIV_ID)
 
     //tracker stuff
