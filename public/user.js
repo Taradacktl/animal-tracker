@@ -60,6 +60,12 @@ const setupRouteHandlers = ()=>{
         ev.preventDefault()
         routeTo(LOGIN_DIV_ID)
     })
+
+    //TODO 6/11 make sure user is logged in
+    $('.js-route-profile').on('click', ev=>{
+        ev.preventDefault()
+        routeTo(PROFILE_DIV_ID)
+    })
 }
 
 const setupSignUpButton = () => {
