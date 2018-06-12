@@ -106,7 +106,7 @@ function setupAddTrackerForm() {
 
     })
 }
-
+/*
 function deleteTrackPromise(){
     return $.ajax({
         url: TRACKERS_URL,
@@ -146,3 +146,4 @@ function setupDeleteTrack() {
 
     })
 }
+*/
