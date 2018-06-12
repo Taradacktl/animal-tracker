@@ -1,4 +1,5 @@
 const TRACKER_FORM_ID = 'tracker-add-form'
+const EDIT_TRACK_FORM_ID = 'tracker-edit-form'
 const TRACKS = 'tracks'
 var MOCK_STATUS_UPDATES = {
     "trackingRecords": [
@@ -143,34 +144,40 @@ function setupDeleteTrack() {
 }
 
 function setupEditTrack() {
-
-    $('body').on('click', '.js-route-edit', ev => {
+    $(`#${EDIT_TRACK_FORM_ID}`).on('submit', ev => {
         ev.preventDefault()
-        const response = confirm('Save changes?')
-        if (response !== true) {
-            return
-        }
-        const idToEdit = $(ev.target).data('id')
-        editTrackerPromise(idToEdit).then(displayTrackerList)
-            .catch(err => {
+        console.log('TRACK edit SUBMIT')
+
+        //split the string into an array, the boundary is a whitespace character
+        const inputNames = 'date timeOfDay activity species location'.split(' ')
+
+        const trackerRecord = {}
+        inputNames.forEach(inputName => {
+            const inputSelector = `#${EDIT_TRACK_FORM_ID} input[name="${inputName}"]`
+            trackerRecord[inputName] = $(inputSelector).val()
+        })
+
+        editTrackerPromise(trackerRecord)
+            .then(() => {
+                return displayTrackerList()
+            }).catch(err => {
                 //TODO display a nice message div
                 console.error('Edit TRACK FAILED')
             })
+
     })
 }
 function editTrackerPromise(id) {
-
     return $.ajax({
-        url: `${TRACKERS_URL}/${id}`,
+        url: TRACKERS_URL,
         type: 'PUT',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${JWT_TOKEN}`
         },
-        // data:JSON.stringify({id}),
+        data: JSON.stringify(trackerRecord),
         dataType: 'json',
     }).then(trackers => {
         return true
     })
-
 }
