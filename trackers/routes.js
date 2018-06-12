@@ -1,9 +1,10 @@
 
 const express = require('express');
+const bodyParser = require('body-parser');
 const passport = require('passport');
 const router = express.Router();
 const { AnimalTracker } = require('./model')
-
+const jsonParser = bodyParser.json();
 
 const jwtAuth = passport.authenticate('jwt', { session: false });
 
@@ -16,7 +17,7 @@ router.get('/', jwtAuth, (req, res) => {
 
     const getTrackersP = AnimalTracker.find({user_id:req.user.id})
     getTrackersP.then(trackers => {
-        console.log("Got %d trackers", trackers.length)
+        console.log("Got %d tracker(s)", trackers.length)
         res.json(trackers.map(t => t.serialize()))
     }).catch(err => {
         res.status(500).json({ error: err.toString() })
@@ -53,4 +54,19 @@ router.delete('/:id', jwtAuth, (req, res) => {
     })
 });
 
+router.put('/:id', jwtAuth, jsonParser, (req, res) => {
+	if (!(req.params.id && req.body.id && req.params.id === req.body.id)) {
+		const message =
+			`Request path id (${req.params.id}) and request body id ` +
+			`(${req.body.id}) must match`;
+		console.error(message);
+		return res.status(400).json({message: message});
+	}
+	const {track} = req.body;
+
+	AnimalTracker.findByIdAndUpdate(req.params.id, {$set: {track: track}})
+		.then(tracker => res.status(200).json({}))
+        .catch(err => {res.status(500).json({error: err.toString() })
+    });
+});
 module.exports = { router };

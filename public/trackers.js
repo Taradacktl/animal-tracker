@@ -142,45 +142,35 @@ function setupDeleteTrack() {
     })
 }
 
+function setupEditTrack() {
 
-/*
-function deleteTrackPromise(){
+    $('body').on('click', '.js-route-edit', ev => {
+        ev.preventDefault()
+        const response = confirm('Save changes?')
+        if (response !== true) {
+            return
+        }
+        const idToEdit = $(ev.target).data('id')
+        editTrackerPromise(idToEdit).then(displayTrackerList)
+            .catch(err => {
+                //TODO display a nice message div
+                console.error('Edit TRACK FAILED')
+            })
+    })
+}
+function editTrackerPromise(id) {
+
     return $.ajax({
-        url: TRACKERS_URL,
-        type: 'DELETE',
+        url: `${TRACKERS_URL}/${id}`,
+        type: 'PUT',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${JWT_TOKEN}`
         },
-        data: JSON.stringify(trackerRecord),
+        // data:JSON.stringify({id}),
         dataType: 'json',
     }).then(trackers => {
         return true
     })
+
 }
-
-function setupDeleteTrack() {
-    $(`#${TRACKS}`).on('submit', ev => {
-        ev.preventDefault()
-        console.log('TRACK DELETE SUBMIT')
-
-        //split the string into an array, the boundary is a whitespace character
-        const inputNames = 'date timeOfDay activity species location'.split(' ')
-
-        const trackerRecord = {}
-        inputNames.forEach(inputName => {
-            const inputSelector = `#${TRACKER_FORM_ID} input[name="${inputName}"]`
-            trackerRecord[inputName] = $(inputSelector).val()
-        })
-
-       deleteTrackPromise(trackerRecord)
-            .then(() => {
-                return displayTrackerList()
-            }).catch(err => {
-                //TODO display a nice message div
-                console.error('DELETE TRACK FAILED')
-            })
-
-    })
-}
-*/

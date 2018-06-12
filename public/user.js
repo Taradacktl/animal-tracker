@@ -102,6 +102,11 @@ const setupRouteHandlers = () => {
         ev.preventDefault()
         routeTo(PROFILE_DIV_ID)
     })
+
+    $('.js-route-edit').on('click', ev => {
+        ev.preventDefault()
+        routeTo(EDIT_DIV_ID)
+    })
 }
 
 const setupSignUpButton = () => {

@@ -17,6 +17,8 @@ $(() => {
     //tracker stuff
     setupAddTrackerForm()
     setupDeleteTrack()
+    setupEditTrack()
+    
     //profile stuff
 
 })

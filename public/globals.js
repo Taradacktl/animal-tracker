@@ -9,6 +9,8 @@ const PROFILE_DIV_ID = 'users-profile' //profile div id
 const TRACKERS_URL = '/trackers'
 const TRACKERS_DIV_ID = 'trackers-page'
 
+const EDIT_DIV_ID = 'edit-trackers-page'
+
 const SIGNUP_URL = 'users/create'
 const SIGNUP_DIV_ID = 'users-signup'
 
