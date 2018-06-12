@@ -33,7 +33,7 @@ function displayTracker(tracker) {
         <p>${tracker.activity}</p>
         <p>${tracker.location}</p>
         <button type="submit">Edit</button>
-        <button type="submit">Delete</button>
+        <button class="js-delete-tracker" data-id="${tracker.id}" type="submit">Delete</button>
     </div>    
     `
 }
@@ -64,6 +64,24 @@ function getTrackersPromise() {
     })
 
 }
+
+function deleteTrackerPromise(id) {
+
+    return $.ajax({
+        url: `${TRACKERS_URL}/${id}`,
+        type: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${JWT_TOKEN}`
+        },
+        // data:JSON.stringify({id}),
+        dataType: 'json',
+    }).then(trackers => {
+        return true
+    })
+
+}
+
 
 
 function addTrackerPromise(trackerRecord) {
@@ -106,6 +124,25 @@ function setupAddTrackerForm() {
 
     })
 }
+
+function setupDeleteTrack() {
+
+    $('body').on('click', '.js-delete-tracker', ev => {
+        ev.preventDefault()
+        const response = confirm('Confirm delete?')
+        if (response !== true) {
+            return
+        }
+        const idToDelete = $(ev.target).data('id')
+        deleteTrackerPromise(idToDelete).then(displayTrackerList)
+            .catch(err => {
+                //TODO display a nice message div
+                console.error('ADD TRACK FAILED')
+            })
+    })
+}
+
+
 /*
 function deleteTrackPromise(){
     return $.ajax({

@@ -46,7 +46,11 @@ router.post('/', jwtAuth, (req, res) => {
 });
 
 router.delete('/:id', jwtAuth, (req, res) => {
-    AnimalTracker.findByIdAndRemove(req.params.id)
+    AnimalTracker.findByIdAndRemove(req.params.id).then(trackers => {
+        res.status(200).json({})
+    }).catch(err => {
+        res.status(500).json({ error: err.toString() })
+    })
 });
 
 module.exports = { router };
