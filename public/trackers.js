@@ -26,12 +26,12 @@ var MOCK_STATUS_UPDATES = {
 function displayTracker(tracker) {
     return `
     <div id="tracks">
-	    <p>${tracker.id}</p>
-        <p>${tracker.date}</p>
-        <p>${tracker.timeOfDay}</p>
-        <p>${tracker.species}</p>
-        <p>${tracker.activity}</p>
-        <p>${tracker.location}</p>
+	    <p>Track id: ${tracker.id}</p>
+        <p>Date: ${tracker.date}</p>
+        <p>Time of day: ${tracker.timeOfDay}</p>
+        <p>Species: ${tracker.species}</p>
+        <p>Activity: ${tracker.activity}</p>
+        <p>Location: ${tracker.location}</p>
         <button type="submit">Edit</button>
         <button class="js-delete-tracker" data-id="${tracker.id}" type="submit">Delete</button>
     </div>    
