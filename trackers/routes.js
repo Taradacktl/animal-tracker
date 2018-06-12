@@ -45,4 +45,8 @@ router.post('/', jwtAuth, (req, res) => {
     })
 });
 
+router.delete('/:id', jwtAuth, (req, res) => {
+    AnimalTracker.findByIdAndRemove(req.params.id)
+});
+
 module.exports = { router };
