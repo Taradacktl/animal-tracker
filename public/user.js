@@ -9,7 +9,43 @@ function apiLoginPromise(emailAddress, password) {
     }).then(loginResponse => {
         // debugger
         JWT_TOKEN = loginResponse.authToken
+        saveToken()
         return JWT_TOKEN
+    })
+}
+
+
+function saveToken() {
+    Cookies.set('APP_LOGIN_TOKEN', JWT_TOKEN);
+}
+function getToken() {
+    return Cookies.set('APP_LOGIN_TOKEN');
+}
+
+function isLoggedIn() {
+    return !!JWT_TOKEN
+}
+
+function restoreLogin() {
+    const existingToken = getToken()
+    if (existingToken) {
+        JWT_TOKEN = existingToken
+        routeTo(TRACKERS_DIV_ID)
+        return displayTrackerList()
+    }
+}
+
+function logout() {
+    Cookies.remove('APP_LOGIN_TOKEN')
+    JWT_TOKEN = null
+}
+
+const setupLogoutButton = () => {
+
+    $('body').on('click', '.js-route-logout', ev => {
+        ev.preventDefault()
+        logout()
+        routeTo(LOGIN_DIV_ID)
     })
 }
 
@@ -51,18 +87,18 @@ function apiSignupPromise(emailAddress, password) {
     })
 }
 
-const setupRouteHandlers = ()=>{
-    $('.js-route-signup').on('click', ev=>{
+const setupRouteHandlers = () => {
+    $('.js-route-signup').on('click', ev => {
         ev.preventDefault()
         routeTo(SIGNUP_DIV_ID)
     })
-    $('.js-route-login').on('click', ev=>{
+    $('.js-route-login').on('click', ev => {
         ev.preventDefault()
         routeTo(LOGIN_DIV_ID)
     })
 
     //TODO 6/11 make sure user is logged in
-    $('.js-route-profile').on('click', ev=>{
+    $('.js-route-profile').on('click', ev => {
         ev.preventDefault()
         routeTo(PROFILE_DIV_ID)
     })
