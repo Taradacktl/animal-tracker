@@ -28,10 +28,12 @@ function routeTo(pageID) {
 
 function displayErrorToaster(err){
     console.error(err.toString(), err)
+    // toastr.remove()
     toastr.error(err.toString(), 'Error')
 }
 
 function displaySuccessToaster(message){    
+    toastr.remove()
     toastr.success(message, 'Success')
 }
 
