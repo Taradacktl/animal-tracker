@@ -1,3 +1,6 @@
+var TRACKERS=[] //keep trackers in a global var to make them available for edit
+
+
 const LOGIN_FORM_ID = 'login-form'
 
 const LOGIN_URL = '/auth/login'
@@ -24,4 +27,20 @@ function routeTo(pageID) {
     $('.app-page').hide()
     $(`#${pageID}`).show()
 
+}
+
+function displayErrorToaster(err){
+    console.error(err.toString(), err)
+    // toastr.remove()
+    toastr.error(err.toString(), 'Error')
+}
+
+function displaySuccessToaster(message){    
+    toastr.remove()
+    toastr.success(message, 'Success')
+}
+
+
+function createError(message){
+    return new Error(message)
 }

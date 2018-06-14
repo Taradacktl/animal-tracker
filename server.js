@@ -131,7 +131,7 @@ app.delete('/:id', (req, res) => {
 
 
 app.use('*', function (req, res) {
-  res.status(200).json({ message: 'Route not handled' });
+  res.status(404).json({ message: 'Route not handled' });
 });
 
 

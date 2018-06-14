@@ -5,6 +5,7 @@
 	<meta charset="utf-8">
 	<title>Animal Tracker</title>
 	<link href="main.css" rel="stylesheet" type="text/css" />
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
@@ -93,12 +94,14 @@
 				<input type="text" name="species" placeholder="Species" />
 				<input type="text" name="activity" placeholder="Activity observed" />
 				<input type="text" name="location" placeholder="Location" />
-				<button data-id="${tracker.id}" type="js-route-edit">Save changes</button>
+				<input type="hidden" name="id" placeholder="" />
+				<button type="submit">Save changes</button>
 			</form>
 	</div>
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 	<script type="text/javascript" src="globals.js"></script>
 	<script type="text/javascript" src="user.js"></script>
 	<script type="text/javascript" src="trackers.js"></script>
