@@ -44,10 +44,7 @@ function displayTrackerList() {
     return trackersPromise.then(trackers => {
         const htmlString = trackers.map(displayTracker).join(' ')
         $(`#${TRACKERS_DIV_ID} .js-container`).html(htmlString)
-    }).catch(err => {
-        //TODO display a nice message div
-        console.error('DISPLAY TRACKERS FAILED')
-    })
+    }).catch(displayErrorToaster)
 }
 
 function getTrackersPromise() {
@@ -117,11 +114,13 @@ function setupAddTrackerForm() {
 
         addTrackerPromise(trackerRecord)
             .then(() => {
-                return displayTrackerList()
-            }).catch(err => {
-                //TODO display a nice message div
-                console.error('ADD TRACK FAILED')
-            })
+                return displayTrackerList().then(()=>{
+                    displaySuccessToaster('Tracker added')
+                    // document.getElementById(TRACKER_FORM_ID).reset()
+                    $(`#${TRACKER_FORM_ID}`)[0].reset()
+
+                })
+            }).catch(()=>displayErrorToaster(createError('Network error, check yout connection')))
 
     })
 }
@@ -135,11 +134,10 @@ function setupDeleteTrack() {
             return
         }
         const idToDelete = $(ev.target).data('id')
-        deleteTrackerPromise(idToDelete).then(displayTrackerList)
-            .catch(err => {
-                //TODO display a nice message div
-                console.error('ADD TRACK FAILED')
-            })
+        deleteTrackerPromise(idToDelete)
+        .then(displayTrackerList)
+        .then(()=>displaySuccessToaster('Tracker deleted'))
+            .catch(displayErrorToaster)
     })
 }
 
@@ -160,10 +158,7 @@ function setupEditTrack() {
         editTrackerPromise(trackerRecord)
             .then(() => {
                 return displayTrackerList()
-            }).catch(err => {
-                //TODO display a nice message div
-                console.error('Edit TRACK FAILED')
-            })
+            }).catch(displayErrorToaster)
 
     })
 }

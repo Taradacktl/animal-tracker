@@ -18,7 +18,20 @@ $(() => {
     setupAddTrackerForm()
     setupDeleteTrack()
     setupEditTrack()
-    
+
     //profile stuff
+
+
+    toastr.options.preventDuplicates = true;
+    //jquery: display toasters when performing AJAX
+    $.ajaxSetup({
+        complete: () => { 
+            // toastr.remove(); 
+            // toastr.info('Completed'); 
+        },
+        beforeSend: () => { toastr.info('Please wait...'); },
+    })
+
+    
 
 })

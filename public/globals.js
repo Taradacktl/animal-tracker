@@ -25,3 +25,17 @@ function routeTo(pageID) {
     $(`#${pageID}`).show()
 
 }
+
+function displayErrorToaster(err){
+    console.error(err.toString(), err)
+    toastr.error(err.toString(), 'Error')
+}
+
+function displaySuccessToaster(message){    
+    toastr.success(message, 'Success')
+}
+
+
+function createError(message){
+    return new Error(message)
+}
