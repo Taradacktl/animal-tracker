@@ -33,8 +33,9 @@ function displayTracker(tracker) {
         <p>Species: ${tracker.species}</p>
         <p>Activity: ${tracker.activity}</p>
         <p>Location: ${tracker.location}</p>
-        <button type="submit">Edit</button>
-        <button class="js-delete-tracker" data-id="${tracker.id}" type="submit">Delete</button>
+        <!-- <button type="submit">Edit</button> -->
+        <button class="js-edit-tracker" data-id="${tracker.id}">Edit</button>
+        <button class="js-delete-tracker" data-id="${tracker.id}">Delete</button>
     </div>    
     `
 }
@@ -58,6 +59,7 @@ function getTrackersPromise() {
         },
         dataType: 'json',
     }).then(trackers => {
+        TRACKERS = trackers
         return trackers
     })
 
@@ -114,18 +116,18 @@ function setupAddTrackerForm() {
 
         addTrackerPromise(trackerRecord)
             .then(() => {
-                return displayTrackerList().then(()=>{
+                return displayTrackerList().then(() => {
                     displaySuccessToaster('Tracker added')
                     // document.getElementById(TRACKER_FORM_ID).reset()
                     $(`#${TRACKER_FORM_ID}`)[0].reset()
 
                 })
-            }).catch(()=>displayErrorToaster(createError('Network error, check yout connection')))
+            }).catch(() => displayErrorToaster(createError('Network error, check yout connection')))
 
     })
 }
 
-function setupDeleteTrack() {
+function setupDeleteTrackLinks() {
 
     $('body').on('click', '.js-delete-tracker', ev => {
         ev.preventDefault()
@@ -135,9 +137,31 @@ function setupDeleteTrack() {
         }
         const idToDelete = $(ev.target).data('id')
         deleteTrackerPromise(idToDelete)
-        .then(displayTrackerList)
-        .then(()=>displaySuccessToaster('Tracker deleted'))
+            .then(displayTrackerList)
+            .then(() => displaySuccessToaster('Tracker deleted'))
             .catch(displayErrorToaster)
+    })
+}
+
+function setupEditTrackLinks() {
+
+    $('body').on('click', '.js-edit-tracker', ev => {
+        ev.preventDefault()
+        const id = $(ev.target).data('id')
+        console.log("Editing tracker %s", id)
+        const trackerRecord = TRACKERS.find(i => i.id === id)
+        console.log("Editing tracker record:", trackerRecord)
+        for (let k in trackerRecord) {
+
+            const inputSelector = `#${EDIT_TRACK_FORM_ID} input[name='${k}']`
+
+            //set the value for the input to the value found in the recordObj
+            $(inputSelector).val(trackerRecord[k])
+
+            // console.log("key: %s, value: %s, selector: %s", k, trackerRecord[k], inputSelector)
+        }
+        $(`#${EDIT_TRACK_FORM_ID} input[name='id']`).val(id)
+        routeTo(EDIT_DIV_ID)
     })
 }
 
@@ -147,24 +171,30 @@ function setupEditTrack() {
         console.log('TRACK edit SUBMIT')
 
         //split the string into an array, the boundary is a whitespace character
-        const inputNames = 'date timeOfDay activity species location'.split(' ')
+        const inputNames = 'date timeOfDay activity species location id'.split(' ')
 
         const trackerRecord = {}
         inputNames.forEach(inputName => {
             const inputSelector = `#${EDIT_TRACK_FORM_ID} input[name="${inputName}"]`
             trackerRecord[inputName] = $(inputSelector).val()
         })
+        console.log('Updated tracker:', trackerRecord)
 
         editTrackerPromise(trackerRecord)
+            .then(displayTrackerList)
             .then(() => {
-                return displayTrackerList()
-            }).catch(displayErrorToaster)
+                displaySuccessToaster('Tracker updated')
+                // routeTo(TRACKERS_DIV_ID)
+                
+            })
+            .catch(displayErrorToaster)
 
     })
 }
-function editTrackerPromise(id) {
+
+function editTrackerPromise(trackerRecord) {
     return $.ajax({
-        url: TRACKERS_URL,
+        url: `${TRACKERS_URL}/${trackerRecord.id}`,
         type: 'PUT',
         headers: {
             'Content-Type': 'application/json',

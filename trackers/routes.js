@@ -62,9 +62,8 @@ router.put('/:id', jwtAuth, jsonParser, (req, res) => {
 		console.error(message);
 		return res.status(400).json({message: message});
 	}
-	const {track} = req.body;
-
-	AnimalTracker.findByIdAndUpdate(req.params.id, {$set: {track: track}})
+   
+	AnimalTracker.findByIdAndUpdate(req.params.id, req.body)
 		.then(tracker => res.status(200).json({}))
         .catch(err => {res.status(500).json({error: err.toString() })
     });

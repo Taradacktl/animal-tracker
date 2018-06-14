@@ -15,9 +15,10 @@ $(() => {
     // routeTo(SIGNUP_DIV_ID)
 
     //tracker stuff
-    setupAddTrackerForm()
-    setupDeleteTrack()
     setupEditTrack()
+    setupAddTrackerForm()
+    setupEditTrackLinks()
+    setupDeleteTrackLinks()
 
     //profile stuff
 

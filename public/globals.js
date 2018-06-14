@@ -1,3 +1,6 @@
+var TRACKERS=[] //keep trackers in a global var to make them available for edit
+
+
 const LOGIN_FORM_ID = 'login-form'
 
 const LOGIN_URL = '/auth/login'
