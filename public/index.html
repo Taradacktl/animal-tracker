@@ -27,9 +27,14 @@
 	</div>
 	<div class="app-page" id="users-profile">
 		<h1>Profile page</h1>
-		<div class="js-container data-container profile-container">
-			Loading...
-		</div>
+		<div class="change-password-form">
+		<form aria-label="change-password" id="change-password">
+		<input type="password" name="current-password" placeholder="Current Password" />
+		<input type="password" name="newPassword" placeholder="New Password" />
+		<input type="password" name="retypeNewPassword" placeholder="Retype New Password" />
+		<button type="submit" class=".js-route-profile">Change Password</button>
+	</form>
+	</div>
 	</div>
 	<div class="app-page" id="users-login">
 		<h1>Login page</h1>
@@ -80,10 +85,6 @@
 			</form>
 		</div>
 
-	</div>
-
-	<div class="app-page" id="users-profile">
-		<h1>Profile page</h1>
 	</div>
 
 	<div class="app-page" id="edit-trackers-page">

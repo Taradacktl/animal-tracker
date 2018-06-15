@@ -18,6 +18,7 @@ const SIGNUP_URL = 'users/create'
 const SIGNUP_DIV_ID = 'users-signup'
 
 const SIGNUP_FORM_ID = 'signup-form'
+const CHANGE_PASSWORD_FORM_ID = 'change-password'
 // const PROFILE_URL = '/auth/refresh-auth-token'
 let JWT_TOKEN = null
 

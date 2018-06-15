@@ -102,13 +102,8 @@ const setupRouteHandlers = () => {
         ev.preventDefault()
         routeTo(PROFILE_DIV_ID)
     })
-
-    $('.js-route-edit').on('click', ev => {
-        ev.preventDefault()
-        routeTo(EDIT_DIV_ID)
-    })
 }
-
+//TODO 6/14 if passwords dont match error message
 const setupSignUpButton = () => {
     $(`#${SIGNUP_FORM_ID}`).on('submit', ev => {
         ev.preventDefault()
@@ -131,3 +126,15 @@ const setupSignUpButton = () => {
     })
 }
 
+const setupChangePassword = () => {
+    $(`#${CHANGE_PASSWORD_FORM_ID}`).on('submit', ev => {
+        ev.preventDefault()
+        console.log('CLICKED')
+     //   const newPassword = `#${CHANGE_PASSWORD_FORM_ID} input[name="${newPassword}"]`
+       const newPasswordData = {
+       newPassword: $('input[name="newPassword"]').val(),
+       retypeNewPassword: $('input[name="retypeNewPassword').val(),
+       }
+        console.log('PASSWORD:', newPasswordData)
+    })
+}

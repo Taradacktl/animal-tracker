@@ -184,7 +184,7 @@ function setupEditTrack() {
             .then(displayTrackerList)
             .then(() => {
                 displaySuccessToaster('Tracker updated')
-                // routeTo(TRACKERS_DIV_ID)
+                 routeTo(TRACKERS_DIV_ID)
                 
             })
             .catch(displayErrorToaster)

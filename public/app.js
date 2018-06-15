@@ -21,7 +21,7 @@ $(() => {
     setupDeleteTrackLinks()
 
     //profile stuff
-
+    setupChangePassword()
 
     toastr.options.preventDuplicates = true;
     //jquery: display toasters when performing AJAX
