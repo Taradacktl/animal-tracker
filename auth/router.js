@@ -3,7 +3,7 @@ const express = require('express');
 const passport = require('passport');
 const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
-
+const {User} = require('../users/model');
 const config = require('../config');
 const router = express.Router();
 
@@ -29,8 +29,22 @@ router.post('/login', localAuth, (req, res) => {
 const jwtAuth = passport.authenticate('jwt', {session: false});
 
 router.post('/changepassword', jwtAuth, (req, res) => {
+  const requiredFields = ['newPassword', 'retypeNewPassword'];
+    for (let i = 0; i < requiredFields.length; i++) {
+        const field = requiredFields[i];
+        if (!(field in req.body)) {
+            const message = `Missing \`${field}\` in request body`
+            console.error(message);
+            return res.status(400).send(message);
+        }
+    }
+
+  const passwordPromise =
+        User.hashPassword(req.body.password).then(hashedPassword => {
+          User.findByIdAndUpdate(req.user.id, {password:hashedPassword})
+          .then(() => res.status(200).json({}))
+        }).catch(err=>res.status(500).json({error:err.toString()}))
   //TODO implement this
- 
 });
 
 

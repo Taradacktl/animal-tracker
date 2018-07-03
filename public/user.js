@@ -87,6 +87,20 @@ function apiSignupPromise(emailAddress, password) {
     })
 }
 
+function apiChangePasswordPromise(newPassword, retypeNewPassword) {
+    return $.ajax({
+        url: '/auth/changepassword',
+        type: 'POST',
+        data: JSON.stringify({ newPassword, retypeNewPassword }),
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+    }).then(signupResponse => {
+        // debugger
+        JWT_TOKEN = signupResponse.authToken
+        return JWT_TOKEN
+    })
+}
+
 const setupRouteHandlers = () => {
     $('.js-route-signup').on('click', ev => {
         ev.preventDefault()
@@ -135,6 +149,19 @@ const setupChangePassword = () => {
        newPassword: $('input[name="newPassword"]').val(),
        retypeNewPassword: $('input[name="retypeNewPassword').val(),
        }
+
         console.log('PASSWORD:', newPasswordData)
+
+        apiChangePasswordPromise(newPasswordData.newPassword, newPasswordData.retypeNewPassword)
+            .then(
+                () => {
+                    logout()
+                    routeTo(LOGIN_DIV_ID)
+                })
+            .catch(err => {
+
+                //TODO display a nice message div
+                console.error('Sign up FAILED')
+            })
     })
 }
