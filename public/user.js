@@ -161,7 +161,7 @@ const setupChangePassword = () => {
             .catch(err => {
 
                 //TODO display a nice message div
-                console.error('Sign up FAILED')
+                console.error('Change password FAILED')
             })
     })
 }
