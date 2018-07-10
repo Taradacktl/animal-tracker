@@ -94,9 +94,9 @@ function apiChangePasswordPromise(newPassword, retypeNewPassword) {
         data: JSON.stringify({ newPassword, retypeNewPassword }),
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
-    }).then(signupResponse => {
+    }).then(changepasswordResponse => {
         // debugger
-        JWT_TOKEN = signupResponse.authToken
+        JWT_TOKEN = changepasswordResponse.authToken
         return JWT_TOKEN
     })
 }
