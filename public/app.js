@@ -30,7 +30,7 @@ $(() => {
             // toastr.remove(); 
             // toastr.info('Completed'); 
         },
-        beforeSend: () => { toastr.info('Please wait...'); },
+       // beforeSend: () => { toastr.info('Please wait...'); },
     })
 
     

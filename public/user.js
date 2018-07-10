@@ -43,7 +43,7 @@ function logout() {
 const setupLogoutButton = () => {
 
     $('body').on('click', '.js-route-logout', ev => {
-        ev.preventDefault()
+        ev.preventDefault()    
         logout()
         routeTo(LOGIN_DIV_ID)
     })
@@ -60,6 +60,7 @@ const setupLoginButton = () => {
         apiLoginPromise(formData.emailAddress, formData.password)
             .then(
                 () => {
+                    document.getElementById(LOGIN_FORM_ID).reset()
                     routeTo(TRACKERS_DIV_ID)
                     return displayTrackerList()
                 })
