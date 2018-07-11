@@ -2,7 +2,6 @@
 //main
 $(() => {
     console.log('Init APP')
-
     //user stuff
     setupLoginButton()
     setupLogoutButton()
@@ -32,7 +31,4 @@ $(() => {
         },
        // beforeSend: () => { toastr.info('Please wait...'); },
     })
-
-    
-
 })
