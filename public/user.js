@@ -171,6 +171,7 @@ const setupChangePassword = () => {
 toggle between hiding and showing the dropdown content */
 function menuFunction() {
     document.getElementById("myDropdown").classList.toggle("show");
+    console.log("menu clicked")
 }
 
 // Close the dropdown menu if the user clicks outside of it
