@@ -65,18 +65,16 @@ background:pink;
 
 /* Dropdown Button */
 .dropbtn {
-    background-color: pink;
+    background-color: #d6c2ad;
     color: black;
     padding: 16px;
     font-size: 16px;
     border: none;
     cursor: pointer;
+    margin-bottom: 0px;
 }
 
-/* Dropdown button on hover & focus */
-.dropbtn:hover, .dropbtn:focus {
-    background-color: #ddd;
-}
+
 
 /* The container <div> - needed to position the dropdown content */
 .dropdown {
@@ -110,4 +108,16 @@ background:pink;
     display:block;
     right: 0;
     left: auto;
+}
+
+#map {
+  
+	height: 50%;
+  width: 50%;
+}
+html,
+body {
+	height: 75%;
+	margin: 0;
+	padding: 0;
 }
