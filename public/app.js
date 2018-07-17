@@ -14,6 +14,7 @@ $(() => {
     // routeTo(SIGNUP_DIV_ID)
 
     //tracker stuff
+    datePicker()
     setupEditTrack()
     setupAddTrackerForm()
     setupEditTrackLinks()

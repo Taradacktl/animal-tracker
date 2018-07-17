@@ -68,8 +68,8 @@
 	<div class="app-page" id="trackers-page">
 		<h1>My tracks</h1>
 		<form id="tracker-add-form">
-			<input type="text" name="date" placeholder="Date" />
-			<input type="text" name="timeOfDay" data-enabletime=true  data-nocalendar=true placeholder="Time">
+			<input class="flatpickr" type="text" name="date" placeholder="Select Date..." />
+			<input type="text" name="timeOfDay" placeholder="Time">
 			<input type="text" name="species" placeholder="Species" />
 			<input type="text" name="activity" placeholder="Activity observed" />
 			<input type="text" name="location" placeholder="Location" />
@@ -113,7 +113,7 @@
 				<button type="submit">Save changes</button>
 			</form>
 	</div>
-	<script async defer src="https://maps.googleapis.com/maps/api/js?key=API_KEY&callback=initMap"></script>
+	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDitv_jv06ICx_WAbgfAeDgL2ofqUk75qU&callback=initMap"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>

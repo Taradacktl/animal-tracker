@@ -206,3 +206,11 @@ function editTrackerPromise(trackerRecord) {
         return true
     })
 }
+
+function datePicker(){
+    $('.flatpickr').flatpickr({
+        altInput: true,
+        altFormat: "F j, Y",
+        dateFormat: "Y-m-d",
+    })
+}
