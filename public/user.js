@@ -208,7 +208,12 @@ function initMap() {
 
 // Override our map zoom level once our fitBounds function runs (Make sure it only runs once)
 var boundsListener = google.maps.event.addListener((marker), 'dragend', function(event) {
+    const coords={
+        lat: event.latLng.lat(),
+        lng: event.latLng.lng(),
+    }
     console.log('Pin dropped!', event.latLng.lat() ,event.latLng.lng())
+    $('input[name="location"]').val(JSON.stringify(coords))
 });
 
 }
