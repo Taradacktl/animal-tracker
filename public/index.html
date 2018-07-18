@@ -7,7 +7,9 @@
 	<link href="main.css" rel="stylesheet" type="text/css" />
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" rel="stylesheet" type="text/css" />
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-	<link rel="stylesheet" type="text/css" href="/path/to/flatpickr.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+   
+
 </head>
 
 <body>
@@ -72,7 +74,7 @@
 			<input type="text" name="timeOfDay" placeholder="Time">
 			<input type="text" name="species" placeholder="Species" />
 			<input type="text" name="activity" placeholder="Activity observed" />
-			<input type="text" name="location" placeholder="Location" />
+			<input type="hidden" name="location" placeholder="Location" />
 			<button type="submit">Post</button>
 		</form>
 		<div id="map"></div>
@@ -113,14 +115,17 @@
 				<button type="submit">Save changes</button>
 			</form>
 	</div>
-	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDitv_jv06ICx_WAbgfAeDgL2ofqUk75qU&callback=initMap"></script>
+	
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+	<!-- see  https://flatpickr.js.org/examples/  -->
+	<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 	<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 	<script type="text/javascript" src="globals.js"></script>
 	<script type="text/javascript" src="user.js"></script>
 	<script type="text/javascript" src="trackers.js"></script>
 	<script type="text/javascript" src="app.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDitv_jv06ICx_WAbgfAeDgL2ofqUk75qU&callback=initMap"></script>
 </body>
 
 </html>

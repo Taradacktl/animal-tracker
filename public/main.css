@@ -112,6 +112,11 @@ background:pink;
 
 #map {
   height: 300px;
-  width: 300px;
+  width: 100%;
   
+}
+
+#map img {
+    max-width: none;   
+    max-height: none;   
 }
