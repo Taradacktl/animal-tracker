@@ -122,7 +122,7 @@ function setupAddTrackerForm() {
                     $(`#${TRACKER_FORM_ID}`)[0].reset()
 
                 })
-            }).catch(() => displayErrorToaster(createError('Network error, check yout connection')))
+            }).catch(() => displayErrorToaster(createError('Network error, check your connection')))
 
     })
 }
@@ -212,5 +212,13 @@ function datePicker(){
         altInput: true,
         altFormat: "F j, Y",
         dateFormat: "Y-m-d",
+    })
+}
+
+function timePicker(){
+    $('.timepickr').flatpickr({ 
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "H:i",
     })
 }

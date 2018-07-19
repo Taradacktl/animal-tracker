@@ -15,6 +15,7 @@ $(() => {
 
     //tracker stuff
     datePicker()
+    timePicker()
     setupEditTrack()
     setupAddTrackerForm()
     setupEditTrackLinks()
