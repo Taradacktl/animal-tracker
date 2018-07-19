@@ -1,28 +1,28 @@
 const TRACKER_FORM_ID = 'tracker-add-form'
 const EDIT_TRACK_FORM_ID = 'tracker-edit-form'
 const TRACKS = 'tracks'
-var MOCK_STATUS_UPDATES = {
-    "trackingRecords": [
-        {
-            "id": "1111111",
-            "date": "3/10/18",
-            "timeOfDay": "Midday",
-            "species": "Deer",
-            "activity": "Napping",
-            "location": "Canyon",
-            "publishedAt": 1470016976609
-        },
-        {
-            "id": "2222222",
-            "date": "4/5/18",
-            "timeOfDay": "Late afternoon",
-            "species": "Coyote",
-            "activity": "Hunting",
-            "location": "Mountains",
-            "publishedAt": 1470012976609
-        },
-    ]
-}
+// var MOCK_STATUS_UPDATES = {
+//     "trackingRecords": [
+//         {
+//             "id": "1111111",
+//             "date": "3/10/18",
+//             "timeOfDay": "Midday",
+//             "species": "Deer",
+//             "activity": "Napping",
+//             "location": "Canyon",
+//             "publishedAt": 1470016976609
+//         },
+//         {
+//             "id": "2222222",
+//             "date": "4/5/18",
+//             "timeOfDay": "Late afternoon",
+//             "species": "Coyote",
+//             "activity": "Hunting",
+//             "location": "Mountains",
+//             "publishedAt": 1470012976609
+//         },
+//     ]
+// }
 
 function displayTracker(tracker) {
     return `
@@ -32,7 +32,7 @@ function displayTracker(tracker) {
         <p>Time of day: ${tracker.timeOfDay}</p>
         <p>Species: ${tracker.species}</p>
         <p>Activity: ${tracker.activity}</p>
-        <p>Location: ${tracker.location}</p>
+        <p>Location: lat: ${tracker.lat} long: ${tracker.lng}</p>
         <!-- <button type="submit">Edit</button> -->
         <button class="js-edit-tracker" data-id="${tracker.id}">Edit</button>
         <button class="js-delete-tracker" data-id="${tracker.id}">Delete</button>
@@ -106,7 +106,7 @@ function setupAddTrackerForm() {
         console.log('TRACK ADD SUBMIT')
 
         //split the string into an array, the boundary is a whitespace character
-        const inputNames = 'date timeOfDay activity species location'.split(' ')
+        const inputNames = 'date timeOfDay activity species lat lng'.split(' ')
 
         const trackerRecord = {}
         inputNames.forEach(inputName => {
@@ -171,7 +171,7 @@ function setupEditTrack() {
         console.log('TRACK edit SUBMIT')
 
         //split the string into an array, the boundary is a whitespace character
-        const inputNames = 'date timeOfDay activity species location id'.split(' ')
+        const inputNames = 'date timeOfDay activity species lat lng id'.split(' ')
 
         const trackerRecord = {}
         inputNames.forEach(inputName => {
