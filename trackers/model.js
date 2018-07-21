@@ -8,7 +8,12 @@ const animalTrackerSchema = new mongoose.Schema({
   timeOfDay: { type: String, required: true },
   species: { type: String, required: true },
   activity: { type: String, required: true },
-  location: { type: String, required: true },
+
+  
+  //location: { type: String, required: true },
+  lat: { type: String, required: true },
+  lng: { type: String, required: true },
+
   user_id: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'User'
@@ -23,7 +28,8 @@ animalTrackerSchema.methods.serialize = function() {
     timeOfDay: this.timeOfDay,
     species: this.species,
     activity: this.activity,
-    location: this.location
+    lat: this.lat,
+    lng: this.lng,
   };
 };
 

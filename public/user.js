@@ -213,7 +213,8 @@ var boundsListener = google.maps.event.addListener((marker), 'dragend', function
         lng: event.latLng.lng(),
     }
     console.log('Pin dropped!', event.latLng.lat() ,event.latLng.lng())
-    $('input[name="location"]').val(JSON.stringify(coords))
+    $('input[name="lat"]').val(coords.lat)
+    $('input[name="lng"]').val(coords.lng)
 });
 
 }
