@@ -188,33 +188,3 @@ window.onclick = function(event) {
     }
   }
 }   
-
-function initMap() {
-    var myLatLng = {lat: 34.0522 , lng: -118.2437 };
-
-    var map = new google.maps.Map(document.getElementById('map'), {
-      zoom: 4,
-      center: myLatLng
-    });
-
-    var marker = new google.maps.Marker({
-      position: myLatLng,
-      map: map,
-      title: 'Los Angeles',
-      draggable: true
-    });
-
-
-
-// Override our map zoom level once our fitBounds function runs (Make sure it only runs once)
-var boundsListener = google.maps.event.addListener((marker), 'dragend', function(event) {
-    const coords={
-        lat: event.latLng.lat(),
-        lng: event.latLng.lng(),
-    }
-    console.log('Pin dropped!', event.latLng.lat() ,event.latLng.lng())
-    $('input[name="lat"]').val(coords.lat)
-    $('input[name="lng"]').val(coords.lng)
-});
-
-}
