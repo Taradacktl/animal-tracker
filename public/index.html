@@ -71,7 +71,7 @@
 		<h1>My tracks</h1>
 		<form id="tracker-add-form">
 			<input class="flatpickr" type="text" name="date" placeholder="Select Date..." />
-			<button id="form-reset" class="close-icon" type="reset"></button>
+			<button id="form-reset" class="close-icon" type="reset" value=""></button>
 			<input class="timepickr" type="text" name="timeOfDay" placeholder="Select Time">
 			<input type="text" name="species" placeholder="Species" />
 			<input type="text" name="activity" placeholder="Activity observed" />
@@ -110,14 +110,16 @@
 	<div class="app-page" id="edit-trackers-page">
 			<h1>Edit track</h1>
 			<form id="tracker-edit-form">
-				<input type="text" name="date" placeholder="Date" />
-				<input type="text" name="timeOfDay" placeholder="Time of Day" />
+				<input class="flatpickr" type="text" name="date" placeholder="Select Date..." />
+				<input class="timepickr" type="text" name="timeOfDay" placeholder="Select Time">
 				<input type="text" name="species" placeholder="Species" />
 				<input type="text" name="activity" placeholder="Activity observed" />
-				<input type="text" name="location" placeholder="Location" />
 				<input type="hidden" name="id" placeholder="" />
+			<input type="hidden" name="lat"  />
+			<input type="hidden" name="lng"  />
 				<button type="submit">Save changes</button>
 			</form>
+			<div id="map"></div>
 	</div>
 	
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>

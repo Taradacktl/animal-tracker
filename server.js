@@ -58,7 +58,7 @@ app.get('/posts/:id', (req, res) => {
 });
 
 app.post('/posts', (req, res) => {
-  const requiredFields = ['date', 'timeOfDay', 'species', 'activity', 'location'];
+  const requiredFields = ['date', 'timeOfDay', 'species', 'activity', 'lat', 'lng'];
   for (let i = 0; i < requiredFields.length; i++) {
     const field = requiredFields[i];
     if (!(field in req.body)) {
@@ -74,7 +74,8 @@ app.post('/posts', (req, res) => {
       timeOfDay: req.body.timeOfDay,
       species: req.body.species,
       activity: req.body.activity,
-      location: req.body.location,
+      lat: req.body.lat,
+      lng: req.body.lng,
     })
     .then(animalTracker => res.status(200).json(animalTracker.serialize()))
     .catch(err => {
@@ -106,7 +107,7 @@ app.put('/posts/:id', (req, res) => {
   }
 
   const updated = {};
-  const updateableFields = ['date', 'timeOfDay', 'species', 'activity', 'location'];
+  const updateableFields = ['date', 'timeOfDay', 'species', 'activity', 'lat', 'lng'];
   updateableFields.forEach(field => {
     if (field in req.body) {
       updated[field] = req.body[field];

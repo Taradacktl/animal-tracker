@@ -122,7 +122,7 @@ function setupAddTrackerForm() {
                     $(`#${TRACKER_FORM_ID}`)[0].reset()
 
                 })
-            }).catch(() => displayErrorToaster(createError('Network error, check your connection')))
+            }).catch(() => displayErrorToaster(createError('Must complete form')))
 
     })
 }
@@ -162,6 +162,7 @@ function setupEditTrackLinks() {
         }
         $(`#${EDIT_TRACK_FORM_ID} input[name='id']`).val(id)
         routeTo(EDIT_DIV_ID)
+        initMap()
     })
 }
 
