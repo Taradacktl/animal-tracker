@@ -17,6 +17,7 @@ $(() => {
     datePicker()
     timePicker()
     setupEditTrack()
+    initMap()
     setupAddTrackerForm()
     setupEditTrackLinks()
     setupDeleteTrackLinks()
