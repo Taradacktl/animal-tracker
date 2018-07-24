@@ -2,7 +2,9 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 
 const mongoose = require('mongoose');
-const {closeServer, runServer, app, runExpress} = require('../server');
+
+const { closeServer, runServer, app, runExpress } = require('../server');
+
 const { TEST_DATABASE_URL } = require('../config');
 const { AnimalTracker } = require('../trackers/model');
 
@@ -10,44 +12,69 @@ const expect = chai.expect;
 const should = chai.should();
 chai.use(chaiHttp);
 
- describe('animal tracker API resource', function () {
+const emailAddress = 'me@example.com';
+const password = 'haxxor';
 
-  before(function() {
+describe('animal tracker API resource', function () {
+
+  before(function () {
     return runServer(TEST_DATABASE_URL);
   });
- 
-  after(function() {
-     return closeServer();
+
+  after(function () {
+    return closeServer();
   });
 
-  describe('Root URL', function() {
- 
-  it('should respond with a status of 200 and HTML', function() {
-    return chai.request(app)
+
+  beforeEach(async function () {
+    await User.remove({});
+    return User.hashPassword(password).then(hashedPassword =>{    
+      // console.log('password/password hash' ,password, hashedPassword)
+      return User.create({
+        emailAddress,
+        password:hashedPassword
+      }) }
+    );
+  });
+
+
+  describe('Root URL', function () {
+
+    it('should respond with a status of 200 and HTML', function () {
+      return chai.request(app)
         .get('/')
-        .then(function(res) {
+        .then(function (res) {
           expect(res).to.have.status(200);
           expect(res).to.be.html;
         });
     });
   });
 
- describe('GET endpoint', function () {
+  describe('GET endpoint', function () {
 
-    it('should return all existing posts', function () {
+    it('should return all existing posts', async function () {
       // strategy:
       //    1. get back all posts returned by by GET request to `/trackers`
       //    2. prove res has right status, data type
       //    3. prove the number of posts we got back is equal to number
       //       in db.
+
+      const loginRes = await chai
+        .request(app)
+        .post('/auth/login')
+        .send({ emailAddress, password })
+
+      const token = loginRes.body.authToken
+
       let res;
       return chai.request(app)
         .get('/trackers')
+        .set('Authorization', `Bearer ${token}`)
         .then(_res => {
           res = _res;
           res.should.have.status(200);
           // otherwise our db seeding didn't work
-    //      res.body.should.have.lengthOf.at.least(1);
+          //      res.body.should.have.lengthOf.at.least(1);
 
           return AnimalTracker.count();
         })
@@ -69,7 +96,7 @@ chai.use(chaiHttp);
           res.should.have.status(200);
           res.should.be.json;
           res.body.should.be.a('array');
-   //       res.body.should.have.lengthOf.at.least(1);
+          //       res.body.should.have.lengthOf.at.least(1);
 
           res.body.forEach(function (post) {
             post.should.be.a('object');
@@ -147,8 +174,8 @@ chai.use(chaiHttp);
         species: 'coyote',
         activity: 'hunting',
         location: 'canyon'
-        }
-      ;
+      }
+        ;
 
       return AnimalTracker
         .findOne()

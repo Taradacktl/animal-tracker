@@ -110,13 +110,15 @@ background:pink;
     left: auto;
 }
 
-#map {
+#map-create, #map-edit {
   height: 300px;
   width: 100%;
   
 }
 
-#map img {
+#map-create img,
+#map-edit img
+{
     max-width: none;   
     max-height: none;   
 }

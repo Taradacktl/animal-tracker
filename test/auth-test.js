@@ -29,7 +29,8 @@ describe('Auth endpoints', function () {
     return closeServer();
   });
 
-  beforeEach(function () {
+  beforeEach(async function () {
+    await User.remove({});
     return User.hashPassword(password).then(hashedPassword =>{    
       // console.log('password/password hash' ,password, hashedPassword)
       return User.create({
@@ -40,7 +41,7 @@ describe('Auth endpoints', function () {
   });
 
   afterEach(function () {
-    return User.remove({});
+    // return User.remove({});
   });
 
   describe('/auth/login', function () {
