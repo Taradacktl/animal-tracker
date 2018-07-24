@@ -162,6 +162,9 @@ function setupEditTrackLinks() {
         }
         $(`#${EDIT_TRACK_FORM_ID} input[name='id']`).val(id)
         routeTo(EDIT_DIV_ID)
+        // debugger
+        const {lat, lng} = trackerRecord
+        initMap('map-edit', {lat,lng})
     })
 }
 
@@ -184,8 +187,8 @@ function setupEditTrack() {
             .then(displayTrackerList)
             .then(() => {
                 displaySuccessToaster('Tracker updated')
-                 routeTo(TRACKERS_DIV_ID)
-                
+                routeTo(TRACKERS_DIV_ID)
+
             })
             .catch(displayErrorToaster)
 
@@ -207,7 +210,7 @@ function editTrackerPromise(trackerRecord) {
     })
 }
 
-function datePicker(){
+function datePicker() {
     $('.flatpickr').flatpickr({
         altInput: true,
         altFormat: "F j, Y",
@@ -215,40 +218,39 @@ function datePicker(){
     })
 }
 
-function timePicker(){
-    $('.timepickr').flatpickr({ 
+function timePicker() {
+    $('.timepickr').flatpickr({
         enableTime: true,
         noCalendar: true,
         dateFormat: "H:i",
     })
 }
 
-function initMap() {
-    var myLatLng = {lat: 34.0522 , lng: -118.2437 };
+function initMap(id = 'map-create', geoPosition = { lat: 34.0522, lng: -118.2437 }) {
 
-    var map = new google.maps.Map(document.getElementById('map'), {
-      zoom: 4,
-      center: myLatLng
+    var map = new google.maps.Map(document.getElementById(id), {
+        zoom: 4,
+        center: geoPosition
     });
 
     var marker = new google.maps.Marker({
-      position: myLatLng,
-      map: map,
-      title: 'Los Angeles',
-      draggable: true
+        position: geoPosition,
+        map: map,
+        title: 'Los Angeles',
+        draggable: true
     });
 
 
 
-// Override our map zoom level once our fitBounds function runs (Make sure it only runs once)
-var boundsListener = google.maps.event.addListener((marker), 'dragend', function(event) {
-    const coords={
-        lat: event.latLng.lat(),
-        lng: event.latLng.lng(),
-    }
-    console.log('Pin dropped!', event.latLng.lat() ,event.latLng.lng())
-    $('input[name="lat"]').val(coords.lat)
-    $('input[name="lng"]').val(coords.lng)
-});
+    // Override our map zoom level once our fitBounds function runs (Make sure it only runs once)
+    var boundsListener = google.maps.event.addListener((marker), 'dragend', function (event) {
+        const coords = {
+            lat: event.latLng.lat(),
+            lng: event.latLng.lng(),
+        }
+        console.log('Pin dropped!', event.latLng.lat(), event.latLng.lng())
+        $('input[name="lat"]').val(coords.lat)
+        $('input[name="lng"]').val(coords.lng)
+    });
 
 }

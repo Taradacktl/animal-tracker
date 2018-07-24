@@ -28,8 +28,8 @@ animalTrackerSchema.methods.serialize = function() {
     timeOfDay: this.timeOfDay,
     species: this.species,
     activity: this.activity,
-    lat: this.lat,
-    lng: this.lng,
+    lat: parseFloat(this.lat),
+    lng: parseFloat(this.lng),
   };
 };
 
