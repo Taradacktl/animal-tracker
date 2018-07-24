@@ -2,10 +2,10 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 
 const mongoose = require('mongoose');
-//const faker = require('faker');
 const {closeServer, runServer, app, runExpress} = require('../server');
 const { TEST_DATABASE_URL } = require('../config');
 const { AnimalTracker } = require('../trackers/model');
+
 const expect = chai.expect;
 const should = chai.should();
 chai.use(chaiHttp);
@@ -36,13 +36,13 @@ chai.use(chaiHttp);
 
     it('should return all existing posts', function () {
       // strategy:
-      //    1. get back all posts returned by by GET request to `/posts`
+      //    1. get back all posts returned by by GET request to `/trackers`
       //    2. prove res has right status, data type
       //    3. prove the number of posts we got back is equal to number
       //       in db.
       let res;
       return chai.request(app)
-        .get('/posts')
+        .get('/trackers')
         .then(_res => {
           res = _res;
           res.should.have.status(200);
@@ -63,7 +63,7 @@ chai.use(chaiHttp);
 
       let resPost;
       return chai.request(app)
-        .get('/posts')
+        .get('/trackers')
         .then(function (res) {
 
           res.should.have.status(200);
@@ -107,7 +107,7 @@ chai.use(chaiHttp);
       };
 
       return chai.request(app)
-        .post('/posts')
+        .post('/trackers')
         .send(newPost)
         .then(function (res) {
           res.should.have.status(200);
@@ -156,7 +156,7 @@ chai.use(chaiHttp);
           updateData.id = post.id;
 
           return chai.request(app)
-            .put(`/posts/${post.id}`)
+            .put(`/trackers/${post.id}`)
             .send(updateData);
         })
         .then(res => {
@@ -187,7 +187,7 @@ chai.use(chaiHttp);
         .findOne()
         .then(_post => {
           post = _post;
-          return chai.request(app).delete(`/posts/${post.id}`);
+          return chai.request(app).delete(`/trackers/${post.id}`);
         })
         .then(res => {
           res.should.have.status(204);
