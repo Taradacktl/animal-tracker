@@ -2,7 +2,9 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 
 const mongoose = require('mongoose');
+
 const { closeServer, runServer, app, runExpress } = require('../server');
+
 const { TEST_DATABASE_URL } = require('../config');
 const { AnimalTracker } = require('../trackers/model');
 
