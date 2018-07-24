@@ -2,10 +2,10 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 
 const mongoose = require('mongoose');
-
+const jwt = require('jsonwebtoken');
 const { closeServer, runServer, app, runExpress } = require('../server');
 const { User } = require('../users/model');
-const { TEST_DATABASE_URL } = require('../config');
+const { JWT_SECRET, TEST_DATABASE_URL } = require('../config');
 const { AnimalTracker } = require('../trackers/model');
 
 const expect = chai.expect;
@@ -16,7 +16,19 @@ const emailAddress = 'me@example.com';
 const password = 'haxxor';
 
 describe('animal tracker API resource', function () {
-
+  const token = jwt.sign(
+    {
+      user: {
+        emailAddress,
+      },
+    },
+    JWT_SECRET,
+    {
+      algorithm: 'HS256',
+      subject: emailAddress,
+      expiresIn: Math.floor(Date.now() / 1000) - 10 // Expired ten seconds ago
+    }
+  );
   before(function () {
     return runServer(TEST_DATABASE_URL);
   });
@@ -59,17 +71,24 @@ describe('animal tracker API resource', function () {
       //    3. prove the number of posts we got back is equal to number
       //       in db.
 
-      const loginRes = await chai
-        .request(app)
-        .post('/auth/login')
-        .send({ emailAddress, password })
-
-      const token = loginRes.body.authToken
+      const token = jwt.sign(
+        {
+          user: {
+            emailAddress,
+          },
+        },
+        JWT_SECRET,
+        {
+          algorithm: 'HS256',
+          subject: emailAddress,
+          expiresIn: Math.floor(Date.now() / 1000) - 10 // Expired ten seconds ago
+        }
+      );
 
       let res;
       return chai.request(app)
         .get('/trackers')
-        .set('Authorization', `Bearer ${token}`)
+        .set('authorization', `Bearer ${token}`)
         .then(_res => {
           res = _res;
           res.should.have.status(200);
@@ -85,13 +104,14 @@ describe('animal tracker API resource', function () {
         });
     });
 
-    it('should return posts with right fields', function () {
+    it('should return trackers with right fields', function () {
       // Strategy: Get back all posts, and ensure they have expected keys
 
       let resPost;
       return chai.request(app)
         .get('/trackers')
-        .then(function (res) {
+        .set('authorization', `Bearer ${token}`)
+        .then(res=> {
 
           res.should.have.status(200);
           res.should.be.json;
@@ -124,7 +144,7 @@ describe('animal tracker API resource', function () {
     // then prove that the post we get back has
     // right keys, and that `id` is there (which means
     // the data was inserted into db)
-    it('should add a new post', function () {
+    it('should add a new tracker', function () {
 
       const newPost = {
         date: 'nov',
@@ -137,6 +157,7 @@ describe('animal tracker API resource', function () {
 
       return chai.request(app)
         .post('/trackers')
+        .set('authorization', `Bearer ${token}`)
         .send(newPost)
         .then(function (res) {
           res.should.have.status(200);
@@ -171,7 +192,7 @@ describe('animal tracker API resource', function () {
     //  1. Get an existing post from db
     //  2. Make a PUT request to update that post
     //  4. Prove post in db is correctly updated
-    it('should update fields you send over', function () {
+    it('should update tracker fields', function () {
       const updateData = {
         date: 'dec',
         timeOfDay: 'night',
@@ -189,6 +210,7 @@ describe('animal tracker API resource', function () {
 
           return chai.request(app)
             .put(`/trackers/${post.id}`)
+            .set('authorization', `Bearer ${token}`)
             .send(updateData);
         })
         .then(res => {
@@ -212,7 +234,7 @@ describe('animal tracker API resource', function () {
     //  2. make a DELETE request for that post's id
     //  3. assert that response has right status code
     //  4. prove that post with the id doesn't exist in db anymore
-    it('should delete a post by id', function () {
+    it('should delete a tracker by id', function () {
 
       let post;
 
@@ -220,7 +242,9 @@ describe('animal tracker API resource', function () {
         .findOne()
         .then(_post => {
           post = _post;
-          return chai.request(app).delete(`/trackers/${post.id}`);
+          return chai.request(app)
+          .delete(`/trackers/${post.id}`)
+          .set('authorization', `Bearer ${token}`)
         })
         .then(res => {
           res.should.have.status(204);

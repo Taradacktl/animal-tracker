@@ -48,7 +48,7 @@ router.post('/', jwtAuth, (req, res) => {
 
 router.delete('/:id', jwtAuth, (req, res) => {
     AnimalTracker.findByIdAndRemove(req.params.id).then(trackers => {
-        res.status(200).json({})
+        res.status(204).json({})
     }).catch(err => {
         res.status(500).json({ error: err.toString() })
     })
@@ -64,7 +64,7 @@ router.put('/:id', jwtAuth, jsonParser, (req, res) => {
 	}
    
 	AnimalTracker.findByIdAndUpdate(req.params.id, req.body)
-		.then(tracker => res.status(200).json({}))
+		.then(tracker => res.status(204).json({}))
         .catch(err => {res.status(500).json({error: err.toString() })
     });
 });
