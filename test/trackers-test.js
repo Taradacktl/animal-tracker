@@ -4,7 +4,7 @@ const chaiHttp = require('chai-http');
 const mongoose = require('mongoose');
 
 const { closeServer, runServer, app, runExpress } = require('../server');
-
+const { User } = require('../users/model');
 const { TEST_DATABASE_URL } = require('../config');
 const { AnimalTracker } = require('../trackers/model');
 
@@ -100,7 +100,7 @@ describe('animal tracker API resource', function () {
 
           res.body.forEach(function (post) {
             post.should.be.a('object');
-            post.should.include.keys('id', 'date', 'timeOfDay', 'species', 'activity', 'location');
+            post.should.include.keys('id', 'date', 'timeOfDay', 'species', 'activity', 'lat', 'lng');
           });
           // just check one of the posts that its values match with those in db
           // and we'll assume it's true for rest
@@ -113,7 +113,8 @@ describe('animal tracker API resource', function () {
           resPost.timeOfDay.should.equal(post.timeOfDay);
           resPost.species.should.equal(post.species);
           resPost.activity.should.equal(post.activity);
-          resPost.location.should.equal(post.location);
+          resPost.lat.should.equal(post.lat);
+          resPost.lng.should.equal(post.lng);
         });
     });
   });
@@ -123,14 +124,15 @@ describe('animal tracker API resource', function () {
     // then prove that the post we get back has
     // right keys, and that `id` is there (which means
     // the data was inserted into db)
-    it('should add a new blog post', function () {
+    it('should add a new post', function () {
 
       const newPost = {
         date: 'nov',
         timeOfDay: 'day',
         species: 'deer',
         activity: 'eating',
-        location: 'hills'
+        lat: '78.987',
+        lng: '7.890'
       };
 
       return chai.request(app)
@@ -141,14 +143,15 @@ describe('animal tracker API resource', function () {
           res.should.be.json;
           res.body.should.be.a('object');
           res.body.should.include.keys(
-            'id', 'date', 'timeOfDay', 'species', 'activity', 'location');
+            'id', 'date', 'timeOfDay', 'species', 'activity', 'lat', 'lng');
           res.body.date.should.equal(newPost.date);
           // cause Mongo should have created id on insertion
           res.body.id.should.not.be.null;
           res.body.timeOfDay.should.equal(newPost.timeOfDay);
           res.body.species.should.equal(newPost.species);
           res.body.activity.should.equal(newPost.activity);
-          res.body.location.should.equal(newPost.location);
+          res.body.lat.should.equal(newPost.lat);
+          res.body.lng.should.equal(newPost.lng);
           return AnimalTracker.findById(res.body.id);
         })
         .then(function (post) {
@@ -156,7 +159,8 @@ describe('animal tracker API resource', function () {
           post.timeOfDay.should.equal(newPost.timeOfDay);
           post.species.should.equal(newPost.species);
           post.activity.should.equal(newPost.activity);
-          post.location.should.equal(newPost.location);
+          post.lat.should.equal(newPost.lat);
+          post.lng.should.equal(newPost.lng);
         });
     });
   });
@@ -173,7 +177,8 @@ describe('animal tracker API resource', function () {
         timeOfDay: 'night',
         species: 'coyote',
         activity: 'hunting',
-        location: 'canyon'
+        lat: '890.789',
+        lng: '89.678'
       }
         ;
 
@@ -195,7 +200,8 @@ describe('animal tracker API resource', function () {
           post.timeOfDay.should.equal(updateData.timeOfDay);
           post.species.should.equal(updateData.species);
           post.activity.should.equal(updateData.activity);
-          post.location.should.equal(updateData.location);
+          post.lat.should.equal(updateData.lat);
+          post.lng.should.equal(updateData.lng);
         });
     });
   });
