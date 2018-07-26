@@ -4,18 +4,21 @@ const bodyParser = require('body-parser');
 const passport = require('passport');
 const router = express.Router();
 const { AnimalTracker } = require('./model')
+const { User } = require('../users/model')
 const jsonParser = bodyParser.json();
 
 const jwtAuth = passport.authenticate('jwt', { session: false });
 
 // get a list of trackers for the logged in user
-router.get('/', jwtAuth, (req, res) => {
+router.get('/', jwtAuth, async (req, res) => {
 
     //at this point we're authenticated and req.user holds the mongoose user record
 
     console.log("Getting trackers for %s", req.user.emailAddress)
 
-    const getTrackersP = AnimalTracker.find({user_id:req.user.id})
+    const user = await User.findOne({emailAddress: req.user.emailAddress})
+
+    const getTrackersP = AnimalTracker.find({user_id:user._id})
     getTrackersP.then(trackers => {
         console.log("Got %d tracker(s)", trackers.length)
         res.json(trackers.map(t => t.serialize()))
@@ -39,8 +42,8 @@ router.post('/', jwtAuth, (req, res) => {
         user_id:req.user.id
     })
 
-    newTrackerP.then(trackers => {
-        res.status(200).json({})
+    newTrackerP.then(tracker => {
+        res.status(200).json(tracker.serialize())
     }).catch(err => {
         res.status(500).json({ error: err.toString() })
     })

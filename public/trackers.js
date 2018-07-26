@@ -61,6 +61,13 @@ function getTrackersPromise() {
     }).then(trackers => {
         TRACKERS = trackers
         return trackers
+    }).catch(err => {
+        console.error('FETCH ERROR', err)
+        if (err.status === 401) {
+            console.log('Bad token???')
+            logout()
+            // window.location.reload()
+        }
     })
 
 }
@@ -163,8 +170,8 @@ function setupEditTrackLinks() {
         $(`#${EDIT_TRACK_FORM_ID} input[name='id']`).val(id)
         routeTo(EDIT_DIV_ID)
         // debugger
-        const {lat, lng} = trackerRecord
-        initMap('map-edit', {lat,lng})
+        const { lat, lng } = trackerRecord
+        initMap('map-edit', { lat, lng })
     })
 }
 
