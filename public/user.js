@@ -29,6 +29,7 @@ function isLoggedIn() {
 function restoreLogin() {
     const existingToken = getToken()
     if (existingToken) {
+        $(`#${MAIN_NAV_ID}`).removeClass('js-logged-out')
         JWT_TOKEN = existingToken
         routeTo(TRACKERS_DIV_ID)
         return displayTrackerList()
@@ -38,6 +39,7 @@ function restoreLogin() {
 function logout() {
     Cookies.remove('APP_LOGIN_TOKEN')
     JWT_TOKEN = null
+    $(`#${MAIN_NAV_ID}`).addClass('js-logged-out')
 }
 
 const setupLogoutButton = () => {
@@ -60,6 +62,7 @@ const setupLoginButton = () => {
         apiLoginPromise(formData.emailAddress, formData.password)
             .then(
                 () => {
+                    $(`#${MAIN_NAV_ID}`).removeClass('js-logged-out')
                     document.getElementById(LOGIN_FORM_ID).reset()
                     routeTo(TRACKERS_DIV_ID)
                     return displayTrackerList()
@@ -123,14 +126,16 @@ const setupSignUpButton = () => {
     $(`#${SIGNUP_FORM_ID}`).on('submit', ev => {
         ev.preventDefault()
         const formData = {
-            emailAddress: $('input[name="emailAddress"]').val(),
-            password: $('input[name="password"]').val(),
+            emailAddress: $('.app-page:visible input[name="emailAddress"]').val(),
+            password: $('.app-page:visible  input[name="password"]').val(),
         }
+
         apiSignupPromise(formData.emailAddress, formData.password)
             .then(
                 () => {
-                    routeTo(TRACKERS_DIV_ID)
-                    return displayTrackerList()
+                    routeTo(LOGIN_DIV_ID)
+                    // routeTo(TRACKERS_DIV_ID)
+                    // return displayTrackerList()
                 })
             .catch(err => {
 

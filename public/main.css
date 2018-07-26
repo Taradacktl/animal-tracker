@@ -159,3 +159,8 @@ background:pink;
 	padding: 10px;
 	
 }
+
+#myDropdown.js-logged-out .js-route-profile,
+#myDropdown.js-logged-out .js-route-logout{
+    display:none;
+}

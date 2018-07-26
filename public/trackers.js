@@ -66,8 +66,7 @@ function getTrackersPromise() {
         if (err.status === 401) {
             console.log('Bad token???')
             logout()
-            debugger
-            window.location.reload()
+            // window.location.reload()
         }
     })
 

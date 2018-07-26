@@ -1,5 +1,6 @@
 var TRACKERS=[] //keep trackers in a global var to make them available for edit
 
+const MAIN_NAV_ID='myDropdown'
 
 const LOGIN_FORM_ID = 'login-form'
 
