@@ -7,6 +7,7 @@ const { closeServer, runServer, app, runExpress } = require('../server');
 const { User } = require('../users/model');
 const { JWT_SECRET, TEST_DATABASE_URL } = require('../config');
 const { AnimalTracker } = require('../trackers/model');
+const { testUtilSeedData } = require('./helpers')
 
 const expect = chai.expect;
 const should = chai.should();
@@ -14,6 +15,18 @@ chai.use(chaiHttp);
 
 const emailAddress = 'me@example.com';
 const password = 'haxxor';
+
+const trackerSeedData = [
+  {
+    date: 'nov',
+    timeOfDay: 'day',
+    species: 'deer',
+    activity: 'eating',
+    lat: 78.987,
+    lng: 7.890,
+  }
+]
+
 
 describe('animal tracker API resource', function () {
   const token = jwt.sign(
@@ -29,8 +42,9 @@ describe('animal tracker API resource', function () {
       expiresIn: Math.floor(Date.now() / 1000) - 10 // Expired ten seconds ago
     }
   );
-  before(function () {
-    return runServer(TEST_DATABASE_URL);
+  before(async function () {
+    await runServer(TEST_DATABASE_URL);
+    await testUtilSeedData(AnimalTracker, trackerSeedData)
   });
 
   after(function () {
@@ -40,12 +54,13 @@ describe('animal tracker API resource', function () {
 
   beforeEach(async function () {
     await User.remove({});
-    return User.hashPassword(password).then(hashedPassword =>{    
+    return User.hashPassword(password).then(hashedPassword => {
       // console.log('password/password hash' ,password, hashedPassword)
       return User.create({
         emailAddress,
-        password:hashedPassword
-      }) }
+        password: hashedPassword
+      })
+    }
     );
   });
 
@@ -64,79 +79,19 @@ describe('animal tracker API resource', function () {
 
   describe('GET endpoint', function () {
 
-    it('should return all existing posts', async function () {
-      // strategy:
-      //    1. get back all posts returned by by GET request to `/trackers`
-      //    2. prove res has right status, data type
-      //    3. prove the number of posts we got back is equal to number
-      //       in db.
 
-      const token = jwt.sign(
-        {
-          user: {
-            emailAddress,
-          },
-        },
-        JWT_SECRET,
-        {
-          algorithm: 'HS256',
-          subject: emailAddress,
-          expiresIn: Math.floor(Date.now() / 1000) - 10 // Expired ten seconds ago
-        }
-      );
+    it('should return trackers with right fields', async function () {
 
-      let res;
-      return chai.request(app)
+      const res = await chai.request(app)
         .get('/trackers')
         .set('authorization', `Bearer ${token}`)
-        .then(_res => {
-          res = _res;
-          res.should.have.status(200);
-          // otherwise our db seeding didn't work
-          //      res.body.should.have.lengthOf.at.least(1);
+      res.should.have.status(200);
+      res.should.be.json;
+      res.body.should.be.a('array');
+      res.body.length.should.equal(0)
 
-          return AnimalTracker.count();
-        })
-        .then(count => {
-          // the number of returned posts should be same
-          // as number of posts in DB
-          res.body.should.have.lengthOf(count);
-        });
     });
 
-    it('should return trackers with right fields', function () {
-      // Strategy: Get back all posts, and ensure they have expected keys
-
-      let resPost;
-      return chai.request(app)
-        .get('/trackers')
-        .set('authorization', `Bearer ${token}`)
-        .then(res=> {
-
-          res.should.have.status(200);
-          res.should.be.json;
-          res.body.should.be.a('array');
-          //       res.body.should.have.lengthOf.at.least(1);
-
-          res.body.forEach(function (post) {
-            post.should.be.a('object');
-            post.should.include.keys('id', 'date', 'timeOfDay', 'species', 'activity', 'lat', 'lng');
-          });
-          // just check one of the posts that its values match with those in db
-          // and we'll assume it's true for rest
-          resPost = res.body[0];
-          return AnimalTracker.findById(resPost.id);
-        })
-        .then(post => {
-          resPost.id.should.equal(post.id);
-          resPost.date.should.equal(post.date);
-          resPost.timeOfDay.should.equal(post.timeOfDay);
-          resPost.species.should.equal(post.species);
-          resPost.activity.should.equal(post.activity);
-          resPost.lat.should.equal(post.lat);
-          resPost.lng.should.equal(post.lng);
-        });
-    });
   });
 
   describe('POST endpoint', function () {
@@ -151,8 +106,8 @@ describe('animal tracker API resource', function () {
         timeOfDay: 'day',
         species: 'deer',
         activity: 'eating',
-        lat: '78.987',
-        lng: '7.890'
+        lat: 78.987,
+        lng: 7.890,
       };
 
       return chai.request(app)
@@ -198,11 +153,10 @@ describe('animal tracker API resource', function () {
         timeOfDay: 'night',
         species: 'coyote',
         activity: 'hunting',
-        lat: '890.789',
-        lng: '89.678'
+        lat: 890.789,
+        lng: 89.678,
       }
-        ;
-
+      
       return AnimalTracker
         .findOne()
         .then(post => {
@@ -243,8 +197,8 @@ describe('animal tracker API resource', function () {
         .then(_post => {
           post = _post;
           return chai.request(app)
-          .delete(`/trackers/${post.id}`)
-          .set('authorization', `Bearer ${token}`)
+            .delete(`/trackers/${post.id}`)
+            .set('authorization', `Bearer ${token}`)
         })
         .then(res => {
           res.should.have.status(204);

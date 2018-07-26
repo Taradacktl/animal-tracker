@@ -11,8 +11,8 @@ const animalTrackerSchema = new mongoose.Schema({
 
   
   //location: { type: String, required: true },
-  lat: { type: String, required: true },
-  lng: { type: String, required: true },
+  lat: { type: Number, required: true },
+  lng: { type: Number, required: true },
 
   user_id: {
 		type: mongoose.Schema.Types.ObjectId,
