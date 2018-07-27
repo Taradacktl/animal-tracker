@@ -193,3 +193,11 @@ window.onclick = function(event) {
     }
   }
 }   
+
+const setupCancelButton = () => {
+
+    $('body').on('click', '.js-route-home', ev => {
+        ev.preventDefault()    
+        routeTo(TRACKERS_DIV_ID)
+    })
+}

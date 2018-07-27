@@ -11,6 +11,7 @@ $(() => {
 
     setupSignUpButton()
     setupRouteHandlers()
+
     // routeTo(SIGNUP_DIV_ID)
 
     //tracker stuff
@@ -21,7 +22,7 @@ $(() => {
     setupAddTrackerForm()
     setupEditTrackLinks()
     setupDeleteTrackLinks()
-
+    setupCancelButton()
     //profile stuff
     setupChangePassword()
 
