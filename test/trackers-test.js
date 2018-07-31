@@ -101,7 +101,7 @@ describe('animal tracker API resource', function () {
     // the data was inserted into db)
     it('should add a new tracker', function () {
 
-      const newPost = {
+      const newTracker = {
         date: 'nov',
         timeOfDay: 'day',
         species: 'deer',
@@ -113,30 +113,30 @@ describe('animal tracker API resource', function () {
       return chai.request(app)
         .post('/trackers')
         .set('authorization', `Bearer ${token}`)
-        .send(newPost)
+        .send(newTracker)
         .then(function (res) {
           res.should.have.status(200);
           res.should.be.json;
           res.body.should.be.a('object');
           res.body.should.include.keys(
             'id', 'date', 'timeOfDay', 'species', 'activity', 'lat', 'lng');
-          res.body.date.should.equal(newPost.date);
+          res.body.date.should.equal(newTracker.date);
           // cause Mongo should have created id on insertion
           res.body.id.should.not.be.null;
-          res.body.timeOfDay.should.equal(newPost.timeOfDay);
-          res.body.species.should.equal(newPost.species);
-          res.body.activity.should.equal(newPost.activity);
-          res.body.lat.should.equal(newPost.lat);
-          res.body.lng.should.equal(newPost.lng);
+          res.body.timeOfDay.should.equal(newTracker.timeOfDay);
+          res.body.species.should.equal(newTracker.species);
+          res.body.activity.should.equal(newTracker.activity);
+          res.body.lat.should.equal(newTracker.lat);
+          res.body.lng.should.equal(newTracker.lng);
           return AnimalTracker.findById(res.body.id);
         })
-        .then(function (post) {
-          post.date.should.equal(newPost.date);
-          post.timeOfDay.should.equal(newPost.timeOfDay);
-          post.species.should.equal(newPost.species);
-          post.activity.should.equal(newPost.activity);
-          post.lat.should.equal(newPost.lat);
-          post.lng.should.equal(newPost.lng);
+        .then(function (track) {
+          track.date.should.equal(newTracker.date);
+          track.timeOfDay.should.equal(newTracker.timeOfDay);
+          track.species.should.equal(newTracker.species);
+          track.activity.should.equal(newTracker.activity);
+          track.lat.should.equal(newTracker.lat);
+          track.lng.should.equal(newTracker.lng);
         });
     });
   });
@@ -159,11 +159,11 @@ describe('animal tracker API resource', function () {
       
       return AnimalTracker
         .findOne()
-        .then(post => {
-          updateData.id = post.id;
+        .then(track => {
+          updateData.id = track.id;
 
           return chai.request(app)
-            .put(`/trackers/${post.id}`)
+            .put(`/trackers/${track.id}`)
             .set('authorization', `Bearer ${token}`)
             .send(updateData);
         })
@@ -171,13 +171,13 @@ describe('animal tracker API resource', function () {
           res.should.have.status(204);
           return AnimalTracker.findById(updateData.id);
         })
-        .then(post => {
-          post.date.should.equal(updateData.date);
-          post.timeOfDay.should.equal(updateData.timeOfDay);
-          post.species.should.equal(updateData.species);
-          post.activity.should.equal(updateData.activity);
-          post.lat.should.equal(updateData.lat);
-          post.lng.should.equal(updateData.lng);
+        .then(track => {
+          track.date.should.equal(updateData.date);
+          track.timeOfDay.should.equal(updateData.timeOfDay);
+          track.species.should.equal(updateData.species);
+          track.activity.should.equal(updateData.activity);
+          track.lat.should.equal(updateData.lat);
+          track.lng.should.equal(updateData.lng);
         });
     });
   });
@@ -190,26 +190,26 @@ describe('animal tracker API resource', function () {
     //  4. prove that post with the id doesn't exist in db anymore
     it('should delete a tracker by id', function () {
 
-      let post;
+      let track;
 
       return AnimalTracker
         .findOne()
-        .then(_post => {
-          post = _post;
+        .then(_track => {
+          track = _track;
           return chai.request(app)
-            .delete(`/trackers/${post.id}`)
+            .delete(`/trackers/${track.id}`)
             .set('authorization', `Bearer ${token}`)
         })
         .then(res => {
           res.should.have.status(204);
-          return AnimalTracker.findById(post.id);
+          return AnimalTracker.findById(track.id);
         })
-        .then(_post => {
+        .then(_track => {
           // when a variable's value is null, chaining `should`
           // doesn't work. so `_post.should.be.null` would raise
           // an error. `should.be.null(_post)` is how we can
           // make assertions about a null value.
-          should.not.exist(_post);
+          should.not.exist(_track);
         });
     });
   });
