@@ -1,24 +1,111 @@
+.app-page{
+    /* this will be overridden by JS */
+    display:none;
+}
+
+.background {
+    background-image: url("https://community.modeanalytics.com/images/gallery/google-maps-with-markers-1.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 1100px;
+  }
+
 body{
     text-align: center;
 }
+
+.change-password-form{
+    padding: 50px;
+    background-color:  rgba(186, 185, 162, 0.9 );
+    max-width: 25%;
+    margin: auto;
+    margin-top: 80px
+  }
+
+.contents{
+      background-color: rgba(186, 185, 162, 0.8 );
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+  }
+
+  .data-container{
+    padding:10px;
+  }
+
+ #edit-trackers-page{
+    background-color: rgba(186, 185, 162, 0.8 );
+    height: 1100px;
+ }
+
+.image-container-right {
+    width: 20%;
+    float: right;
+    margin: 50px;
+    margin-right: 20px
+}
+
+.image-container-left {
+   width: 20%;
+    float: left;
+    margin: 50px
+}
+
+.image-container-right-tracker{
+ width: 10%;
+ float: right;
+ margin: 30px
+}
+
+.image-container-left-tracker{
+    width: 10%;
+    float: left;
+    margin: 30px
+}
+
 img {
-    max-height: 12%;
-    max-width: 33%;
+  width: 100%;
+  height: 40%;
+  margin-bottom: 30px;
 }
-.image {
-    width: 100%;
-}
+
 input, button{
+    border: 0.2px solid rgb(150, 143, 143);
     margin: auto;
     margin-bottom: 25px;
     padding: 10px;
 }
+
 .main-login{
+    
     padding: 50px;
-    background-color: #d6c2ad;
+    background-color:  rgba(186, 185, 162, 0.9 );
     max-width: 25%;
     margin: auto;
+    margin-top: 80px
 }
+
+.main-signup-form{
+    padding: 50px;
+    background-color:  rgba(186, 185, 162, 0.9 );
+    max-width: 25%;
+    margin: auto;
+    margin-top: 80px
+}
+
+#map-create, #map-edit {
+    height: 300px;
+    width: 50%;
+    margin-top: 100px;
+    margin: auto
+  }
+  
+  #map-create img, #map-edit img {
+      max-width: none;   
+      max-height: none;   
+  }
+
 .new-track{
     margin: auto;
     margin-top: 25px;
@@ -26,18 +113,24 @@ input, button{
     background-color:  #dbc9b8;
     padding: 10px;
 }
+
 #Sign-up {
     color: black; 
     text-decoration: none;
 }
-.top-bar{
-    background-color:  #d6c2ad;
-    padding: 25px;
+
+.title-container {
+    text-align: center;
+    padding-top: 60px
 }
-.app-page{
-    /* this will be overridden by JS */
-    display:none;
-}
+    
+.title {
+     font-size: 25px;
+     background-color:  rgba(186, 185, 162, 0.9 );
+     margin-left: 50px;
+     margin-right: 70px;
+     padding: 20px
+    }
 
 .tracker-data{
     margin: auto;
@@ -48,30 +141,19 @@ input, button{
     padding: 10px;
 }
 
-
-.data-container{
-  padding:10px;
-}
-
-.profile-container{
-background:pink;
-}
-
 .tracker-container{
-    background:lightgreen;
+   background-color: rgba(186, 185, 162, 0.9 );
 }
-
-
 
 /* Dropdown Button */
 .dropbtn {
-    background-color: #d6c2ad;
+    background-color:  rgba(186, 185, 162, 0.8 );
     color: black;
     padding: 16px;
     font-size: 16px;
     border: none;
     cursor: pointer;
-    margin-bottom: 0px;
+    
 }
 
 
@@ -108,19 +190,6 @@ background:pink;
     display:block;
     right: 0;
     left: auto;
-}
-
-#map-create, #map-edit {
-  height: 300px;
-  width: 100%;
-  
-}
-
-#map-create img,
-#map-edit img
-{
-    max-width: none;   
-    max-height: none;   
 }
 
 .close-icon {

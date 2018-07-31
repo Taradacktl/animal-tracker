@@ -236,7 +236,7 @@ function timePicker() {
 function initMap(id = 'map-create', geoPosition = { lat: 34.0522, lng: -118.2437 }) {
 
     var map = new google.maps.Map(document.getElementById(id), {
-        zoom: 4,
+        zoom: 7,
         center: geoPosition
     });
 
