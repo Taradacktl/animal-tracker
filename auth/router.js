@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
 const { User } = require('../users/model');
 const config = require('../config');
+const crypto = require('crypto')
 const router = express.Router();
 
 const createAuthToken = function (user) {
@@ -28,6 +29,43 @@ router.post('/login', localAuth, (req, res) => {
 
 const jwtAuth = passport.authenticate('jwt', { session: false });
 
+
+router.get('/forgotpassword/:emailAddress/:resetToken', async (req, res) => {
+  // TODO check the reset token
+
+  const emailAddress = req.params.emailAddress
+
+  const user = await User.find({ emailAddress })
+
+  // TODO check 
+
+  //return a JWT
+
+})
+
+router.post('/forgotpassword', async (req, res) => {
+  var buf = crypto.randomBytes(16).toString('hex');
+  console.log('Random token of %d bytes in hexadecimal: %s', buf.length, buf);
+
+  const emailAddress = req.body.emailAddress
+
+  const user = await User.findOneAndUpdate({ emailAddress }, {
+    resetPasswordToken: buf,
+    resetPasswordExpires: Date.now() + 3600000,
+  })
+
+  if (user) {
+    res.status(200).json({ user: user.serialize() })
+    //TODO send e-mail
+  } else {
+    res.status(401).json({})
+    //no such user
+  }
+
+
+})
+
+
 router.post('/changepassword', jwtAuth, async (req, res) => {
 
   try {
@@ -42,9 +80,9 @@ router.post('/changepassword', jwtAuth, async (req, res) => {
     }
 
     const hashedPassword = await User.hashPassword(req.body.newPassword)
-    const updatedUser = await User.findByIdAndUpdate(req.user.id, { password: hashedPassword })    
+    const updatedUser = await User.findByIdAndUpdate(req.user.id, { password: hashedPassword })
     res.status(200).json({})
-    
+
   } catch (e) {
     console.error('changepassword ERROR')
     console.error(e)

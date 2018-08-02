@@ -7,6 +7,8 @@ const bcrypt = require('bcryptjs');
 const userSchema = new mongoose.Schema({
   emailAddress: { type: String, required: true, unique: true },
   password: { type: String, required: true },
+  resetPasswordToken: { type: String },
+  resetPasswordExpires: { type: Date },
 });
 
 
@@ -17,11 +19,11 @@ userSchema.methods.serialize = function () {
   };
 };
 
-userSchema.methods.validatePassword = function(password) {
+userSchema.methods.validatePassword = function (password) {
   return bcrypt.compare(password, this.password);
 };
 
-userSchema.statics.hashPassword = function(password) {
+userSchema.statics.hashPassword = function (password) {
   return bcrypt.hash(password, 10);
 };
 
