@@ -96,8 +96,12 @@ function apiChangePasswordPromise(newPassword, retypeNewPassword) {
         url: '/auth/changepassword',
         type: 'POST',
         data: JSON.stringify({ newPassword, retypeNewPassword }),
-        contentType: 'application/json; charset=utf-8',
+        // contentType: 'application/json; charset=utf-8',
         dataType: 'json',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${JWT_TOKEN}`
+        },
     }).then(changepasswordResponse => {
         // debugger
         JWT_TOKEN = changepasswordResponse.authToken
