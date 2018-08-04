@@ -165,6 +165,7 @@ const setupChangePassword = () => {
         apiChangePasswordPromise(newPasswordData.newPassword, newPasswordData.retypeNewPassword)
             .then(
                 () => {
+                    $(`#${CHANGE_PASSWORD_FORM_ID}`)[0].reset()
                     logout()
                     routeTo(LOGIN_DIV_ID)
                 })
