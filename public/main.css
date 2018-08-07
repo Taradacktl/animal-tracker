@@ -212,7 +212,7 @@ font-weight: bold
     right: 0;
     left: auto;
 }
-
+/*
 .close-icon {
 	border:1px solid transparent;
 	background-color: transparent;
@@ -249,7 +249,7 @@ font-weight: bold
 	padding: 10px;
 	
 }
-
+*/
 #myDropdown.js-logged-out .js-route-profile, #myDropdown.js-logged-out .js-route-home,
 #myDropdown.js-logged-out .js-route-logout{
     display:none;

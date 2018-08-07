@@ -108,14 +108,15 @@
 						</div>
 						</div>
 		<form id="tracker-add-form">
-			<input class="flatpickr" type="text" name="date" placeholder="Select Date..." />
-			<button id="form-reset" class="close-icon" type="reset" value=""></button>
+			<input class="flatpickr" type="search" name="date" placeholder="Select Date..." />
 			<input class="timepickr" type="text" name="timeOfDay" placeholder="Select Time...">
-			<input type="text" name="species" placeholder="Species" />
-			<input type="text" name="activity" placeholder="Activity observed" />
-			<input type="hidden" name="lat"  />
-			<input type="hidden" name="lng"  />
+			<input type="search" name="species" placeholder="Species" />
+			<input type="search" name="activity" placeholder="Activity observed" />
+			<input type="search" name="lat" placeholder="Latitude- Drag pin to enter" />
+			<input type="search" name="lng" placeholder="Longitude- Drag pin to enter" />
+			<!-- <button id="form-reset" class="close-icon" type="reset" value=""></button> -->
 			<button type="submit">Post</button>
+			<button id="form-clear" class="close-icon" type="reset" value="">Clear</button>
 		</form>
 	<div class="tracker-column">
 		<div class="js-container data-container tracker-container">
@@ -189,13 +190,18 @@
 			
 			<form id="tracker-edit-form">
 				<input class="flatpickr" type="text" name="date" placeholder="Select Date..." />
+				
 				<input class="timepickr" type="text" name="timeOfDay" placeholder="Select Time">
+				
 				<input type="text" name="species" placeholder="Species" />
+				
 				<input type="text" name="activity" placeholder="Activity observed" />
-				<input type="hidden" name="id" placeholder="" />
-			<input type="hidden" name="lat"  />
-			<input type="hidden" name="lng"  />
+				
+				<input  name="lat" placeholder="Latitude- Drag pin to enter" />
+			
+				<input  name="lng" placeholder="Longitude- Drag pin to enter" />
 				<button type="submit">Save changes</button>
+				<button id="form-reset" class="close-icon" type="reset" value="">Clear</button>
 			</form>
 				<button class="js-route-home">Cancel</button>
 			<div id="map-container"><p class="map-instructions">Drag pin to change location</p><div id="map-edit"></div></div>

@@ -196,9 +196,10 @@ function setupEditTrack() {
             .then(() => {
                 displaySuccessToaster('Tracker updated')
                 routeTo(TRACKERS_DIV_ID)
+                $(`#${TRACKER_FORM_ID}`)[0].reset()
 
             })
-            .catch(displayErrorToaster)
+        .catch(() => displayErrorToaster(createError('Must complete form')))
 
     })
 }
