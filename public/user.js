@@ -171,8 +171,6 @@ const setupChangePassword = () => {
                 })
                 .catch(() => displayErrorToaster(createError('Password change failed')))
 
-                //TODO display a nice message div
-                console.error('Change password FAILED')
             })
 
 }

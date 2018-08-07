@@ -72,11 +72,20 @@ router.post('/changepassword', jwtAuth, async (req, res) => {
     const requiredFields = ['newPassword', 'retypeNewPassword'];
     for (let i = 0; i < requiredFields.length; i++) {
       const field = requiredFields[i];
+
       if (!(field in req.body)) {
         const message = `Missing \`${field}\` in request body`
         console.error(message);
         return res.status(400).send(message);
       }
+    }
+
+    if (req.body.newPassword.length < 4) {
+      return res.status(400).send({ message: 'Password is too short' });
+    }
+
+    if (req.body.newPassword !== req.body.retypeNewPassword) {
+      return res.status(400).send({ message: 'Passwords do not match' });
     }
 
     const hashedPassword = await User.hashPassword(req.body.newPassword)
