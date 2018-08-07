@@ -45,7 +45,7 @@ function logout() {
 const setupLogoutButton = () => {
 
     $('body').on('click', '.js-route-logout', ev => {
-        ev.preventDefault()    
+        ev.preventDefault()
         logout()
         routeTo(LOGIN_DIV_ID)
     })
@@ -67,10 +67,10 @@ const setupLoginButton = () => {
                     routeTo(TRACKERS_DIV_ID)
                     return displayTrackerList()
                 })
-                .catch(() => displayErrorToaster(createError('Must provide valid email and password')))
-                //TODO display a nice message div
-                console.error('LOGIN FAILED')
-            })
+            .catch(() => displayErrorToaster(createError('Must provide valid email and password')))
+        //TODO display a nice message div
+        console.error('LOGIN FAILED')
+    })
 }
 
 //TODO 6/7 create a new user with email address and password
@@ -136,16 +136,16 @@ const setupSignUpButton = () => {
         apiSignupPromise(formData.emailAddress, formData.password)
             .then(
                 () => {
-                  //  document.getElementById(LOGIN_FORM_ID).reset()
+                    //  document.getElementById(LOGIN_FORM_ID).reset()
                     routeTo(LOGIN_DIV_ID)
                     // routeTo(TRACKERS_DIV_ID)
                     // return displayTrackerList()
                 })
-                .catch(() => displayErrorToaster(createError('Must provide a unique email address')))
+            .catch(() => displayErrorToaster(createError('Must provide a unique email address')))
 
-                //TODO display a nice message div
-                console.error('Sign up FAILED')
-            
+        //TODO display a nice message div
+        console.error('Sign up FAILED')
+
 
     })
 }
@@ -154,11 +154,16 @@ const setupChangePassword = () => {
     $(`#${CHANGE_PASSWORD_FORM_ID}`).on('submit', ev => {
         ev.preventDefault()
         console.log('CLICKED')
-     //   const newPassword = `#${CHANGE_PASSWORD_FORM_ID} input[name="${newPassword}"]`
-       const newPasswordData = {
-       newPassword: $('input[name="newPassword"]').val(),
-       retypeNewPassword: $('input[name="retypeNewPassword').val(),
-       }
+        //   const newPassword = `#${CHANGE_PASSWORD_FORM_ID} input[name="${newPassword}"]`
+        const newPasswordData = {
+            newPassword: $('input[name="newPassword"]').val(),
+            retypeNewPassword: $('input[name="retypeNewPassword').val(),
+        }
+
+        if (newPasswordData.newPasswordData.length < 4) {
+            //TODO display nice toaster
+            return
+        }
 
         console.log('PASSWORD:', newPasswordData)
 
@@ -169,13 +174,13 @@ const setupChangePassword = () => {
                     logout()
                     routeTo(LOGIN_DIV_ID)
                 })
-                .catch(() => displayErrorToaster(createError('Password change failed')))
+            .catch(() => displayErrorToaster(createError('Password change failed')))
 
-            })
+    })
 
 }
 
- /* When the user clicks on the button, 
+/* When the user clicks on the button, 
 toggle between hiding and showing the dropdown content */
 function menuFunction() {
     document.getElementById("myDropdown").classList.toggle("show");
@@ -183,24 +188,24 @@ function menuFunction() {
 }
 
 // Close the dropdown menu if the user clicks outside of it
-window.onclick = function(event) {
-  if (!event.target.matches('.js-dropbtn')) {
+window.onclick = function (event) {
+    if (!event.target.matches('.js-dropbtn')) {
 
-    var dropdowns = document.getElementsByClassName("dropdown-content");
-    var i;
-    for (i = 0; i < dropdowns.length; i++) {
-      var openDropdown = dropdowns[i];
-      if (openDropdown.classList.contains('show')) {
-        openDropdown.classList.remove('show');
-      }
+        var dropdowns = document.getElementsByClassName("dropdown-content");
+        var i;
+        for (i = 0; i < dropdowns.length; i++) {
+            var openDropdown = dropdowns[i];
+            if (openDropdown.classList.contains('show')) {
+                openDropdown.classList.remove('show');
+            }
+        }
     }
-  }
-}   
+}
 
 const setupCancelButton = () => {
 
     $('body').on('click', '.js-route-home', ev => {
-        ev.preventDefault()    
+        ev.preventDefault()
         routeTo(TRACKERS_DIV_ID)
     })
 }
