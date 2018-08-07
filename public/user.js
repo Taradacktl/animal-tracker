@@ -67,13 +67,10 @@ const setupLoginButton = () => {
                     routeTo(TRACKERS_DIV_ID)
                     return displayTrackerList()
                 })
-            .catch(err => {
-
+                .catch(() => displayErrorToaster(createError('Must provide valid email and password')))
                 //TODO display a nice message div
                 console.error('LOGIN FAILED')
             })
-
-    })
 }
 
 //TODO 6/7 create a new user with email address and password
@@ -112,10 +109,12 @@ function apiChangePasswordPromise(newPassword, retypeNewPassword) {
 const setupRouteHandlers = () => {
     $('.js-route-signup').on('click', ev => {
         ev.preventDefault()
+        document.getElementById(LOGIN_FORM_ID).reset()
         routeTo(SIGNUP_DIV_ID)
     })
     $('.js-route-login').on('click', ev => {
         ev.preventDefault()
+        document.getElementById(SIGNUP_FORM_ID).reset()
         routeTo(LOGIN_DIV_ID)
     })
 
@@ -137,15 +136,16 @@ const setupSignUpButton = () => {
         apiSignupPromise(formData.emailAddress, formData.password)
             .then(
                 () => {
+                  //  document.getElementById(LOGIN_FORM_ID).reset()
                     routeTo(LOGIN_DIV_ID)
                     // routeTo(TRACKERS_DIV_ID)
                     // return displayTrackerList()
                 })
-            .catch(err => {
+                .catch(() => displayErrorToaster(createError('Must provide a unique email address')))
 
                 //TODO display a nice message div
                 console.error('Sign up FAILED')
-            })
+            
 
     })
 }
@@ -169,12 +169,12 @@ const setupChangePassword = () => {
                     logout()
                     routeTo(LOGIN_DIV_ID)
                 })
-            .catch(err => {
+                .catch(() => displayErrorToaster(createError('Password change failed')))
 
                 //TODO display a nice message div
                 console.error('Change password FAILED')
             })
-    })
+
 }
 
  /* When the user clicks on the button, 
