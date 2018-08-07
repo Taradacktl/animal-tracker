@@ -32,7 +32,8 @@ function displayTracker(tracker) {
         <p>Time of day: ${tracker.timeOfDay}</p>
         <p>Species: ${tracker.species}</p>
         <p>Activity: ${tracker.activity}</p>
-        <p>Location: lat: ${tracker.lat} long: ${tracker.lng}</p>
+        <p>Lat: ${tracker.lat}</p>
+        <p>Long: ${tracker.lng}</p>
         <!-- <button type="submit">Edit</button> -->
         <button class="js-edit-tracker" data-id="${tracker.id}">Edit</button>
         <button class="js-delete-tracker" data-id="${tracker.id}">Delete</button>
@@ -195,9 +196,10 @@ function setupEditTrack() {
             .then(() => {
                 displaySuccessToaster('Tracker updated')
                 routeTo(TRACKERS_DIV_ID)
+                $(`#${TRACKER_FORM_ID}`)[0].reset()
 
             })
-            .catch(displayErrorToaster)
+        .catch(() => displayErrorToaster(createError('Must complete form')))
 
     })
 }
