@@ -61,7 +61,8 @@ router.put('/:id', jwtAuth, jsonParser, (req, res) => {
 	if (!(req.params.id && req.body.id && req.params.id === req.body.id)) {
 		const message =
 			`Request path id (${req.params.id}) and request body id ` +
-			`(${req.body.id}) must match`;
+            `(${req.body.id}) must match`;
+            console.log('req.body.id:', req.body.id)
 		console.error(message);
 		return res.status(400).json({message: message});
 	}
