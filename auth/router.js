@@ -80,6 +80,14 @@ router.post('/changepassword', jwtAuth, async (req, res) => {
       }
     }
 
+    const userRecord = await User.findById(req.user.id)
+
+    const validPassword = await userRecord.validatePassword(req.body.currentPassword)
+
+    if (!validPassword) {
+      return res.status(400).send({ message: 'Current password is wrong' });
+    }
+
     if (req.body.newPassword.length < 4) {
       return res.status(400).send({ message: 'Password is too short' });
     }
