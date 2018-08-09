@@ -88,11 +88,11 @@ function apiSignupPromise(emailAddress, password) {
     })
 }
 
-function apiChangePasswordPromise(newPassword, retypeNewPassword) {
+function apiChangePasswordPromise(newPassword, retypeNewPassword, currentPassword) {
     return $.ajax({
         url: '/auth/changepassword',
         type: 'POST',
-        data: JSON.stringify({ newPassword, retypeNewPassword }),
+        data: JSON.stringify({ newPassword, retypeNewPassword, currentPassword }),
         // contentType: 'application/json; charset=utf-8',
         dataType: 'json',
         headers: {
@@ -157,6 +157,7 @@ const setupChangePassword = () => {
         //   const newPassword = `#${CHANGE_PASSWORD_FORM_ID} input[name="${newPassword}"]`
         const newPasswordData = {
             newPassword: $('input[name="newPassword"]').val(),
+            currentPassword: $('input[name="current-password"]').val(),
             retypeNewPassword: $('input[name="retypeNewPassword').val(),
         }
 
@@ -169,7 +170,11 @@ const setupChangePassword = () => {
 
         console.log('PASSWORD:', newPasswordData)
 
-        apiChangePasswordPromise(newPasswordData.newPassword, newPasswordData.retypeNewPassword)
+        apiChangePasswordPromise(
+            newPasswordData.newPassword, 
+            newPasswordData.retypeNewPassword, 
+            newPasswordData.currentPassword
+        )
             .then(
                 () => {
                     $(`#${CHANGE_PASSWORD_FORM_ID}`)[0].reset()

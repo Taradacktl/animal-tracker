@@ -19,7 +19,7 @@ router.post('/create', jsonParser, (req, res) => {
         }
     }
     //validation went well, now create the Mongo record
-
+    //cleartext password
     const userPromise =
         User.hashPassword(req.body.password).then(hashedPassword =>
             User.create({
