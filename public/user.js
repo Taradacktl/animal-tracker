@@ -68,8 +68,8 @@ const setupLoginButton = () => {
                     return displayTrackerList()
                 })
             .catch(() => displayErrorToaster(createError('Must provide valid email and password')))
-        //TODO display a nice message div
-        console.error('LOGIN FAILED')
+  
+     
     })
 }
 
@@ -160,9 +160,11 @@ const setupChangePassword = () => {
             retypeNewPassword: $('input[name="retypeNewPassword').val(),
         }
 
-        if (newPasswordData.newPasswordData.length < 4) {
-            //TODO display nice toaster
-            return
+        if (newPasswordData.newPassword.length < 4) {
+            return displayErrorToaster(createError('Password must be at least 4 characters'))
+        }
+        if (newPasswordData.newPassword !== newPasswordData.retypeNewPassword){
+            return displayErrorToaster(createError('Passwords do not match'))
         }
 
         console.log('PASSWORD:', newPasswordData)
@@ -184,7 +186,6 @@ const setupChangePassword = () => {
 toggle between hiding and showing the dropdown content */
 function menuFunction() {
     document.getElementById("myDropdown").classList.toggle("show");
-    console.log("menu clicked")
 }
 
 // Close the dropdown menu if the user clicks outside of it
