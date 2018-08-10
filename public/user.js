@@ -212,6 +212,7 @@ const setupCancelButton = () => {
 
     $('body').on('click', '.js-route-home', ev => {
         ev.preventDefault()
+        $(`#${CHANGE_PASSWORD_FORM_ID}`)[0].reset()
         routeTo(TRACKERS_DIV_ID)
     })
 }
