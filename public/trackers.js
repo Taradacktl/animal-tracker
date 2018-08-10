@@ -263,3 +263,12 @@ function initMap(id = 'map-create', geoPosition = { lat: 34.0522, lng: -118.2437
     });
 
 }
+
+const setupCancelButton2 = () => {
+
+    $('body').on('click', '.js-route-home', ev => {
+        ev.preventDefault()
+        $(`#${EDIT_TRACK_FORM_ID}`)[0].reset()
+        routeTo(TRACKERS_DIV_ID)
+    })
+}

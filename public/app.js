@@ -21,8 +21,10 @@ $(() => {
     initMap()
     setupAddTrackerForm()
     setupEditTrackLinks()
+    setupCancelButton2()
     setupDeleteTrackLinks()
     setupCancelButton()
+    
     //profile stuff
     setupChangePassword()
 
