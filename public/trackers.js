@@ -24,9 +24,14 @@ const TRACKS = 'tracks'
 //     ]
 // }
 
+function getListingID(id) {
+    return `tracker-listing-${id}`
+}
+
 function displayTracker(tracker) {
+    const id = getListingID(tracker.id)
     return `
-    <div id="tracks">
+    <div id="${id}" class="tracker-listing">
 	    <p>Track id: ${tracker.id}</p>
         <p>Date: ${tracker.date}</p>
         <p>Time of day: ${tracker.timeOfDay}</p>
@@ -41,9 +46,35 @@ function displayTracker(tracker) {
     `
 }
 
+function handleMarkerClick(listingID) {
+    const listEl = $(`#${listingID}`)
+
+    $('.tracker-container').animate({
+        scrollTop: listEl.offset().top
+    }, 500);
+
+    $('.tracker-listing').removeClass('tracker-selected')
+    $(`#${listingID}`).addClass('tracker-selected')
+}
+
 function displayTrackerList() {
     const trackersPromise = getTrackersPromise()
     return trackersPromise.then(trackers => {
+
+        trackers.forEach(tracker => {
+            const { date, timeOfDay, species, activity, lat, lng } = tracker
+            const title = `${species} - ${activity} @${date} ${timeOfDay}`
+            var marker = new google.maps.Marker({
+                position: { lat, lng }, //{lat:lat, lng:lng}
+                map: MAP,
+                title: title,
+                draggable: false
+            });
+            const listingID = getListingID(tracker.id)
+            const handler = function () { handleMarkerClick(listingID) }
+            marker.addListener('click', handler);
+        })
+
         const htmlString = trackers.map(displayTracker).join(' ')
         $(`#${TRACKERS_DIV_ID} .js-container`).html(htmlString)
     }).catch(displayErrorToaster)
@@ -199,7 +230,7 @@ function setupEditTrack() {
                 $(`#${TRACKER_FORM_ID}`)[0].reset()
 
             })
-        .catch(() => displayErrorToaster(createError('Must complete form')))
+            .catch(() => displayErrorToaster(createError('Must complete form')))
 
     })
 }
@@ -235,9 +266,10 @@ function timePicker() {
     })
 }
 
+let MAP
 function initMap(id = 'map-create', geoPosition = { lat: 34.0522, lng: -118.2437 }) {
 
-    var map = new google.maps.Map(document.getElementById(id), {
+    MAP = new google.maps.Map(document.getElementById(id), {
         zoom: 7,
         center: geoPosition,
         mapTypeId: 'terrain'
@@ -245,7 +277,8 @@ function initMap(id = 'map-create', geoPosition = { lat: 34.0522, lng: -118.2437
 
     var marker = new google.maps.Marker({
         position: geoPosition,
-        map: map,
+        label: 'ADD',
+        map: MAP,
         title: 'Los Angeles',
         draggable: true
     });
