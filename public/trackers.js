@@ -239,7 +239,8 @@ function initMap(id = 'map-create', geoPosition = { lat: 34.0522, lng: -118.2437
 
     var map = new google.maps.Map(document.getElementById(id), {
         zoom: 7,
-        center: geoPosition
+        center: geoPosition,
+        mapTypeId: 'terrain'
     });
 
     var marker = new google.maps.Marker({
@@ -257,7 +258,7 @@ function initMap(id = 'map-create', geoPosition = { lat: 34.0522, lng: -118.2437
             lat: event.latLng.lat(),
             lng: event.latLng.lng(),
         }
-        console.log('Pin dropped!', event.latLng.lat(), event.latLng.lng())
+        console.log('Pin dropped:', event.latLng.lat(), event.latLng.lng())
         $('input[name="lat"]').val(coords.lat)
         $('input[name="lng"]').val(coords.lng)
     });
