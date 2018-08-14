@@ -254,3 +254,15 @@ font-weight: bold
 #myDropdown.js-logged-out .js-route-logout{
     display:none;
 }
+
+.tracker-selected{
+background:lightgreen;
+}
+
+.tracker-listing{
+    position:relative;
+}
+
+.tracker-container{
+    position:relative;
+}

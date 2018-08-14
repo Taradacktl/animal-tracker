@@ -62,9 +62,12 @@ router.get('/forgotpassword/:emailAddress/:resetToken', async (req, res) => {
     const hashedPassword = await User.hashPassword(newPassword)
     const updatedUser = await User.findByIdAndUpdate(user._id, { password: hashedPassword })
 
+    const loginURL = fullUrl(req, '/')
+
     res.status(200).send(`
-    Hello, ${user.emailAddress}
+    <h4>Hello, ${user.emailAddress}</h4>
     Your new password is: ${newPassword}
+    Please use it to login here: <a href="${loginURL}">here</a>
     `)
   } catch (error) {
     res.status(400).send(`There was an error: <pre>${error.toString()}</pre>`)
