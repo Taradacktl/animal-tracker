@@ -90,21 +90,21 @@ router.post('/forgotpassword', async (req, res) => {
     const link = fullUrl(req, `/auth/forgotpassword/${emailAddress}/${buf}`)
 
     const mailInfo = JSON.parse(process.env.MAIL_INFO_JSON)
-    // let transporter = nodemailer.createTransport(mailInfo.TRANSPORT);
-    const transporter = nodemailer.createTransport({
-      host: 'smtp.ethereal.email',
-      port: 587,
-      auth: {
-        user: 'hkpzsxgcddw72il4@ethereal.email',
-        pass: 'aM5SPGGquDFszCZAfG'
-      }
-    });
+    let transporter = nodemailer.createTransport(mailInfo);
+    // const transporter = nodemailer.createTransport({
+    //   host: 'smtp.ethereal.email',
+    //   port: 587,
+    //   auth: {
+    //     user: 'hkpzsxgcddw72il4@ethereal.email',
+    //     pass: 'aM5SPGGquDFszCZAfG'
+    //   }
+    // });
 
     // NOTE see about sending fake emails for test purposes here https://nodemailer.com/about/
     // NOTE please go here to enable less secure apps
     // https://myaccount.google.com/lesssecureapps
     let mailOptions = {
-      from: mailInfo.FROM, // sender address
+      from: config.EMAIL_SENDER, // sender address
       to: emailAddress, // list of receivers
       subject: 'Animal tracker: reset password requested', // Subject line
       text: `And here is your link: ${link}`, // plain text body
