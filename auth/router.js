@@ -1,4 +1,6 @@
 'use strict';
+const nodemailer = require('nodemailer')
+const url = require('url');
 const express = require('express');
 const passport = require('passport');
 const bodyParser = require('body-parser');
@@ -7,6 +9,16 @@ const { User } = require('../users/model');
 const config = require('../config');
 const crypto = require('crypto')
 const router = express.Router();
+
+function fullUrl(req, relativeURL) {
+  return url.format({
+    protocol: req.protocol,
+    host: req.get('host'),
+    pathname: relativeURL
+  });
+}
+
+
 
 const createAuthToken = function (user) {
   return jwt.sign({ user }, config.JWT_SECRET, {
@@ -33,14 +45,30 @@ const jwtAuth = passport.authenticate('jwt', { session: false });
 router.get('/forgotpassword/:emailAddress/:resetToken', async (req, res) => {
   // TODO check the reset token
 
-  const emailAddress = req.params.emailAddress
+  try {
+    const { emailAddress, resetToken } = req.params
 
-  const user = await User.find({ emailAddress })
+    const user = await User.findOne({ emailAddress })
 
-  // TODO check 
+    if (!user) {
+      return res.status(400).send('No such user')
+    }
 
-  //return a JWT
+    if (user.resetPasswordToken !== resetToken) {
+      return res.status(400).send('Bad token, try again')
+    }
 
+    const newPassword = crypto.randomBytes(8).toString('hex');
+    const hashedPassword = await User.hashPassword(newPassword)
+    const updatedUser = await User.findByIdAndUpdate(user._id, { password: hashedPassword })
+
+    res.status(200).send(`
+    Hello, ${user.emailAddress}
+    Your new password is: ${newPassword}
+    `)
+  } catch (error) {
+    res.status(400).send(`There was an error: <pre>${error.toString()}</pre>`)
+  }
 })
 
 router.post('/forgotpassword', async (req, res) => {
@@ -55,10 +83,35 @@ router.post('/forgotpassword', async (req, res) => {
   })
 
   if (user) {
-    res.status(200).json({ user: user.serialize() })
-    //TODO send e-mail
+
+    const link = fullUrl(req, `/auth/forgotpassword/${emailAddress}/${buf}`)
+
+    const mailInfo = JSON.parse(process.env.MAIL_INFO_JSON)
+    let transporter = nodemailer.createTransport(mailInfo.TRANSPORT);
+
+    // NOTE see about sending fake emails for test purposes here https://nodemailer.com/about/
+    // NOTE please go here to enable less secure apps
+    // https://myaccount.google.com/lesssecureapps
+    let mailOptions = {
+      from: mailInfo.FROM, // sender address
+      to: emailAddress, // list of receivers
+      subject: 'Animal tracker: reset password requested', // Subject line
+      text: `And here is your link: ${link}`, // plain text body
+      // html: '<b>Hello world?</b>' // html body
+    };
+
+    // send mail with defined transport object
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        return res.status(500).json({ message: 'CANNOT_SEND_MAIL', error })
+      }
+      console.log('Message sent: %s', info.messageId);
+      res.status(200).json({ user: user.serialize() })
+
+    });
+
   } else {
-    res.status(401).json({})
+    res.status(404).json({ message: 'USER_NOT_FOUND' })
     //no such user
   }
 

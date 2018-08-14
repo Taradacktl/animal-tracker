@@ -1,4 +1,6 @@
 'use strict';
+const _env = require('dotenv').config()
+
 const passport = require('passport');
 const { router: authRouter, localStrategy, jwtStrategy } = require('./auth');
 

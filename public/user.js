@@ -68,8 +68,8 @@ const setupLoginButton = () => {
                     return displayTrackerList()
                 })
             .catch(() => displayErrorToaster(createError('Must provide valid email and password')))
-  
-     
+
+
     })
 }
 
@@ -118,12 +118,48 @@ const setupRouteHandlers = () => {
         routeTo(LOGIN_DIV_ID)
     })
 
+    $('.js-route-reset-password').on('click', ev => {
+        ev.preventDefault()
+        document.getElementById(RESET_PASSWORD_FORM_ID).reset()
+        routeTo(RESET_PASSWORD_DIV_ID)
+    })
+
     //TODO 6/11 make sure user is logged in
     $('.js-route-profile').on('click', ev => {
         ev.preventDefault()
         routeTo(PROFILE_DIV_ID)
     })
 }
+
+
+function apiResetPasswordPromise(emailAddress) {
+    return $.ajax({
+        url: RESET_URL,
+        type: 'POST',
+        data: JSON.stringify({ emailAddress }),
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+    })
+}
+
+const setupResetPassword = () => {
+    $(`#${RESET_PASSWORD_FORM_ID}`).on('submit', ev => {
+        ev.preventDefault()
+        const emailAddress = $(`#${RESET_PASSWORD_FORM_ID} input[name="emailAddress"]`).val()
+        displaySuccessToaster(`Please wait, sending e-mail to ${emailAddress}...`)
+        apiResetPasswordPromise(emailAddress).then(res => {
+            displaySuccessToaster('Please check your email inbox, we sent a password reset link')
+        }).catch(xhr => {
+            if (xhr && xhr.status === 404) {
+                displayErrorToaster(createError('This email is not registered'))
+            } else {
+                displayErrorToaster(createError('Unknown error, is this e-mail registered?'))
+            }
+        })
+    })
+}
+
+
 //TODO 6/14 if passwords dont match error message
 const setupSignUpButton = () => {
     $(`#${SIGNUP_FORM_ID}`).on('submit', ev => {
@@ -164,15 +200,15 @@ const setupChangePassword = () => {
         if (newPasswordData.newPassword.length < 4) {
             return displayErrorToaster(createError('Password must be at least 4 characters'))
         }
-        if (newPasswordData.newPassword !== newPasswordData.retypeNewPassword){
+        if (newPasswordData.newPassword !== newPasswordData.retypeNewPassword) {
             return displayErrorToaster(createError('Passwords do not match'))
         }
 
         console.log('PASSWORD:', newPasswordData)
 
         apiChangePasswordPromise(
-            newPasswordData.newPassword, 
-            newPasswordData.retypeNewPassword, 
+            newPasswordData.newPassword,
+            newPasswordData.retypeNewPassword,
             newPasswordData.currentPassword
         )
             .then(
