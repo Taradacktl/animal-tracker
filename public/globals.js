@@ -20,6 +20,11 @@ const SIGNUP_DIV_ID = 'users-signup'
 
 const SIGNUP_FORM_ID = 'signup-form'
 const CHANGE_PASSWORD_FORM_ID = 'change-password'
+
+const RESET_URL = 'auth/forgotpassword'
+const RESET_PASSWORD_DIV_ID = 'password-reset-page'
+const RESET_PASSWORD_FORM_ID = 'password-reset-form'
+
 // const PROFILE_URL = '/auth/refresh-auth-token'
 let JWT_TOKEN = null
 
@@ -39,7 +44,7 @@ function displayErrorToaster(err){
 
 function displaySuccessToaster(message){    
     toastr.remove()
-    toastr.success(message, 'Success')
+    toastr.success(message, 'Info')
 }
 
 

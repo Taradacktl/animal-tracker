@@ -27,6 +27,7 @@ $(() => {
     
     //profile stuff
     setupChangePassword()
+    setupResetPassword()
 
     toastr.options.preventDuplicates = true;
     //jquery: display toasters when performing AJAX
