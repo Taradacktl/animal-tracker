@@ -87,7 +87,15 @@ router.post('/forgotpassword', async (req, res) => {
     const link = fullUrl(req, `/auth/forgotpassword/${emailAddress}/${buf}`)
 
     const mailInfo = JSON.parse(process.env.MAIL_INFO_JSON)
-    let transporter = nodemailer.createTransport(mailInfo.TRANSPORT);
+    // let transporter = nodemailer.createTransport(mailInfo.TRANSPORT);
+    const transporter = nodemailer.createTransport({
+      host: 'smtp.ethereal.email',
+      port: 587,
+      auth: {
+        user: 'hkpzsxgcddw72il4@ethereal.email',
+        pass: 'aM5SPGGquDFszCZAfG'
+      }
+    });
 
     // NOTE see about sending fake emails for test purposes here https://nodemailer.com/about/
     // NOTE please go here to enable less secure apps
@@ -106,6 +114,7 @@ router.post('/forgotpassword', async (req, res) => {
         return res.status(500).json({ message: 'CANNOT_SEND_MAIL', error })
       }
       console.log('Message sent: %s', info.messageId);
+      console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
       res.status(200).json({ user: user.serialize() })
 
     });
