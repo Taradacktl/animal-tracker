@@ -17,6 +17,10 @@ body{
     background-color:grey;
 }
 
+header{
+    position:relative;
+}
+
 .main-wrapper {
     
     background-image: url("https://community.modeanalytics.com/images/gallery/google-maps-with-markers-1.png");
@@ -113,7 +117,7 @@ button{
 
 input, button{
     
-    border: 0.2px solid rgb(150, 143, 143);
+    border: 0.2px solid #5E2B0B;
     margin: auto;
     margin-bottom: 10px;
     padding: 10px;
@@ -194,7 +198,8 @@ font-weight: bold
     background-color:  rgba(186, 185, 162, 0.9 );
     margin: auto;
     /* margin-top: 2%; */
-    padding: 10px
+    padding: 10px;
+    margin-bottom:1vh;
     }
 
 .tracker-column {
@@ -235,8 +240,8 @@ font-weight: bold
 /* The container <div> - needed to position the dropdown content */
 .dropdown {
     position: absolute;
-    right:1em;;
-    top:1em;
+    right:0;
+    top:0;
     z-index:99;
 }
 
