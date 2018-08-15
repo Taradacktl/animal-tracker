@@ -21,7 +21,10 @@ body{
     margin: auto;
     margin-top: 80px
   }
-
+  .container{
+    max-width: 1200px;
+    margin: auto;
+}
 .contents{
       background-color: rgba(186, 185, 162, 0.8 );
       top: 0;
@@ -131,7 +134,7 @@ font-weight: bold
 
 .title-container {
     text-align: center;
-    padding-top: 3%
+
 }
     
 .title {
@@ -139,7 +142,7 @@ font-weight: bold
      background-color:  rgba(186, 185, 162, 0.9 );
      margin-left: 50px;
      margin-right: 70px;
-     padding: 20px
+     padding: 20px;
     }
 
 #tracker-add-form {
@@ -154,13 +157,22 @@ font-weight: bold
     margin: 2%;
     height: 500px;
     float: left;
-    min-width: 45%;
+    min-width: 30%;
+}
+
+.tracker-column2 {
+    background-color: rgba(186, 185, 162, 0.9 );
+    margin: 2%;
+    height: 500px;
+    float: right;
+    min-width: 60%;
 }
 .tracker-container{
    background-color: rgba(186, 185, 162, 0.9 );
    overflow: auto;
    height: 500px;
    font-weight: bold;
+   text-align: left
 }
 #tracks {
     box-shadow: 0 1px 3px rgba(0,0,0,.1);
