@@ -286,3 +286,32 @@ background:lightgreen;
 .tracker-container{
     position:relative;
 }
+
+#image-carousel{
+    position:relative;
+    height:30vh;
+    width:100%;
+    /* overflow:hidden; */
+}
+
+.slide{
+    height:30vh;
+    width:70vw;
+    background:lightgrey;
+    margin-right:30px;
+    font-size:30px;
+    /* height:100px; */
+    /* width:100px; */
+}
+
+.slick-track{
+    height:30vh;
+}
+
+/* .slick-slide {
+    height:200px;
+ }
+ 
+ .slick-slide img {
+    height:200px;
+ } */

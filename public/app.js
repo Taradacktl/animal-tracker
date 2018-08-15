@@ -38,4 +38,18 @@ $(() => {
         },
        // beforeSend: () => { toastr.info('Please wait...'); },
     })
+
+    $('#image-carousel').slick({
+        lazyLoad: 'ondemand',
+        dots: false,
+        infinite: true,
+        speed: 300,
+        slidesToShow: 2,
+        centerMode: true,
+        variableWidth: true,
+        autoplay:true,
+        autoplaySpeed: 2000,
+      });
+
+
 })
