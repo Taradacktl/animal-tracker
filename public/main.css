@@ -23,12 +23,19 @@ body{
     background-repeat: no-repeat;
     background-size: cover;
     min-height:100vh;
-    max-width:1200px;
-    margin: 0 auto;
+    
+    
     
   }
-.inner-wrapper{
+
+.middle-wrapper{
     background-color:rgba(0,0,0,0.7);
+  }
+
+  .inner-wrapper{
+    position:relative;
+    margin: 0 auto;
+    max-width:1200px;
     min-height:100vh;
     padding:1%;
 }
@@ -153,16 +160,24 @@ font-weight: bold
 }
 
 .title-container {
+    background-color:  rgba(186, 185, 162, 0.5 );
+    /* position:absolute;
+    top:0;
+    left:50%;
+    transform:translateX(-50%); */
+    z-index:99;
     text-align: center;
-    padding-top: 3%
+    padding:1vh;
+}
+.title-container *{
+    line-height:1.2;
+    margin:0;
+    padding:0;
 }
     
 .title {
-     font-size: 25px;
-     background-color:  rgba(186, 185, 162, 0.9 );
-     margin-left: 50px;
-     margin-right: 70px;
-     padding: 20px
+     font-size: 1em;
+     
     }
 
 #tracker-add-form {
@@ -196,21 +211,23 @@ font-weight: bold
 }
 /* Dropdown Button */
 .dropbtn {
-    background-color:  rgba(186, 185, 162, 0.8 );
+    background-color:  rgba(186, 185, 162, 0.9 );
+    border: 1px solid #333;
     color: black;
     padding: 16px;
     font-size: 16px;
-    border: none;
-    cursor: pointer;
-    
+    /* border: none; */
+    cursor: pointer;    
 }
 
 
 
 /* The container <div> - needed to position the dropdown content */
 .dropdown {
-    float: right;
-    position: relative;
+    position: absolute;
+    right:1em;;
+    top:1em;
+    z-index:99;
 }
 
 /* Dropdown Content (Hidden by Default) */
