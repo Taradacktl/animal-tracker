@@ -63,7 +63,7 @@ function displayTrackerList() {
 
         trackers.forEach(tracker => {
             const { date, timeOfDay, species, activity, lat, lng } = tracker
-            const title = `${species} - ${activity} @${date} ${timeOfDay}`
+            const title = `${species} - ${activity} - ${date} @ ${timeOfDay}`
             var marker = new google.maps.Marker({
                 position: { lat, lng }, //{lat:lat, lng:lng}
                 map: MAP,
@@ -254,7 +254,7 @@ function datePicker() {
     $('.flatpickr').flatpickr({
         altInput: true,
         altFormat: "F j, Y",
-        dateFormat: "Y-m-d",
+        dateFormat: "m-d-Y",
     })
 }
 
