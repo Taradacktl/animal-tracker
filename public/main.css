@@ -221,9 +221,9 @@ font-weight: bold
 }
 /* Dropdown Button */
 .dropbtn {
-    background-color:  rgba(186, 185, 162, 0.9 );
+    background: #5E2B0B;
     border: 1px solid #333;
-    color: black;
+    color: white;
     padding: 16px;
     font-size: 16px;
     /* border: none; */
