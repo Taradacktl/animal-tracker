@@ -2,93 +2,96 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 
 const mongoose = require('mongoose');
-//const faker = require('faker');
-const {closeServer, runServer, app, runExpress} = require('../server');
-const { TEST_DATABASE_URL } = require('../config');
+const jwt = require('jsonwebtoken');
+const { closeServer, runServer, app, runExpress } = require('../server');
+const { User } = require('../users/model');
+const { JWT_SECRET, TEST_DATABASE_URL } = require('../config');
 const { AnimalTracker } = require('../trackers/model');
+const { testUtilSeedData } = require('./helpers')
+
 const expect = chai.expect;
 const should = chai.should();
 chai.use(chaiHttp);
 
- describe('animal tracker API resource', function () {
+const emailAddress = 'me@example.com';
+const password = 'haxxor';
 
-  before(function() {
-    return runServer(TEST_DATABASE_URL);
-  });
- 
-  after(function() {
-     return closeServer();
+const trackerSeedData = [
+  {
+    date: 'nov',
+    timeOfDay: 'day',
+    species: 'deer',
+    activity: 'eating',
+    lat: 78.987,
+    lng: 7.890,
+  }
+]
+
+
+describe('animal tracker API resource', function () {
+  const token = jwt.sign(
+    {
+      user: {
+        emailAddress,
+      },
+    },
+    JWT_SECRET,
+    {
+      algorithm: 'HS256',
+      subject: emailAddress,
+      expiresIn: Math.floor(Date.now() / 1000) - 10 // Expired ten seconds ago
+    }
+  );
+  before(async function () {
+    await runServer(TEST_DATABASE_URL);
+    await testUtilSeedData(AnimalTracker, trackerSeedData)
   });
 
-  describe('Root URL', function() {
- 
-  it('should respond with a status of 200 and HTML', function() {
-    return chai.request(app)
+  after(function () {
+    return closeServer();
+  });
+
+
+  beforeEach(async function () {
+    await User.remove({});
+    return User.hashPassword(password).then(hashedPassword => {
+      // console.log('password/password hash' ,password, hashedPassword)
+      return User.create({
+        emailAddress,
+        password: hashedPassword
+      })
+    }
+    );
+  });
+
+
+  describe('Root URL', function () {
+
+    it('should respond with a status of 200 and HTML', function () {
+      return chai.request(app)
         .get('/')
-        .then(function(res) {
+        .then(function (res) {
           expect(res).to.have.status(200);
           expect(res).to.be.html;
         });
     });
   });
 
- describe('GET endpoint', function () {
+  describe('GET endpoint', function () {
 
-    it('should return all existing posts', function () {
-      // strategy:
-      //    1. get back all posts returned by by GET request to `/posts`
-      //    2. prove res has right status, data type
-      //    3. prove the number of posts we got back is equal to number
-      //       in db.
-      let res;
-      return chai.request(app)
-        .get('/posts')
-        .then(_res => {
-          res = _res;
-          res.should.have.status(200);
-          // otherwise our db seeding didn't work
-    //      res.body.should.have.lengthOf.at.least(1);
 
-          return AnimalTracker.count();
-        })
-        .then(count => {
-          // the number of returned posts should be same
-          // as number of posts in DB
-          res.body.should.have.lengthOf(count);
-        });
+    it('should return trackers with right fields', async function () {
+
+      const res = await chai.request(app)
+        .get('/trackers')
+        .set('authorization', `Bearer ${token}`)
+      res.should.have.status(200);
+      res.should.be.json;
+      res.body.should.be.a('array');
+      res.body.length.should.equal(0)
+
     });
 
-    it('should return posts with right fields', function () {
-      // Strategy: Get back all posts, and ensure they have expected keys
-
-      let resPost;
-      return chai.request(app)
-        .get('/posts')
-        .then(function (res) {
-
-          res.should.have.status(200);
-          res.should.be.json;
-          res.body.should.be.a('array');
-   //       res.body.should.have.lengthOf.at.least(1);
-
-          res.body.forEach(function (post) {
-            post.should.be.a('object');
-            post.should.include.keys('id', 'date', 'timeOfDay', 'species', 'activity', 'location');
-          });
-          // just check one of the posts that its values match with those in db
-          // and we'll assume it's true for rest
-          resPost = res.body[0];
-          return AnimalTracker.findById(resPost.id);
-        })
-        .then(post => {
-          resPost.id.should.equal(post.id);
-          resPost.date.should.equal(post.date);
-          resPost.timeOfDay.should.equal(post.timeOfDay);
-          resPost.species.should.equal(post.species);
-          resPost.activity.should.equal(post.activity);
-          resPost.location.should.equal(post.location);
-        });
-    });
   });
 
   describe('POST endpoint', function () {
@@ -96,40 +99,44 @@ chai.use(chaiHttp);
     // then prove that the post we get back has
     // right keys, and that `id` is there (which means
     // the data was inserted into db)
-    it('should add a new blog post', function () {
+    it('should add a new tracker', function () {
 
-      const newPost = {
+      const newTracker = {
         date: 'nov',
         timeOfDay: 'day',
         species: 'deer',
         activity: 'eating',
-        location: 'hills'
+        lat: 78.987,
+        lng: 7.890,
       };
 
       return chai.request(app)
-        .post('/posts')
-        .send(newPost)
+        .post('/trackers')
+        .set('authorization', `Bearer ${token}`)
+        .send(newTracker)
         .then(function (res) {
           res.should.have.status(200);
           res.should.be.json;
           res.body.should.be.a('object');
           res.body.should.include.keys(
-            'id', 'date', 'timeOfDay', 'species', 'activity', 'location');
-          res.body.date.should.equal(newPost.date);
+            'id', 'date', 'timeOfDay', 'species', 'activity', 'lat', 'lng');
+          res.body.date.should.equal(newTracker.date);
           // cause Mongo should have created id on insertion
           res.body.id.should.not.be.null;
-          res.body.timeOfDay.should.equal(newPost.timeOfDay);
-          res.body.species.should.equal(newPost.species);
-          res.body.activity.should.equal(newPost.activity);
-          res.body.location.should.equal(newPost.location);
+          res.body.timeOfDay.should.equal(newTracker.timeOfDay);
+          res.body.species.should.equal(newTracker.species);
+          res.body.activity.should.equal(newTracker.activity);
+          res.body.lat.should.equal(newTracker.lat);
+          res.body.lng.should.equal(newTracker.lng);
           return AnimalTracker.findById(res.body.id);
         })
-        .then(function (post) {
-          post.date.should.equal(newPost.date);
-          post.timeOfDay.should.equal(newPost.timeOfDay);
-          post.species.should.equal(newPost.species);
-          post.activity.should.equal(newPost.activity);
-          post.location.should.equal(newPost.location);
+        .then(function (track) {
+          track.date.should.equal(newTracker.date);
+          track.timeOfDay.should.equal(newTracker.timeOfDay);
+          track.species.should.equal(newTracker.species);
+          track.activity.should.equal(newTracker.activity);
+          track.lat.should.equal(newTracker.lat);
+          track.lng.should.equal(newTracker.lng);
         });
     });
   });
@@ -140,35 +147,37 @@ chai.use(chaiHttp);
     //  1. Get an existing post from db
     //  2. Make a PUT request to update that post
     //  4. Prove post in db is correctly updated
-    it('should update fields you send over', function () {
+    it('should update tracker fields', function () {
       const updateData = {
         date: 'dec',
         timeOfDay: 'night',
         species: 'coyote',
         activity: 'hunting',
-        location: 'canyon'
-        }
-      ;
-
+        lat: 890.789,
+        lng: 89.678,
+      }
+      
       return AnimalTracker
         .findOne()
-        .then(post => {
-          updateData.id = post.id;
+        .then(track => {
+          updateData.id = track.id;
 
           return chai.request(app)
-            .put(`/posts/${post.id}`)
+            .put(`/trackers/${track.id}`)
+            .set('authorization', `Bearer ${token}`)
             .send(updateData);
         })
         .then(res => {
           res.should.have.status(204);
           return AnimalTracker.findById(updateData.id);
         })
-        .then(post => {
-          post.date.should.equal(updateData.date);
-          post.timeOfDay.should.equal(updateData.timeOfDay);
-          post.species.should.equal(updateData.species);
-          post.activity.should.equal(updateData.activity);
-          post.location.should.equal(updateData.location);
+        .then(track => {
+          track.date.should.equal(updateData.date);
+          track.timeOfDay.should.equal(updateData.timeOfDay);
+          track.species.should.equal(updateData.species);
+          track.activity.should.equal(updateData.activity);
+          track.lat.should.equal(updateData.lat);
+          track.lng.should.equal(updateData.lng);
         });
     });
   });
@@ -179,26 +188,28 @@ chai.use(chaiHttp);
     //  2. make a DELETE request for that post's id
     //  3. assert that response has right status code
     //  4. prove that post with the id doesn't exist in db anymore
-    it('should delete a post by id', function () {
+    it('should delete a tracker by id', function () {
 
-      let post;
+      let track;
 
       return AnimalTracker
         .findOne()
-        .then(_post => {
-          post = _post;
-          return chai.request(app).delete(`/posts/${post.id}`);
+        .then(_track => {
+          track = _track;
+          return chai.request(app)
+            .delete(`/trackers/${track.id}`)
+            .set('authorization', `Bearer ${token}`)
         })
         .then(res => {
           res.should.have.status(204);
-          return AnimalTracker.findById(post.id);
+          return AnimalTracker.findById(track.id);
         })
-        .then(_post => {
+        .then(_track => {
           // when a variable's value is null, chaining `should`
           // doesn't work. so `_post.should.be.null` would raise
           // an error. `should.be.null(_post)` is how we can
           // make assertions about a null value.
-          should.not.exist(_post);
+          should.not.exist(_track);
         });
     });
   });
