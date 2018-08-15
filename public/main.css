@@ -102,7 +102,17 @@ img {
   margin: 2%
 }
 
+a{
+    color: #5E2B0B;
+}
+
+button{
+    background: #5E2B0B;
+    color:white;
+}
+
 input, button{
+    
     border: 0.2px solid rgb(150, 143, 143);
     margin: auto;
     margin-bottom: 10px;
