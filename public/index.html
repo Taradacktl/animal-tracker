@@ -4,227 +4,153 @@
 <head>
 	<meta charset="utf-8">
 	<title>Animal Tracker</title>
+	<!-- reset -->
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.1.1/normalize.min.css">
 	<link href="main.css" rel="stylesheet" type="text/css" />
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" rel="stylesheet" type="text/css" />
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-
-
 </head>
 
 <body>
-	<div class="dropdown">
-		<button onclick="menuFunction()" class="dropbtn js-dropbtn"><i class="js-dropbtn  fa fa-bars"></i></button>
-		<div id="myDropdown" class="dropdown-content js-logged-out">
-			<a href class="js-route-home">Home</a>
-			<a href class="js-route-logout">Logout</a>
-			<a href class="js-route-profile">Change Password</a>
-		</div>
-	</div>
+	<div class="main-wrapper clearfix">
+		<div class="inner-wrapper clearfix">
+			<header>
 
-	<div class="app-page" id="users-profile">
-		<div class="background">
-			<div class="contents">
-				<div class="image-container-left-tracker">
-					<img src="https://cdn.audubon.org/cdn/farfuture/PYNdHg889lBO6UVA8Dc4rYiA4SLWanA6kZMTTCB-7IU/mtime:1461360865/sites/default/files/sfw_2015_kristenmauzy_275511_americankestrel.jpg"
-					 alt- "American Kestrel">
-					<img src="https://static.boredpanda.com/blog/wp-content/uploads/2016/09/mother-bear-cubs-animal-parenting-21-57e3a2161d7f7__880.jpg">
-					<img src="http://78.media.tumblr.com/tumblr_m6jkdhzmQ51rwcfrqo1_500.png" alt="Roaming wolf">
-				</div>
-				<div class="image-container-right-tracker">
-					<img src="https://i.pinimg.com/736x/15/7d/81/157d8135be40bb60c3a698987fc5eb2c.jpg" alt="Hunting Caracal">
-					<img src="http://www.gameandfishmag.com/files/2017/11/mule-deer-Sinfelt.jpg" alt="Mule Deer eating">
-					<img src="https://images.pexels.com/photos/38438/rattlesnake-toxic-snake-dangerous-38438.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260">
-				</div>
-				<div class="title-container">
-					<div class="title">
-						<h1>Animal Tracker</h1>
-						<h2>Change Password</h2>
+				<div class="dropdown">
+					<button onclick="menuFunction()" class="dropbtn js-dropbtn"><i class="js-dropbtn  fa fa-bars"></i></button>
+					<div id="myDropdown" class="dropdown-content js-logged-out">
+						<a href class="js-route-home">Home</a>
+						<a href class="js-route-logout">Logout</a>
+						<a href class="js-route-profile">Change Password</a>
 					</div>
 				</div>
-				<div class="change-password-form">
-					<form aria-label="change-password" id="change-password">
-						<input type="password" name="current-password" placeholder="Current Password" />
-						<input type="password" name="newPassword" placeholder="New Password" />
-						<input type="password" name="retypeNewPassword" placeholder="Retype New Password" />
-						<button type="submit" class=".js-route-profile">Change Password</button>
+			</header>
+			<div class="pages-container" aria-role="main">
+				<div class="app-page" id="users-profile">
+					<div class="background">
+
+						<div class="change-password-form">
+							<form aria-label="change-password" id="change-password">
+								<input type="password" name="current-password" placeholder="Current Password" />
+								<input type="password" name="newPassword" placeholder="New Password" />
+								<input type="password" name="retypeNewPassword" placeholder="Retype New Password" />
+								<button type="submit" class=".js-route-profile">Change Password</button>
+							</form>
+							<button class="js-route-home">Cancel</button>
+						</div>
+					</div>
+				</div>
+
+				<div class="app-page" id="users-login">
+					<div class="background">
+						<div class="contents">
+
+							<div class="main-login">
+								<form aria-label="login-username" id="login-form">
+									<input type="text" name="emailAddress" placeholder="Email Address" />
+
+									<input type="password" name="password" placeholder="Password" />
+
+									<button type="submit" id="login-button">Login</button>
+
+									<button class="js-route-signup">Sign Up</button>
+									<p><a href="#" class="js-route-reset-password">Forgot password?</a>
+									</p>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="app-page" id="trackers-page">
+					<div class="background">
+						<div class="contents">
+
+							<form id="tracker-add-form">
+								<input class="flatpickr" type="search" name="date" placeholder="Select Date..." />
+								<input class="timepickr" type="text" name="timeOfDay" placeholder="Select Time...">
+								<input type="search" name="species" placeholder="Species" />
+								<input type="search" name="activity" placeholder="Activity observed" />
+								<input type="search" name="lat" placeholder="Latitude- Drag pin to enter" />
+								<input type="search" name="lng" placeholder="Longitude- Drag pin to enter" />
+								<!-- <button id="form-reset" class="close-icon" type="reset" value=""></button> -->
+								<button type="submit">Post</button>
+								<button id="form-clear" class="close-icon" type="reset" value="">Clear</button>
+							</form>
+							<div class="tracker-column">
+								<div class="js-container data-container tracker-container">
+									Loading...
+								</div>
+							</div>
+							<div class="tracker-column">
+								<div id="map-create"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="app-page" id="password-reset-page">
+					<form id="password-reset-form">
+						<input type="email" name="emailAddress" placeholder="e.g john@example.com" />
+						<button type="submit">Send me the reset link</button>
+						<button class="close-icon" type="reset" value="">Clear</button>
 					</form>
-					<button class="js-route-home">Cancel</button>
+					<p><a href="#" class="js-route-logout">Go to the login page</a></p>
 				</div>
-			</div>
-		</div>
-	</div>
-	<div class="app-page" id="users-login">
-		<div class="background">
-			<div class="contents">
-				<div class="image-container-left-tracker">
-					<img src="https://cdn.audubon.org/cdn/farfuture/PYNdHg889lBO6UVA8Dc4rYiA4SLWanA6kZMTTCB-7IU/mtime:1461360865/sites/default/files/sfw_2015_kristenmauzy_275511_americankestrel.jpg"
-					 alt- "American Kestrel">
-					<img src="https://static.boredpanda.com/blog/wp-content/uploads/2016/09/mother-bear-cubs-animal-parenting-21-57e3a2161d7f7__880.jpg">
-					<img src="http://78.media.tumblr.com/tumblr_m6jkdhzmQ51rwcfrqo1_500.png" alt="Roaming wolf">
-				</div>
-				<div class="image-container-right-tracker">
-					<img src="https://i.pinimg.com/736x/15/7d/81/157d8135be40bb60c3a698987fc5eb2c.jpg" alt="Hunting Caracal">
-					<img src="http://www.gameandfishmag.com/files/2017/11/mule-deer-Sinfelt.jpg" alt="Mule Deer eating">
-					<img src="https://images.pexels.com/photos/38438/rattlesnake-toxic-snake-dangerous-38438.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260">
-				</div>
-				<div class="title-container">
-					<div class="title">
-						<h1>Animal Tracker</h1>
-						<h2>Record animal behaviors and locations</h2>
+
+
+				<div class="app-page" id="users-signup">
+					<div class="background">
+						<div class="contents">
+							<div class="main-signup-form">
+								<form aria-label="signup-username" id="signup-form">
+									<input type="text" name="emailAddress" placeholder="Email Address" />
+
+									<input type="password" name="password" placeholder="Password" />
+									<input type="password" name="password-repeat" placeholder="Repeat password" />
+
+									<button type="submit" id="sign-up">Sign Up</button>
+
+									<p>Got an account?
+										<a href="#" class="js-route-login">Login</a>
+									</p>
+
+								</form>
+							</div>
+						</div>
 					</div>
 				</div>
-				<div class="main-login">
-					<form aria-label="login-username" id="login-form">
-						<input type="text" name="emailAddress" placeholder="Email Address" />
 
-						<input type="password" name="password" placeholder="Password" />
+				<div class="app-page" id="edit-trackers-page">
 
-						<button type="submit" id="login-button">Login</button>
+					<div class="contents">
 
-						<button class="js-route-signup">Sign Up</button>
-						<p><a href="#" class="js-route-reset-password">Forgot password?</a>
-						</p>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="app-page" id="trackers-page">
-		<div class="background">
-			<div class="contents">
-				<div class="image-container-left-tracker">
-					<img src="https://cdn.audubon.org/cdn/farfuture/PYNdHg889lBO6UVA8Dc4rYiA4SLWanA6kZMTTCB-7IU/mtime:1461360865/sites/default/files/sfw_2015_kristenmauzy_275511_americankestrel.jpg"
-					 alt- "American Kestrel">
-					<img src="https://static.boredpanda.com/blog/wp-content/uploads/2016/09/mother-bear-cubs-animal-parenting-21-57e3a2161d7f7__880.jpg">
-					<img src="http://78.media.tumblr.com/tumblr_m6jkdhzmQ51rwcfrqo1_500.png" alt="Roaming wolf">
-				</div>
-				<div class="image-container-right-tracker">
-					<img src="https://i.pinimg.com/736x/15/7d/81/157d8135be40bb60c3a698987fc5eb2c.jpg" alt="Hunting Caracal">
-					<img src="http://www.gameandfishmag.com/files/2017/11/mule-deer-Sinfelt.jpg" alt="Mule Deer eating">
-					<img src="https://images.pexels.com/photos/38438/rattlesnake-toxic-snake-dangerous-38438.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260">
-				</div>
-				<div class="title-container">
-					<div class="title">
-						<h2>Animal Tracker</h2>
-						<h3>My Tracks</h3>
+
+						<form id="tracker-edit-form">
+							<input class="flatpickr" type="text" name="date" placeholder="Select Date..." />
+
+							<input class="timepickr" type="text" name="timeOfDay" placeholder="Select Time">
+
+							<input type="text" name="species" placeholder="Species" />
+
+							<input type="text" name="activity" placeholder="Activity observed" />
+							<input type="hidden" name="id" placeholder="" />
+							<input name="lat" placeholder="Latitude- Drag pin to enter" />
+
+							<input name="lng" placeholder="Longitude- Drag pin to enter" />
+							<button type="submit">Save changes</button>
+							<button id="form-reset" class="close-icon" type="reset" value="">Clear</button>
+						</form>
+						<button class="js-route-home">Cancel</button>
+						<div id="map-container">
+							<p class="map-instructions">Drag pin to change location</p>
+							<div id="map-edit"></div>
+						</div>
 					</div>
-				</div>
-				<form id="tracker-add-form">
-					<input class="flatpickr" type="search" name="date" placeholder="Select Date..." />
-					<input class="timepickr" type="text" name="timeOfDay" placeholder="Select Time...">
-					<input type="search" name="species" placeholder="Species" />
-					<input type="search" name="activity" placeholder="Activity observed" />
-					<input type="search" name="lat" placeholder="Latitude- Drag pin to enter" />
-					<input type="search" name="lng" placeholder="Longitude- Drag pin to enter" />
-					<!-- <button id="form-reset" class="close-icon" type="reset" value=""></button> -->
-					<button type="submit">Post</button>
-					<button id="form-clear" class="close-icon" type="reset" value="">Clear</button>
-				</form>
-				<div class="tracker-column">
-					<div class="js-container data-container tracker-container">
-						Loading...
-					</div>
-				</div>
-				<div class="tracker-column">
-					<div id="map-create"></div>
+
 				</div>
 			</div>
 		</div>
-	</div>
-
-	<div class="app-page" id="password-reset-page">
-		<form id="password-reset-form">			
-			<input type="email" name="emailAddress" placeholder="e.g john@example.com" />			
-			<button type="submit">Send me the reset link</button>
-			<button  class="close-icon" type="reset" value="">Clear</button>
-		</form>
-		<p><a href="#" class="js-route-logout">Go to the login page</a></p>
-	</div>
-
-
-	<div class="app-page" id="users-signup">
-		<div class="background">
-			<div class="contents">
-				<div class="image-container-left-tracker">
-					<img src="https://cdn.audubon.org/cdn/farfuture/PYNdHg889lBO6UVA8Dc4rYiA4SLWanA6kZMTTCB-7IU/mtime:1461360865/sites/default/files/sfw_2015_kristenmauzy_275511_americankestrel.jpg"
-					 alt- "American Kestrel">
-					<img src="https://static.boredpanda.com/blog/wp-content/uploads/2016/09/mother-bear-cubs-animal-parenting-21-57e3a2161d7f7__880.jpg">
-					<img src="http://78.media.tumblr.com/tumblr_m6jkdhzmQ51rwcfrqo1_500.png" alt="Roaming wolf">
-				</div>
-				<div class="image-container-right-tracker">
-					<img src="https://i.pinimg.com/736x/15/7d/81/157d8135be40bb60c3a698987fc5eb2c.jpg" alt="Hunting Caracal">
-					<img src="http://www.gameandfishmag.com/files/2017/11/mule-deer-Sinfelt.jpg" alt="Mule Deer eating">
-					<img src="https://images.pexels.com/photos/38438/rattlesnake-toxic-snake-dangerous-38438.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260">
-				</div>
-				<div class="title-container">
-					<div class="title">
-						<h1>Animal Tracker</h1>
-						<h2>Sign up</h2>
-					</div>
-				</div>
-				<div class="main-signup-form">
-					<form aria-label="signup-username" id="signup-form">
-						<input type="text" name="emailAddress" placeholder="Email Address" />
-
-						<input type="password" name="password" placeholder="Password" />
-						<input type="password" name="password-repeat" placeholder="Repeat password" />
-
-						<button type="submit" id="sign-up">Sign Up</button>
-
-						<p>Got an account?
-							<a href="#" class="js-route-login">Login</a>
-						</p>
-
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div class="app-page" id="edit-trackers-page">
-
-		<div class="contents">
-			<div class="image-container-left-tracker">
-				<img src="https://cdn.audubon.org/cdn/farfuture/PYNdHg889lBO6UVA8Dc4rYiA4SLWanA6kZMTTCB-7IU/mtime:1461360865/sites/default/files/sfw_2015_kristenmauzy_275511_americankestrel.jpg"
-				 alt- "American Kestrel">
-				<img src="https://static.boredpanda.com/blog/wp-content/uploads/2016/09/mother-bear-cubs-animal-parenting-21-57e3a2161d7f7__880.jpg">
-				<img src="http://78.media.tumblr.com/tumblr_m6jkdhzmQ51rwcfrqo1_500.png" alt="Roaming wolf">
-			</div>
-			<div class="image-container-right-tracker">
-				<img src="https://i.pinimg.com/736x/15/7d/81/157d8135be40bb60c3a698987fc5eb2c.jpg" alt="Hunting Caracal">
-				<img src="http://www.gameandfishmag.com/files/2017/11/mule-deer-Sinfelt.jpg" alt="Mule Deer eating">
-				<img src="https://images.pexels.com/photos/38438/rattlesnake-toxic-snake-dangerous-38438.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260">
-			</div>
-			<div class="title-container">
-				<div class="title">
-					<h1>Animal Tracker</h1>
-					<h2>Edit Track</h2>
-				</div>
-			</div>
-
-			<form id="tracker-edit-form">
-				<input class="flatpickr" type="text" name="date" placeholder="Select Date..." />
-
-				<input class="timepickr" type="text" name="timeOfDay" placeholder="Select Time">
-
-				<input type="text" name="species" placeholder="Species" />
-
-				<input type="text" name="activity" placeholder="Activity observed" />
-				<input type="hidden" name="id" placeholder="" />
-				<input name="lat" placeholder="Latitude- Drag pin to enter" />
-
-				<input name="lng" placeholder="Longitude- Drag pin to enter" />
-				<button type="submit">Save changes</button>
-				<button id="form-reset" class="close-icon" type="reset" value="">Clear</button>
-			</form>
-			<button class="js-route-home">Cancel</button>
-			<div id="map-container">
-				<p class="map-instructions">Drag pin to change location</p>
-				<div id="map-edit"></div>
-			</div>
-		</div>
-
 	</div>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 	<!-- see  https://flatpickr.js.org/examples/  -->

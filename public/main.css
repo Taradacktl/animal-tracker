@@ -1,17 +1,37 @@
+*{
+    box-sizing: border-box;
+}
 .app-page{
     /* this will be overridden by JS */
     display:none;
+    /* position:relative; */
+}
+.clearfix:after, .app-page:after{
+    display:table;
+    content:'';
+    width:100%;
+    clear:both;
 }
 
-.background {
+body{
+    background-color:grey;
+}
+
+.main-wrapper {
     background-image: url("https://community.modeanalytics.com/images/gallery/google-maps-with-markers-1.png");
     background-repeat: no-repeat;
     background-size: cover;
-    height: 1100px;
+    min-height:100vh;
+    max-width:1200px;
+    margin: 0 auto;
   }
+.inner-wrapper{
+    background:rgba(0,0,0,0.8);
+    min-height:100vh;
+}
 
 body{
-    text-align: center;
+    text-align: center;    
 }
 
 .change-password-form{
@@ -83,9 +103,9 @@ input, button{
     
     padding: 50px;
     background-color:  rgba(186, 185, 162, 0.9 );
-    max-width: 25%;
+    max-width: 80%;
     margin: auto;
-    margin-top: 80px
+    /* margin-top: 80px */
 }
 
 .main-signup-form{
@@ -145,7 +165,7 @@ font-weight: bold
 #tracker-add-form {
     background-color:  rgba(186, 185, 162, 0.9 );
     margin: auto;
-    margin-top: 2%;
+    /* margin-top: 2%; */
     padding: 10px
     }
 
