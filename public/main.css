@@ -60,10 +60,7 @@ body{
     margin: auto;
     margin-top: 80px
   }
-  .container{
-    max-width: 1200px;
-    margin: auto;
-}
+
 .contents{
       background-color: rgba(186, 185, 162, 0.8 );
       top: 0;
@@ -189,15 +186,18 @@ font-weight: bold
     transform:translateX(-50%); */
     z-index:99;
     text-align: center;
-
+    padding:1vh;
+    font-family: 'Roboto Condensed';
+}
+.title-container *{
+    line-height:1.2;
+    margin:0;
+    padding:0;
 }
     
-.title {
-     font-size: 25px;
-     background-color:  rgba(186, 185, 162, 0.9 );
-     margin-left: 50px;
-     margin-right: 70px;
-     padding: 20px;
+.title h2 {
+     font-size: 1em;
+     font-family: 'Fira Sans';
     }
 
 #tracker-add-form {
@@ -216,15 +216,8 @@ font-weight: bold
     
     min-width: 45%; */
     float: left;
-    min-width: 30%;
-}
-
-.tracker-column2 {
-    background-color: rgba(186, 185, 162, 0.9 );
-    margin: 2%;
-    height: 500px;
-    float: right;
-    min-width: 60%;
+    width:49.999%;
+    
 }
 
 
@@ -233,7 +226,6 @@ font-weight: bold
    overflow: auto;
    height: 500px;
    font-weight: bold;
-   text-align: left
 }
 #tracks {
     box-shadow: 0 1px 3px rgba(0,0,0,.1);
@@ -297,7 +289,6 @@ font-weight: bold
   cursor: pointer;
   margin-bottom: 0px;
 }
-
 .close-icon:after {
 	content: "X";
 	display: block;
@@ -318,7 +309,6 @@ font-weight: bold
 	font-size: 12px;
 	cursor: pointer;
 }
-
 .close-icon,.search-wrapper {
 	position: relative;
 	padding: 10px;
