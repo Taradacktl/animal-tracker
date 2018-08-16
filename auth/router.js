@@ -89,6 +89,10 @@ router.post('/forgotpassword', async (req, res) => {
 
     const link = fullUrl(req, `/auth/forgotpassword/${emailAddress}/${buf}`)
 
+    if (!process.env.MAIL_INFO_JSON) {
+      return res.status(500).json({ message: 'MAIL_SERVER_NOT_CONFIGURED' })
+    }
+
     const mailInfo = JSON.parse(process.env.MAIL_INFO_JSON)
     let transporter = nodemailer.createTransport(mailInfo);
     // const transporter = nodemailer.createTransport({
@@ -101,8 +105,6 @@ router.post('/forgotpassword', async (req, res) => {
     // });
 
     // NOTE see about sending fake emails for test purposes here https://nodemailer.com/about/
-    // NOTE please go here to enable less secure apps
-    // https://myaccount.google.com/lesssecureapps
     let mailOptions = {
       from: config.EMAIL_SENDER, // sender address
       to: emailAddress, // list of receivers
