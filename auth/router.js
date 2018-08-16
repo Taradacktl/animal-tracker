@@ -105,8 +105,6 @@ router.post('/forgotpassword', async (req, res) => {
     // });
 
     // NOTE see about sending fake emails for test purposes here https://nodemailer.com/about/
-    // NOTE please go here to enable less secure apps
-    // https://myaccount.google.com/lesssecureapps
     let mailOptions = {
       from: config.EMAIL_SENDER, // sender address
       to: emailAddress, // list of receivers
