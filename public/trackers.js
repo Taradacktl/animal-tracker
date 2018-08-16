@@ -56,14 +56,22 @@ function handleMarkerClick(listingID) {
     $('.tracker-listing').removeClass('tracker-selected')
     $(`#${listingID}`).addClass('tracker-selected')
 }
+const MARKERS = {}
 
 function displayTrackerList() {
     const trackersPromise = getTrackersPromise()
     return trackersPromise.then(trackers => {
 
+        Object.keys(MARKERS).forEach(trackerID => {
+            console.log('DELETE MARKER', trackerID)
+            MARKERS[trackerID].setMap(null)
+            delete MARKERS[trackerID]
+        })
+
         trackers.forEach(tracker => {
             const { date, timeOfDay, species, activity, lat, lng } = tracker
             const title = `${species} - ${activity} - ${date} - ${timeOfDay}`
+
             var marker = new google.maps.Marker({
                 position: { lat, lng }, //{lat:lat, lng:lng}
                 map: MAP,
@@ -73,6 +81,8 @@ function displayTrackerList() {
             const listingID = getListingID(tracker.id)
             const handler = function () { handleMarkerClick(listingID) }
             marker.addListener('click', handler);
+            console.log('ADD MARKER', tracker.id)
+            MARKERS[tracker.id] = marker
         })
 
         const htmlString = trackers.map(displayTracker).join(' ')
@@ -176,7 +186,9 @@ function setupDeleteTrackLinks() {
         }
         const idToDelete = $(ev.target).data('id')
         deleteTrackerPromise(idToDelete)
-            .then(displayTrackerList)
+            .then(() => {
+                displayTrackerList()
+            })
             .then(() => displaySuccessToaster('Tracker deleted'))
             .catch(displayErrorToaster)
     })
@@ -281,18 +293,19 @@ function initMap(id = 'map-create', geoPosition = { lat: 34.0522, lng: -118.2437
         map: MAP,
         title: 'Los Angeles',
         draggable: true,
-        icon: pinSymbol('green')
+        icon: pinSymbol('green'),
+        zIndex: 100,
     });
     function pinSymbol(color) {
         return {
-          path: 'M 0,0 C -2,-20 -10,-22 -10,-30 A 10,10 0 1,1 10,-30 C 10,-22 2,-20 0,0 z',
-          fillColor: color,
-          fillOpacity: 1,
-        //  strokeColor: '#000',
-        //  strokeWeight: 1,
-         // scale: 1
+            path: 'M 0,0 C -2,-20 -10,-22 -10,-30 A 10,10 0 1,1 10,-30 C 10,-22 2,-20 0,0 z',
+            fillColor: color,
+            fillOpacity: 1,
+            //  strokeColor: '#000',
+            //  strokeWeight: 1,
+            // scale: 1
         };
-      }
+    }
 
 
     // Override our map zoom level once our fitBounds function runs (Make sure it only runs once)
