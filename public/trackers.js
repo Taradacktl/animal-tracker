@@ -63,7 +63,7 @@ function displayTrackerList() {
 
         trackers.forEach(tracker => {
             const { date, timeOfDay, species, activity, lat, lng } = tracker
-            const title = `${species} - ${activity} @${date} ${timeOfDay}`
+            const title = `${species} - ${activity} - ${date} - ${timeOfDay}`
             var marker = new google.maps.Marker({
                 position: { lat, lng }, //{lat:lat, lng:lng}
                 map: MAP,
@@ -254,7 +254,7 @@ function datePicker() {
     $('.flatpickr').flatpickr({
         altInput: true,
         altFormat: "F j, Y",
-        dateFormat: "Y-m-d",
+        dateFormat: "m-d-Y",
     })
 }
 
@@ -270,19 +270,29 @@ let MAP
 function initMap(id = 'map-create', geoPosition = { lat: 34.0522, lng: -118.2437 }) {
 
     MAP = new google.maps.Map(document.getElementById(id), {
-        zoom: 7,
+        zoom: 6,
         center: geoPosition,
         mapTypeId: 'terrain'
     });
 
     var marker = new google.maps.Marker({
         position: geoPosition,
-        label: 'ADD',
+        label: '*',
         map: MAP,
         title: 'Los Angeles',
-        draggable: true
+        draggable: true,
+        icon: pinSymbol('green')
     });
-
+    function pinSymbol(color) {
+        return {
+          path: 'M 0,0 C -2,-20 -10,-22 -10,-30 A 10,10 0 1,1 10,-30 C 10,-22 2,-20 0,0 z',
+          fillColor: color,
+          fillOpacity: 1,
+        //  strokeColor: '#000',
+        //  strokeWeight: 1,
+         // scale: 1
+        };
+      }
 
 
     // Override our map zoom level once our fitBounds function runs (Make sure it only runs once)
