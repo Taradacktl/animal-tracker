@@ -89,6 +89,10 @@ router.post('/forgotpassword', async (req, res) => {
 
     const link = fullUrl(req, `/auth/forgotpassword/${emailAddress}/${buf}`)
 
+    if (!process.env.MAIL_INFO_JSON) {
+      res.status(500).json({ message: 'MAIL_SERVER_NOT_CONFIGURED' })
+    }
+
     const mailInfo = JSON.parse(process.env.MAIL_INFO_JSON)
     let transporter = nodemailer.createTransport(mailInfo);
     // const transporter = nodemailer.createTransport({
