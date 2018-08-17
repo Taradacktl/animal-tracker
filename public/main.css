@@ -127,7 +127,12 @@ input, button{
     margin-bottom: 10px;
     padding: 10px;
 }
-
+.reset-password{
+    padding: 50px;
+    background-color:  rgba(186, 185, 162, 0.9 );
+    max-width: 80%;
+    margin: auto;
+}
 .main-login{
     
     padding: 50px;
@@ -321,7 +326,7 @@ font-weight: bold
 }
 
 .tracker-selected{
-background:lightgreen;
+background:#BDD7B0;
 }
 
 .tracker-listing{
