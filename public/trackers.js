@@ -235,12 +235,13 @@ function setupEditTrack() {
         console.log('Updated tracker:', trackerRecord)
 
         editTrackerPromise(trackerRecord)
-            .then(displayTrackerList)
+            .then(() => {
+                displayTrackerList()
+            })
             .then(() => {
                 displaySuccessToaster('Tracker updated')
                 routeTo(TRACKERS_DIV_ID)
                 $(`#${TRACKER_FORM_ID}`)[0].reset()
-
             })
             .catch(() => displayErrorToaster(createError('Must complete form')))
 
@@ -291,7 +292,7 @@ function initMap(id = 'map-create', geoPosition = { lat: 34.0522, lng: -118.2437
         position: geoPosition,
         label: '*',
         map: MAP,
-        title: 'Los Angeles',
+        title: 'Drag to enter Latitude and Longitude',
         draggable: true,
         icon: pinSymbol('green'),
         zIndex: 100,

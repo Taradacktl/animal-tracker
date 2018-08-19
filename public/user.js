@@ -73,7 +73,6 @@ const setupLoginButton = () => {
     })
 }
 
-//TODO 6/7 create a new user with email address and password
 function apiSignupPromise(emailAddress, password) {
     return $.ajax({
         url: SIGNUP_URL,
@@ -124,7 +123,6 @@ const setupRouteHandlers = () => {
         routeTo(RESET_PASSWORD_DIV_ID)
     })
 
-    //TODO 6/11 make sure user is logged in
     $('.js-route-profile').on('click', ev => {
         ev.preventDefault()
         routeTo(PROFILE_DIV_ID)
@@ -159,8 +157,6 @@ const setupResetPassword = () => {
     })
 }
 
-
-//TODO 6/14 if passwords dont match error message
 const setupSignUpButton = () => {
     $(`#${SIGNUP_FORM_ID}`).on('submit', ev => {
         ev.preventDefault()
@@ -179,7 +175,6 @@ const setupSignUpButton = () => {
                 })
             .catch(() => displayErrorToaster(createError('Must provide a unique email address')))
 
-        //TODO display a nice message div
         console.error('Sign up FAILED')
 
 

@@ -28,14 +28,8 @@ router.get('/', jwtAuth, async (req, res) => {
 
 });
 
-router.get('/:id', jwtAuth, (req, res) => {
-    //TODO implement this
-
-});
-
 //the API URL is still /trackers, but the method should be POST
 router.post('/', jwtAuth, (req, res) => {
-    //TODO implement this
     const newTrackerP = AnimalTracker.create({
         //request fields here
         ...req.body,

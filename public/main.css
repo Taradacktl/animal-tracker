@@ -26,22 +26,18 @@ header{
     position:relative;
 }
 
-.main-wrapper {
-    
+.main-wrapper { 
     background-image: url("https://community.modeanalytics.com/images/gallery/google-maps-with-markers-1.png");
     background-repeat: no-repeat;
     background-size: cover;
     min-height:100vh;
-    
-    
-    
   }
 
 .middle-wrapper{
     background-color:rgba(0,0,0,0.7);
   }
 
-  .inner-wrapper{
+.inner-wrapper{
     position:relative;
     margin: 0 auto;
     max-width:1200px;
@@ -51,6 +47,19 @@ header{
 
 body{
     text-align: center;    
+}
+
+button{
+    background: #5E2B0B;
+    color:white;
+}
+
+input, button{
+    
+    border: 0.2px solid #5E2B0B;
+    margin: auto;
+    margin-bottom: 10px;
+    padding: 10px;
 }
 
 .change-password-form{
@@ -69,7 +78,7 @@ body{
       height: 100%;
   }
 
-  .data-container{
+.data-container{
     padding:10px;
   }
 
@@ -115,39 +124,11 @@ a{
     color: #5E2B0B;
 }
 
-button{
-    background: #5E2B0B;
-    color:white;
-}
-
-input, button{
-    
-    border: 0.2px solid #5E2B0B;
-    margin: auto;
-    margin-bottom: 10px;
-    padding: 10px;
-}
-.reset-password{
+.main-login, .main-signup-form, .change-password-form{
     padding: 50px;
     background-color:  rgba(186, 185, 162, 0.9 );
     max-width: 80%;
     margin: auto;
-}
-.main-login{
-    
-    padding: 50px;
-    background-color:  rgba(186, 185, 162, 0.9 );
-    max-width: 80%;
-    margin: auto;
-    /* margin-top: 80px */
-}
-
-.main-signup-form{
-    padding: 50px;
-    background-color:  rgba(186, 185, 162, 0.9 );
-    max-width: 25%;
-    margin: auto;
-    margin-top: 80px
 }
 
 #map-create, #map-edit {
@@ -166,6 +147,7 @@ input, button{
     width: 50%;
     margin: auto
 }
+
 .map-instructions{
 font-weight: bold
 }
@@ -176,6 +158,13 @@ font-weight: bold
     max-width: 40%;
     background-color:  #dbc9b8;
     padding: 10px;
+}
+
+.reset-password{
+    padding: 50px;
+    background-color:  rgba(186, 185, 162, 0.9 );
+    max-width: 80%;
+    margin: auto;
 }
 
 #Sign-up {
@@ -194,6 +183,7 @@ font-weight: bold
     padding:1vh;
     font-family: 'Roboto Condensed';
 }
+
 .title-container *{
     line-height:1.2;
     margin:0;
@@ -225,7 +215,6 @@ font-weight: bold
     
 }
 
-
 .tracker-container{
    background-color: rgba(186, 185, 162, 0.9 );
    overflow: auto;
@@ -234,8 +223,8 @@ font-weight: bold
 }
 #tracks {
     box-shadow: 0 1px 3px rgba(0,0,0,.1);
-
 }
+
 /* Dropdown Button */
 .dropbtn {
     background: #5E2B0B;
@@ -246,8 +235,6 @@ font-weight: bold
     /* border: none; */
     cursor: pointer;    
 }
-
-
 
 /* The container <div> - needed to position the dropdown content */
 .dropdown {

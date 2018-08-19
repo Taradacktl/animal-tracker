@@ -64,8 +64,8 @@
 				<div class="pages-container" aria-role="main">
 					<div class="app-page" id="users-profile">
 						<div class="background">
-
-							<div class="change-password-form">
+							<div class="contents">
+							  <div class="change-password-form">
 								<form aria-label="change-password" id="change-password">
 									<input type="password" name="current-password" placeholder="Current Password" />
 									<input type="password" name="newPassword" placeholder="New Password" />
@@ -73,6 +73,7 @@
 									<button type="submit" class=".js-route-profile">Change Password</button>
 								</form>
 								<button class="js-route-home">Cancel</button>
+							   </div>
 							</div>
 						</div>
 					</div>
@@ -106,8 +107,9 @@
 									<input class="timepickr" type="text" name="timeOfDay" placeholder="Select Time...">
 									<input type="search" name="species" placeholder="Species" />
 									<input type="search" name="activity" placeholder="Activity observed" />
-									<input type="search" name="lat" placeholder="Latitude- Drag pin to enter" />
-									<input type="search" name="lng" placeholder="Longitude- Drag pin to enter" />
+									<br>
+									<input type="search" name="lat" placeholder="Lat- Drag pin to enter" />
+									<input type="search" name="lng" placeholder="Long- Drag pin to enter" />
 									<br>
 									<button type="submit">Post</button>
 									<button id="form-clear" class="close-icon" type="reset" value="">Clear</button>
@@ -175,8 +177,8 @@
 
 								<input type="text" name="activity" placeholder="Activity observed" />
 								<input type="hidden" name="id" placeholder="" />
+								<br>
 								<input name="lat" placeholder="Latitude- Drag pin to enter" />
-
 								<input name="lng" placeholder="Longitude- Drag pin to enter" />
 								<button type="submit">Save changes</button>
 								<button id="form-reset" class="close-icon" type="reset" value="">Clear</button>
@@ -187,7 +189,6 @@
 								<div id="map-edit"></div>
 							</div>
 						</div>
-
 					</div>
 				</div>
 			</div>

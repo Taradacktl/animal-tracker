@@ -44,24 +44,6 @@ router.get('/create', (req, res) => {
 
 const jwtAuth = passport.authenticate('jwt', { session: false });
 
-// routes = API endpoints
-router.get('/trackers', jwtAuth, (req, res) => {
-    //TODO implement this
-
-});
-
-router.get('/tracker:id', jwtAuth, (req, res) => {
-    //TODO implement this
-
-});
-
-router.post('/tracker', jwtAuth, (req, res) => {
-    //TODO implement this
-
-});
-
-
-
 router.get('/profile', jwtAuth, (req, res) => {
     console.log('AUTH USER IS:', req.user)
     const userPromise = User.findOne({ emailAddress: req.user.emailAddress })
