@@ -216,6 +216,7 @@ function setupEditTrackLinks() {
         // debugger
         const { lat, lng } = trackerRecord
         initMap('map-edit', { lat, lng })
+
     })
 }
 
@@ -235,13 +236,12 @@ function setupEditTrack() {
         console.log('Updated tracker:', trackerRecord)
 
         editTrackerPromise(trackerRecord)
-            .then(() => {
-                displayTrackerList()
-            })
+
             .then(() => {
                 displaySuccessToaster('Tracker updated')
                 routeTo(TRACKERS_DIV_ID)
                 $(`#${TRACKER_FORM_ID}`)[0].reset()
+                displayTrackerList()
             })
             .catch(() => displayErrorToaster(createError('Must complete form')))
 
@@ -282,16 +282,19 @@ function timePicker() {
 let MAP
 function initMap(id = 'map-create', geoPosition = { lat: 34.0522, lng: -118.2437 }) {
 
-    MAP = new google.maps.Map(document.getElementById(id), {
+    let map = new google.maps.Map(document.getElementById(id), {
         zoom: 6,
         center: geoPosition,
         mapTypeId: 'terrain'
     });
+    if (id === 'map-create') {
+        MAP = map
+    }
 
     var marker = new google.maps.Marker({
         position: geoPosition,
-     //   label: '*',
-        map: MAP,
+        //   label: '*',
+        map: map,
         title: 'Drag to enter Latitude and Longitude',
         draggable: true,
         icon: pinSymbol('green'),
