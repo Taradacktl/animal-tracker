@@ -290,7 +290,7 @@ function initMap(id = 'map-create', geoPosition = { lat: 34.0522, lng: -118.2437
 
     var marker = new google.maps.Marker({
         position: geoPosition,
-        label: '*',
+     //   label: '*',
         map: MAP,
         title: 'Drag to enter Latitude and Longitude',
         draggable: true,
@@ -302,9 +302,9 @@ function initMap(id = 'map-create', geoPosition = { lat: 34.0522, lng: -118.2437
             path: 'M 0,0 C -2,-20 -10,-22 -10,-30 A 10,10 0 1,1 10,-30 C 10,-22 2,-20 0,0 z',
             fillColor: color,
             fillOpacity: 1,
-            //  strokeColor: '#000',
-            //  strokeWeight: 1,
-            // scale: 1
+            strokeColor: 'white',
+            strokeWeight: .5,
+            scale: 1.2
         };
     }
 
