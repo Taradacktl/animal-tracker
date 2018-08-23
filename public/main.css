@@ -198,18 +198,21 @@ font-weight: bold
 #tracker-add-form {
     background-color:  rgba(186, 185, 162, 0.9 );
     margin: auto;
-    /* margin-top: 2%; */
     padding: 2vh;
     padding-top:3vh;
     margin-bottom:1vh;
     }
 
+#tracker-edit-form {
+    margin: auto;
+    /* margin-top: 2%; */
+    padding: 2vh;
+    padding-top:3vh;
+    margin-bottom:1vh; 
+}   
+
 .tracker-column {
     background-color: rgba(186, 185, 162, 0.9 );
-    /* margin: 2%;
-    height: 500px;
-    
-    min-width: 45%; */
     float: left;
     width:49.999%;
     

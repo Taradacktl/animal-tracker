@@ -103,8 +103,8 @@
 							<div class="contents">
 
 								<form id="tracker-add-form">
-									<input class="flatpickr" type="search" name="date" placeholder="Select Date..." />
-									<input class="timepickr" type="text" name="timeOfDay" placeholder="Select Time...">
+									<input class="flatpickr" type="date" name="date" placeholder="Select Date..." />
+									<input class="timepickr" type="text" name="timeOfDay" placeholder="Select Time..."/>
 									<input type="search" name="species" placeholder="Species" />
 									<input type="search" name="activity" placeholder="Activity observed" />
 									<br>
@@ -169,9 +169,9 @@
 
 
 							<form id="tracker-edit-form">
-								<input class="flatpickr" type="text" name="date" placeholder="Select Date..." />
+								<input class="flatpickr"  type="date" name="date" placeholder="Select Date..." />
 
-								<input class="timepickr" type="text" name="timeOfDay" placeholder="Select Time">
+								<input class="timepickr" type="text" name="timeOfDay" placeholder="Select Time..."/>
 
 								<input type="text" name="species" placeholder="Species" />
 
@@ -182,8 +182,8 @@
 								<input name="lng" placeholder="Longitude- Drag pin to enter" />
 								<button type="submit">Save changes</button>
 								<button id="form-reset" class="close-icon" type="reset" value="">Clear</button>
+								<button class="js-route-home">Cancel</button>
 							</form>
-							<button class="js-route-home">Cancel</button>
 							<div id="map-container">
 								<p class="map-instructions">Drag pin to change location</p>
 								<div id="map-edit"></div>
