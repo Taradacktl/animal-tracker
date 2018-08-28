@@ -1,6 +1,6 @@
-var TRACKERS=[] //keep trackers in a global var to make them available for edit
+var TRACKERS = [] //keep trackers in a global var to make them available for edit
 
-const MAIN_NAV_ID='myDropdown'
+const MAIN_NAV_ID = 'myDropdown'
 
 const LOGIN_FORM_ID = 'login-form'
 
@@ -34,20 +34,28 @@ function routeTo(pageID) {
     $('.app-page').hide()
     $(`#${pageID}`).show()
 
+    if (pageID === TRACKERS_DIV_ID) {
+        console.log('INIT add form')
+        const inputSelector = '#js-create-date-picker'
+        var calendar = flatpickr(inputSelector);
+        calendar.destroy();
+        datePicker(null, inputSelector)
+    }
+
 }
 
-function displayErrorToaster(err){
+function displayErrorToaster(err) {
     console.error(err.toString(), err)
     // toastr.remove()
     toastr.error(err.toString(), 'Error')
 }
 
-function displaySuccessToaster(message){    
+function displaySuccessToaster(message) {
     toastr.remove()
     toastr.success(message, 'Info')
 }
 
 
-function createError(message){
+function createError(message) {
     return new Error(message)
 }

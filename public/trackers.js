@@ -280,23 +280,21 @@ function editTrackerPromise(trackerRecord) {
 
 function datePicker(defaultValue, selector) {
 
-    const parts = defaultValue.split('-')
-    const ymdValue = [parts[2], parts[0], parts[1]].join('-')
-
     const opts = {
         altInput: true,
         altFormat: "F j, Y",
         dateFormat: "Y-m-d",
     }
     if (defaultValue) {
+        const parts = defaultValue.split('-')
+        const ymdValue = [parts[2], parts[0], parts[1]].join('-')
         opts.defaultDate = ymdValue
+        $(selector).val(ymdValue)
     }
 
-    console.log(new Date().toLocaleTimeString() + ' initializing the pickr', opts)
-    $(selector).val(ymdValue)
+    console.log(new Date().toLocaleTimeString() + ' initializing the pickr', opts)   
+
     $(selector).flatpickr(opts)
-
-
 }
 
 function timePicker() {
