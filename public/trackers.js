@@ -208,19 +208,19 @@ function setupEditTrackLinks() {
 
             //set the value for the input to the value found in the recordObj
             let inputSelector = `#${EDIT_TRACK_FORM_ID} [name="${k}"]`
-            
 
-            
+
+
             if (k === 'date') {
                 //inputSelector = `#${EDIT_TRACK_FORM_ID} #js-date-picker`
                 inputSelector = `#${EDIT_TRACK_FORM_ID} [name="date"]`
                 console.log(new Date().toLocaleTimeString() + ' populating the value', trackerRecord[k])
                 var calendar = flatpickr(inputSelector);
                 calendar.destroy();
-                datePicker(trackerRecord[k])
+                datePicker(trackerRecord[k], '#js-date-picker')
                 continue
             }
-            
+
             console.log('Populating the ', inputSelector, trackerRecord[k])
             $(inputSelector).val(trackerRecord[k])
 
@@ -278,25 +278,25 @@ function editTrackerPromise(trackerRecord) {
     })
 }
 
-function datePicker(defaultValue) {
-    
+function datePicker(defaultValue, selector) {
+
     const parts = defaultValue.split('-')
     const ymdValue = [parts[2], parts[0], parts[1]].join('-')
 
     const opts = {
-        // altInput: true,
-        // altFormat: "F j, Y",
+        altInput: true,
+        altFormat: "F j, Y",
         dateFormat: "Y-m-d",
     }
     if (defaultValue) {
-        opts.defaultValue = ymdValue
+        opts.defaultDate = ymdValue
     }
-    
+
     console.log(new Date().toLocaleTimeString() + ' initializing the pickr', opts)
-    $('#js-date-picker').val(ymdValue)
-    $('#js-date-picker').flatpickr(opts)
-    
-    
+    $(selector).val(ymdValue)
+    $(selector).flatpickr(opts)
+
+
 }
 
 function timePicker() {
