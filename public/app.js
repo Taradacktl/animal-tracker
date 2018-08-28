@@ -15,7 +15,7 @@ $(() => {
     // routeTo(SIGNUP_DIV_ID)
 
     //tracker stuff
-    datePicker()
+    // datePicker()
     timePicker()
     setupEditTrack()
     initMap()
