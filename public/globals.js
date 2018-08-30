@@ -46,7 +46,7 @@ function routeTo(pageID) {
 
 function displayErrorToaster(err) {
     console.error(err.toString(), err)
-    // toastr.remove()
+    toastr.clear()
     toastr.error(err.toString(), 'Error')
 }
 
