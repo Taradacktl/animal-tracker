@@ -16,9 +16,9 @@ router.get('/', jwtAuth, async (req, res) => {
 
     console.log("Getting trackers for %s", req.user.emailAddress)
 
-    const user = await User.findOne({emailAddress: req.user.emailAddress})
+    const user = await User.findOne({ emailAddress: req.user.emailAddress })
 
-    const getTrackersP = AnimalTracker.find({user_id:user._id})
+    const getTrackersP = AnimalTracker.find({ user_id: user._id })
     getTrackersP.then(trackers => {
         console.log("Got %d tracker(s)", trackers.length)
         res.json(trackers.map(t => t.serialize()))
@@ -33,7 +33,7 @@ router.post('/', jwtAuth, (req, res) => {
     const newTrackerP = AnimalTracker.create({
         //request fields here
         ...req.body,
-        user_id:req.user.id
+        user_id: req.user.id
     })
 
     newTrackerP.then(tracker => {
@@ -52,18 +52,28 @@ router.delete('/:id', jwtAuth, (req, res) => {
 });
 
 router.put('/:id', jwtAuth, jsonParser, (req, res) => {
-	if (!(req.params.id && req.body.id && req.params.id === req.body.id)) {
-		const message =
-			`Request path id (${req.params.id}) and request body id ` +
+    if (!(req.params.id && req.body.id && req.params.id === req.body.id)) {
+        const message =
+            `Request path id (${req.params.id}) and request body id ` +
             `(${req.body.id}) must match`;
-            console.log('req.body.id:', req.body.id)
-		console.error(message);
-		return res.status(400).json({message: message});
-	}
-   
-	AnimalTracker.findByIdAndUpdate(req.params.id, req.body)
-		.then(tracker => res.status(204).json({}))
-        .catch(err => {res.status(500).json({error: err.toString() })
-    });
+        console.log('req.body.id:', req.body.id)
+        console.error(message);
+        return res.status(400).json({ message: message });
+    }
+
+    const fields = 'lng lat activity species timeOfDay date'.split(' ')
+    let isValid = true
+    fields.forEach(f => { if (!req.body[f]) { isValid = false } })
+
+    if (!isValid) {
+        const message = 'You must provide all fields'
+        return res.status(400).json({ message: message });
+    }
+
+    AnimalTracker.findByIdAndUpdate(req.params.id, req.body)
+        .then(tracker => res.status(204).json({}))
+        .catch(err => {
+            res.status(500).json({ error: err.toString() })
+        });
 });
 module.exports = { router };
