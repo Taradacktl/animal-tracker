@@ -46,13 +46,30 @@ function displayTracker(tracker) {
     `
 }
 
+// NOTE see https://stackoverflow.com/a/45851497/646156
+function scrollIfNeeded(element, container) {
+    let scrollTop = null
+    if (element.offsetTop < container.scrollTop) {
+        scrollTop = element.offsetTop;
+    } else {
+        const offsetBottom = element.offsetTop + element.offsetHeight;
+        const scrollBottom = container.scrollTop + container.offsetHeight;
+        if (offsetBottom > scrollBottom) {
+            scrollTop = offsetBottom - container.offsetHeight;
+        }
+    }
+
+    if (scrollTop !== null) {
+        $(container).animate({
+            scrollTop: scrollTop
+        }, 500);
+    }
+}
+
 function handleMarkerClick(listingID) {
-    const listEl = $(`#${listingID}`)
-
-    $('.tracker-container').animate({
-        scrollTop: listEl.offset().top
-    }, 500);
-
+    const listEl = $(`#${listingID}`)[0]
+    const container = $('.tracker-container')[0]
+    scrollIfNeeded(listEl, container)
     $('.tracker-listing').removeClass('tracker-selected')
     $(`#${listingID}`).addClass('tracker-selected')
 }
@@ -292,7 +309,7 @@ function datePicker(defaultValue, selector) {
         $(selector).val(ymdValue)
     }
 
-    console.log(new Date().toLocaleTimeString() + ' initializing the pickr', opts)   
+    console.log(new Date().toLocaleTimeString() + ' initializing the pickr', opts)
 
     $(selector).flatpickr(opts)
 }
