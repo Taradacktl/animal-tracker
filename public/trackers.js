@@ -373,6 +373,7 @@ const setupCancelButton2 = () => {
     $('body').on('click', '.js-route-home', ev => {
         ev.preventDefault()
         $(`#${EDIT_TRACK_FORM_ID}`)[0].reset()
+        $(`#${TRACKER_FORM_ID}`)[0].reset()
         routeTo(TRACKERS_DIV_ID)
     })
 }
