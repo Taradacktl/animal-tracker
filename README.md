@@ -6,5 +6,4 @@ Animal Tracker is designed to study migration activity, eating habits, and daily
 [Visit Animal Tracker](https://animaltrack.herokuapp.com/)
 
 ## Technology
--HTML
--CSS, JavaScript, jQueryNode, Express, JWT, MongoDB, and Passport
+HTML, CSS, JavaScript, jQuery, Node.js, Express, JWT, MongoDB, and Passport
